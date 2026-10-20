@@ -1,0 +1,9 @@
+{
+  "name": "nursing-portal-root",
+  "version": "1.0.0",
+  "description": "Hospital Nursing Division Portal",
+  "scripts": {
+    "start": "node backend/server.js",
+    "backend": "node backend/server.js"
+  }
+}

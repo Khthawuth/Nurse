@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เข้าสู่ระบบ | กลุ่มการพยาบาล โรงพยาบาลแม่สอด</title>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="apple-touch-icon" href="images/logo.png">
+  <meta name="description" content="ระบบเข้าสู่ระบบเพื่อจัดการข้อมูลข่าวสารและกิจกรรม กลุ่มภารกิจด้านการพยาบาล โรงพยาบาลแม่สอด">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .auth-wrapper {
+      min-height: 75vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .auth-card {
+      background: var(--white);
+      width: 100%;
+      max-width: 440px;
+      padding: 40px 32px;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--slate-200);
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      position: relative;
+    }
+    .auth-icon-wrap {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: var(--primary-50);
+      color: var(--primary-600);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 16px;
+      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.15);
+    }
+    .auth-card h2 { 
+      color: var(--slate-900); 
+      font-size: 24px; 
+      margin-bottom: 6px; 
+      font-weight: 700;
+    }
+    .auth-card p.sub { 
+      color: var(--slate-500); 
+      font-size: 14px; 
+      margin-bottom: 26px; 
+    }
+    .switch-link { 
+      margin-top: 24px; 
+      font-size: 14px; 
+      color: var(--slate-600); 
+      border-top: 1px solid var(--slate-100);
+      padding-top: 18px;
+    }
+    .switch-link a { 
+      color: var(--primary-700); 
+      font-weight: 600; 
+      text-decoration: none; 
+      cursor: pointer; 
+      transition: color var(--transition-fast);
+    }
+    .switch-link a:hover {
+      color: var(--primary-800);
+      text-decoration: underline;
+    }
+    .already-logged-box {
+      margin-bottom: 20px;
+      background: var(--primary-50);
+      border: 1.5px solid var(--primary-200);
+      padding: 14px 16px;
+      border-radius: var(--radius-lg);
+      text-align: center;
+      font-size: 13.5px;
+      color: var(--primary-900);
+    }
+    .already-logged-box strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--primary-800);
+    }
+    .already-logged-box .btn-row {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .btn-quick-admin {
+      background: var(--primary-700);
+      color: white;
+      text-decoration: none;
+      padding: 7px 14px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-quick-admin:hover {
+      background: var(--primary-800);
+      color: white;
+    }
+    .btn-quick-logout {
+      background: var(--slate-200);
+      color: var(--slate-700);
+      border: none;
+      padding: 7px 12px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-quick-logout:hover {
+      background: var(--slate-300);
+    }
+
+    /* กล่องป๊อปอัปแจ้งเตือน Custom Modal */
+    .custom-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      animation: modalFadeIn 0.2s ease;
+    }
+    .custom-modal-box {
+      background: #ffffff;
+      width: 90%;
+      max-width: 420px;
+      padding: 32px 28px;
+      border-radius: var(--radius-xl);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      animation: modalPopScale 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes modalPopScale { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .custom-modal-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+    }
+    .custom-modal-icon.success { background: #dcfce7; color: #16a34a; }
+    .custom-modal-icon.error { background: #fee2e2; color: #ef4444; }
+    .custom-modal-icon.warning { background: #fef3c7; color: #d97706; }
+    .custom-modal-icon.info { background: #e0f2fe; color: #0284c7; }
+    .custom-modal-title { font-size: 20px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+    .custom-modal-desc { font-size: 14.5px; color: #64748b; margin-bottom: 22px; line-height: 1.6; white-space: pre-line; }
+    .custom-modal-btn {
+      width: 100%;
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: none;
+      background: #0d9488;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .custom-modal-btn:hover { background: #0f766e; }
+  </style>
+</head>
+<body>
+
+  <!-- แถบ Header -->
+  <header class="navbar-wrapper">
+    <div class="navbar-container">
+      <a href="index.html" class="brand-section">
+        <div class="brand-logo-wrap">
+          <img src="images/logo.png" alt="ตราสัญลักษณ์กลุ่มการพยาบาล โรงพยาบาลแม่สอด" class="brand-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/f7/Emblem_of_the_Ministry_of_Public_Health_of_Thailand.svg'">
+        </div>
+        <div class="brand-text">
+          <h2>กลุ่มการพยาบาล โรงพยาบาลแม่สอด</h2>
+          <p>ระบบเข้าสู่ระบบเพื่อจัดการข้อมูล</p>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i> กลับสู่หน้าหลัก</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- กล่องฟอร์มล็อกอิน -->
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-icon-wrap">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <h2 id="auth-title">เข้าสู่ระบบ</h2>
+      <p id="auth-sub" class="sub">สำหรับเจ้าหน้าที่ผู้มีสิทธิ์จัดการข้อมูลข่าวสาร</p>
+
+      <!-- กล่องเตือนกรณีเข้าสู่ระบบอยู่แล้ว -->
+      <div id="already-logged-banner" class="already-logged-box hidden" style="display: none;">
+        <strong><i class="fa-solid fa-circle-check" style="color: #10b981;"></i> คุณกำลังเข้าสู่ระบบอยู่แล้ว</strong>
+        <span id="already-user-text"></span>
+        <div class="btn-row">
+          <a href="admin.html" class="btn-quick-admin"><i class="fa-solid fa-gauge-high"></i> ไปหน้าจัดการ (Admin)</a>
+          <button type="button" class="btn-quick-logout" onclick="clearExistingLogin()"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</button>
+        </div>
+      </div>
+
+      <form id="auth-form" style="text-align: left;">
+        <div id="fullname-field" class="form-group hidden">
+          <label>ชื่อ - สกุล ผู้ขอใช้งาน</label>
+          <input type="text" id="fullname" placeholder="เช่น พว.สมศรี มีสุข">
+        </div>
+
+        <div class="form-group">
+          <label>ชื่อผู้ใช้งาน (Username)</label>
+          <input type="text" id="username" required placeholder="กรอกชื่อผู้ใช้ของคุณ" autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label>รหัสผ่าน (Password)</label>
+          <input type="password" id="password" required placeholder="กรอกรหัสผ่าน" autocomplete="current-password">
+        </div>
+
+        <button type="submit" id="btn-auth-submit" class="btn-submit" style="width: 100%; margin-top: 10px; padding: 12px 20px; font-size: 15px;">
+          เข้าสู่ระบบ
+        </button>
+      </form>
+
+      <div class="switch-link">
+        <span id="switch-text">ยังไม่มีสิทธิ์เข้าใช้งาน?</span>
+        <a id="btn-toggle-mode" onclick="toggleAuthMode()">ลงทะเบียนขอสิทธิ์ใช้งานที่นี่</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- กล่องป๊อปอัปแจ้งเตือนกลางจอดีไซน์สวยงาม -->
+  <div id="app-modal" class="custom-modal-overlay hidden" style="display: none;">
+    <div class="custom-modal-box">
+      <div id="modal-icon" class="custom-modal-icon"></div>
+      <div id="modal-heading" class="custom-modal-title"></div>
+      <div id="modal-message" class="custom-modal-desc"></div>
+      <button type="button" id="modal-confirm-btn" class="custom-modal-btn" onclick="closeAppModal()">ตกลง</button>
+    </div>
+  </div>
+
+  <!-- Footer ท้ายเว็บไซต์ -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-col footer-about">
+        <h4>กลุ่มการพยาบาล โรงพยาบาลแม่สอด</h4>
+        <p>
+          มุ่งมั่นพัฒนาการบริการพยาบาลที่ได้มาตรฐานสากล บริการด้วยหัวใจความเป็นมนุษย์ ดำรงไว้ซึ่งจริยธรรมวิชาชีพ เพื่อสุขภาวะที่ดีของผู้รับบริการในพื้นที่ชายแดน
+        </p>
+        <div class="footer-emergency-card">
+          <div class="footer-emergency-icon">
+            <i class="fa-solid fa-truck-medical"></i>
+          </div>
+          <div class="footer-emergency-text">
+            <strong>อุบัติเหตุ - ฉุกเฉิน (EMS 24 ชม.)</strong>
+            <span>โทร. 1669 หรือ 055-541600</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>ข้อมูลการติดต่อ</h4>
+        <ul class="footer-contact-list">
+          <li>
+            <i class="fa-solid fa-location-dot"></i>
+            <span>เลขที่ 11 ถนนศรีพานิช ตำบลแม่สอด อำเภอแม่สอด จังหวัดตาก 63110</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-phone"></i>
+            <span>โทรศัพท์กลาง: 055-531229, 055-531224</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>หน่วยงานที่เกี่ยวข้อง</h4>
+        <ul class="footer-links-list">
+          <li><a href="https://maesothospital.go.th/" target="_blank"><i class="fa-solid fa-angle-right"></i> โรงพยาบาลแม่สอด</a></li>
+          <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> หน้าแรก</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 กลุ่มการพยาบาล โรงพยาบาลแม่สอด (Mae Sot Hospital). สงวนลิขสิทธิ์</p>
+      <p>ระบบสารสนเทศและการสื่อสารงานพยาบาล</p>
+    </div>
+  </footer>
+
+  <script>
+    // ตรวจจับ Host อัตโนมัติ (รองรับทั้ง localhost, 127.0.0.1 หรือ LAN IP)
+    const backendHost = (window.location.hostname && window.location.hostname !== '') ? window.location.hostname : 'localhost';
+    const API_BASE = `http://${backendHost}:4000/api`;
+
+    let isRegisterMode = false;
+    let modalCallback = null;
+    let autoRedirectTimeout = null;
+
+    // ตรวจสอบว่าผู้ใช้ล็อกอินค้างไว้อยู่แล้วหรือไม่
+    window.addEventListener('DOMContentLoaded', () => {
+      const existingToken = localStorage.getItem('nursing_token');
+      const existingUser = localStorage.getItem('nursing_user_name');
+      if (existingToken && existingUser) {
+        const banner = document.getElementById('already-logged-banner');
+        const userText = document.getElementById('already-user-text');
+        if (banner && userText) {
+          userText.innerText = `เข้าสู่ระบบในชื่อ: ${existingUser}`;
+          banner.classList.remove('hidden');
+          banner.style.display = 'block';
+        }
+      }
+    });
+
+    function clearExistingLogin() {
+      localStorage.removeItem('nursing_token');
+      localStorage.removeItem('nursing_user_role');
+      localStorage.removeItem('nursing_user_name');
+      const banner = document.getElementById('already-logged-banner');
+      if (banner) {
+        banner.classList.add('hidden');
+        banner.style.display = 'none';
+      }
+    }
+
+    function showAppModal(title, message, type = 'info', callback = null) {
+      const modal = document.getElementById('app-modal');
+      const icon = document.getElementById('modal-icon');
+      const heading = document.getElementById('modal-heading');
+      const desc = document.getElementById('modal-message');
+
+      modalCallback = callback;
+      heading.innerText = title;
+      desc.innerText = message;
+
+      icon.className = `custom-modal-icon ${type}`;
+      if (type === 'success') {
+        icon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+      } else if (type === 'error') {
+        icon.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
+      } else if (type === 'warning') {
+        icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+      } else {
+        icon.innerHTML = '<i class="fa-solid fa-circle-info"></i>';
+      }
+
+      modal.classList.remove('hidden');
+      modal.style.display = 'flex';
+    }
+
+    function closeAppModal() {
+      if (autoRedirectTimeout) {
+        clearTimeout(autoRedirectTimeout);
+        autoRedirectTimeout = null;
+      }
+      const modal = document.getElementById('app-modal');
+      modal.classList.add('hidden');
+      modal.style.display = 'none';
+      if (modalCallback) {
+        const cb = modalCallback;
+        modalCallback = null;
+        cb();
+      }
+    }
+
+    function toggleAuthMode() {
+      isRegisterMode = !isRegisterMode;
+      const title = document.getElementById('auth-title');
+      const sub = document.getElementById('auth-sub');
+      const fullnameField = document.getElementById('fullname-field');
+      const submitBtn = document.getElementById('btn-auth-submit');
+      const switchText = document.getElementById('switch-text');
+      const toggleLink = document.getElementById('btn-toggle-mode');
+
+      if (isRegisterMode) {
+        title.innerText = 'ลงทะเบียนขอสิทธิ์ใช้งาน';
+        sub.innerText = 'ข้อมูลจะถูกส่งให้ผู้พัฒนาระบบตรวจสอบและอนุมัติ';
+        fullnameField.classList.remove('hidden');
+        document.getElementById('fullname').required = true;
+        submitBtn.innerText = 'ส่งคำขอลงทะเบียน';
+        switchText.innerText = 'มีบัญชีที่ได้รับอนุมัติแล้ว?';
+        toggleLink.innerText = 'เข้าสู่ระบบที่นี่';
+      } else {
+        title.innerText = 'เข้าสู่ระบบ';
+        sub.innerText = 'สำหรับเจ้าหน้าที่ผู้มีสิทธิ์จัดการข้อมูลข่าวสาร';
+        fullnameField.classList.add('hidden');
+        document.getElementById('fullname').required = false;
+        submitBtn.innerText = 'เข้าสู่ระบบ';
+        switchText.innerText = 'ยังไม่มีสิทธิ์เข้าใช้งาน?';
+        toggleLink.innerText = 'ลงทะเบียนขอสิทธิ์ใช้งานที่นี่';
+      }
+    }
+
+    document.getElementById('auth-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = document.getElementById('btn-auth-submit');
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const fullname = document.getElementById('fullname').value.trim();
+
+      const endpoint = isRegisterMode ? '/register' : '/login';
+      const bodyData = isRegisterMode ? { fullname, username, password } : { username, password };
+
+      // แสดงสถานะกำลังประมวลผลบนปุ่ม
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังตรวจสอบข้อมูล...';
+
+      try {
+        const res = await fetch(`${API_BASE}${endpoint}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(bodyData)
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          submitBtn.disabled = false;
+          submitBtn.innerText = isRegisterMode ? 'ส่งคำขอลงทะเบียน' : 'เข้าสู่ระบบ';
+          showAppModal('แจ้งเตือน', data.error || 'เกิดข้อผิดพลาดในการดำเนินการ', 'error');
+          return;
+        }
+
+        if (isRegisterMode) {
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'ส่งคำขอลงทะเบียน';
+          showAppModal('ส่งคำขอสำเร็จ', data.message, 'success', () => {
+            toggleAuthMode();
+          });
+        } else {
+          // บันทึก Token และข้อมูลผู้ใช้ลง localStorage
+          localStorage.setItem('nursing_token', data.token);
+          localStorage.setItem('nursing_user_role', data.user.role);
+          localStorage.setItem('nursing_user_name', data.user.fullname);
+
+          submitBtn.style.background = '#059669';
+          submitBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> เข้าสู่ระบบสำเร็จ กำลังพาไปหน้าแอดมิน...';
+
+          // ฟังก์ชันนำทางไปหน้าแอดมิน (admin.html) ทันที
+          let isRedirected = false;
+          const goToAdmin = () => {
+            if (isRedirected) return;
+            isRedirected = true;
+            window.location.href = 'admin.html';
+          };
+
+          // แสดงป๊อปอัปแจ้งเตือนสวยงาม พร้อมตั้งเวลานำทางอัตโนมัติใน 1 วินาที
+          showAppModal(
+            'เข้าสู่ระบบสำเร็จ', 
+            `ยินดีต้อนรับคุณ ${data.user.fullname}\nระบบกำลังนำท่านเข้าสู่หน้าจัดการข้อมูล (Admin Portal)...`, 
+            'success', 
+            () => {
+              goToAdmin();
+            }
+          );
+
+          // ทำงานเด้งเข้าหน้าแอดมินอัตโนมัติ ไม่ต้องรอกดปุ่มตกลง
+          autoRedirectTimeout = setTimeout(goToAdmin, 1000);
+        }
+      } catch (err) {
+        submitBtn.disabled = false;
+        submitBtn.innerText = isRegisterMode ? 'ส่งคำขอลงทะเบียน' : 'เข้าสู่ระบบ';
+        showAppModal(
+          'การเชื่อมต่อล้มเหลว', 
+          'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ Backend (พอร์ต 4000) ได้\nกรุณาตรวจสอบว่าเซิร์ฟเวอร์กำลังทำงานอยู่ (รันคำสั่ง npm start ในโปรเจกต์)', 
+          'error'
+        );
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>วิสัยทัศน์และพันธกิจ | กลุ่มการพยาบาล โรงพยาบาลแม่สอด</title>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="apple-touch-icon" href="images/logo.png">
+  <meta name="description" content="วิสัยทัศน์ พันธกิจ และเป้าหมายการดำเนินงาน กลุ่มภารกิจด้านการพยาบาล โรงพยาบาลแม่สอด">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- แถบเมนูด้านบน (Sticky Navbar) -->
+  <header class="navbar-wrapper">
+    <div class="navbar-container">
+      <a href="index.html" class="brand-section">
+        <div class="brand-logo-wrap">
+          <img src="images/logo.png" alt="ตราสัญลักษณ์กลุ่มการพยาบาล โรงพยาบาลแม่สอด" class="brand-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/f7/Emblem_of_the_Ministry_of_Public_Health_of_Thailand.svg'">
+        </div>
+        <div class="brand-text">
+          <h2>กลุ่มการพยาบาล โรงพยาบาลแม่สอด</h2>
+          <p>Nursing Division, Mae Sot Hospital</p>
+        </div>
+      </a>
+
+      <button class="mobile-toggle-btn" onclick="toggleMobileMenu()" aria-label="เปิดเมนูนำทาง">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <nav class="nav-links" id="primary-navigation" aria-label="เมนูหลัก">
+        <a href="index.html" class="nav-btn">
+          <i class="fa-solid fa-house"></i> หน้าแรก
+        </a>
+
+        <!-- ดรอปดาวน์: เกี่ยวกับกลุ่มการพยาบาล -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-btn active" onclick="toggleDropdown('about-menu')" aria-expanded="false"
+            aria-controls="about-menu">
+            <i class="fa-solid fa-landmark"></i> เกี่ยวกับกลุ่มการพยาบาล <i class="fa-solid fa-angle-down"></i>
+          </button>
+          <div id="about-menu" class="dropdown-menu hidden" role="menu" aria-label="เมนูเกี่ยวกับกลุ่มการพยาบาล">
+            <a href="vision.html" class="dropdown-item active" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-compass"></i></div>
+              <div class="dropdown-item-text">
+                <strong>วิสัยทัศน์ / พันธกิจ</strong>
+                <span>ทิศทางและเป้าหมายองค์กร</span>
+              </div>
+            </a>
+            <a href="structure.html" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-sitemap"></i></div>
+              <div class="dropdown-item-text">
+                <strong>โครงสร้างการบริหาร</strong>
+                <span>สายการบังคับบัญชาและกลุ่มงาน</span>
+              </div>
+            </a>
+            <a href="strategy.html" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-chart-line"></i></div>
+              <div class="dropdown-item-text">
+                <strong>แผนยุทธศาสตร์</strong>
+                <span>แผนยุทธศาสตร์และทิศทางการพัฒนา</span>
+              </div>
+            </a>
+            <a href="kpi.html" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ตัวชี้วัด (KPI)</strong>
+                <span>เป้าหมายคุณภาพและความสำเร็จ</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- ดรอปดาวน์: บทบาทหน้าที่ -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-btn" onclick="toggleDropdown('roles-menu')" aria-expanded="false"
+            aria-controls="roles-menu">
+            <i class="fa-solid fa-user-tie"></i> บทบาทหน้าที่ <i class="fa-solid fa-angle-down"></i>
+          </button>
+          <div id="roles-menu" class="dropdown-menu hidden" role="menu" aria-label="เมนูบทบาทหน้าที่">
+            <div class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-gear"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ด้านบริหาร</strong>
+                <span>กำกับคุณภาพ กำลังคน และระบบบริการ</span>
+              </div>
+            </div>
+            <div class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ด้านวิชาการ</strong>
+                <span>องค์ความรู้ วิจัย R2R นวัตกรรม</span>
+              </div>
+            </div>
+            <div class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ด้านบริการ</strong>
+                <span>การพยาบาลแบบองค์รวม ปลอดภัย</span>
+              </div>
+            </div>
+            <div class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-star"></i></div>
+              <div class="dropdown-item-text">
+                <strong>กิจกรรมพิเศษ</strong>
+                <span>สร้างเสริมสุขภาพและเครือข่ายชุมชน</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ดรอปดาวน์: ข่าวสารและกิจกรรม -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-btn" onclick="toggleDropdown('news-menu')" aria-expanded="false"
+            aria-controls="news-menu">
+            <i class="fa-solid fa-newspaper"></i> ข่าวสารและกิจกรรม <i class="fa-solid fa-angle-down"></i>
+          </button>
+          <div id="news-menu" class="dropdown-menu hidden" role="menu" aria-label="เมนูข่าวสารและกิจกรรม">
+            <a href="index.html#news-section" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-bullhorn"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ข่าวประชาสัมพันธ์</strong>
+                <span>ข่าวสาร ประกาศ และเอกสารสำคัญ</span>
+              </div>
+            </a>
+            <a href="index.html#activities-section" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-calendar-days"></i></div>
+              <div class="dropdown-item-text">
+                <strong>กิจกรรมและโครงการ</strong>
+                <span>ภาพกิจกรรม โครงการ และงานอบรม</span>
+              </div>
+            </a>
+            <a href="index.html#news-section" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-layer-group"></i></div>
+              <div class="dropdown-item-text">
+                <strong>คลังข่าวสารทั้งหมด</strong>
+                <span>เปิดดูข่าวประชาสัมพันธ์ทั้งหมด</span>
+              </div>
+            </a>
+            <a href="index.html#activities-section" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-images"></i></div>
+              <div class="dropdown-item-text">
+                <strong>คลังภาพกิจกรรมทั้งหมด</strong>
+                <span>เปิดดูประมวลภาพกิจกรรมทั้งหมด</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <a href="javascript:void(0)" class="nav-btn"
+          onclick="alert('งานวิจัยและวิชาการ กำลังอยู่ในระหว่างอัปเดตข้อมูล')">
+          <i class="fa-solid fa-book-open"></i> งานวิจัยและวิชาการ
+        </a>
+
+        <!-- ปุ่มเข้าสู่ระบบสำหรับเจ้าหน้าที่ -->
+        <a href="login.html" id="nav-login-link" class="nav-btn btn-nav-login">
+          <i class="fa-solid fa-right-to-bracket"></i> เข้าสู่ระบบ
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- เนื้อหาหน้าวิสัยทัศน์และพันธกิจ -->
+  <main class="page-body">
+    <div class="subpage-card">
+      <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าแรก</a>
+
+      <!-- ส่วนหัวของหน้าเพจ (Subpage Header) -->
+      <div class="subpage-header-box">
+        <div class="hero-badge-wrap">
+          <i class="fa-solid fa-compass"></i>
+          <span>ปรัชญาและเป้าหมายการดำเนินงาน</span>
+        </div>
+        <h1 style="font-size: clamp(24px, 2.2vw, 32px); color: var(--slate-900); font-weight: 700; margin-bottom: 8px;">
+          วิสัยทัศน์และพันธกิจ
+        </h1>
+        <p style="color: var(--slate-600); font-size: clamp(14px, 1.1vw, 16px); max-width: 800px; line-height: 1.6;">
+          ทิศทางการพัฒนาและเป้าหมายการดำเนินงาน กลุ่มภารกิจด้านการพยาบาล โรงพยาบาลแม่สอด จังหวัดตาก
+        </p>
+
+        <!-- แถบสลับหน้าข้อมูลกลุ่มการพยาบาล (Quick Subpage Tabs) -->
+        <nav class="subpage-nav-tabs" aria-label="เมนูสลับหน้าข้อมูล">
+          <a href="vision.html" class="subpage-tab-link active">
+            <i class="fa-solid fa-compass"></i> วิสัยทัศน์ / พันธกิจ
+          </a>
+          <a href="structure.html" class="subpage-tab-link">
+            <i class="fa-solid fa-sitemap"></i> โครงสร้างการบริหาร
+          </a>
+          <a href="strategy.html" class="subpage-tab-link">
+            <i class="fa-solid fa-chart-line"></i> แผนยุทธศาสตร์
+          </a>
+          <a href="kpi.html" class="subpage-tab-link">
+            <i class="fa-solid fa-arrow-trend-up"></i> ตัวชี้วัด (KPI)
+          </a>
+        </nav>
+      </div>
+
+      <!-- แถวแสดงวิสัยทัศน์และพันธกิจ (2-Column Responsive Grid) -->
+      <div class="subpage-grid-2">
+        <!-- กล่องวิสัยทัศน์ (Vision Spotlight Card) -->
+        <section class="vision-spotlight-card" aria-label="วิสัยทัศน์องค์กร">
+          <div>
+            <div class="vision-head">
+              <div class="vision-icon-wrap">
+                <i class="fa-solid fa-eye"></i>
+              </div>
+              <div>
+                <h3 style="color: var(--primary-900); font-size: 20px; font-weight: 700; margin: 0;">วิสัยทัศน์ (Vision)</h3>
+                <span style="font-size: 13px; color: var(--primary-700); font-weight: 500;">เป้าหมายสูงสุดขององค์กรพยาบาล</span>
+              </div>
+            </div>
+            <blockquote class="vision-quote-text">
+              "เป็นองค์กรพยาบาลชั้นนำที่ได้มาตรฐานสากล บริการด้วยหัวใจความเป็นมนุษย์ ดำรงไว้ซึ่งจริยธรรมวิชาชีพ เพื่อสุขภาวะที่ดีของประชาชนในพื้นที่ชายแดน"
+            </blockquote>
+          </div>
+
+          <div class="vision-tags-row">
+            <span class="vision-tag-pill"><i class="fa-solid fa-award"></i> มาตรฐานสากล</span>
+            <span class="vision-tag-pill"><i class="fa-solid fa-heart"></i> หัวใจความเป็นมนุษย์</span>
+            <span class="vision-tag-pill"><i class="fa-solid fa-scale-balanced"></i> จริยธรรมวิชาชีพ</span>
+            <span class="vision-tag-pill"><i class="fa-solid fa-mountain"></i> สุขภาวะชายแดน</span>
+          </div>
+        </section>
+
+        <!-- กล่องพันธกิจ (Mission Container Card) -->
+        <section class="mission-container-card" aria-label="พันธกิจองค์กร">
+          <div class="mission-head">
+            <div class="mission-icon-wrap">
+              <i class="fa-solid fa-bullseye"></i>
+            </div>
+            <div>
+              <h3 style="color: var(--peach-600); font-size: 20px; font-weight: 700; margin: 0;">พันธกิจหลัก (Mission)</h3>
+              <span style="font-size: 13px; color: var(--slate-500); font-weight: 500;">ภารกิจสำคัญ 4 ด้านในการขับเคลื่อนองค์กร</span>
+            </div>
+          </div>
+
+          <div class="mission-list">
+            <div class="mission-item-box">
+              <div class="mission-number">1</div>
+              <div class="mission-text">
+                <strong>มาตรฐานความปลอดภัยระดับสากล:</strong> พัฒนาระบบบริการพยาบาลให้ได้มาตรฐานความปลอดภัยตามหลักสากล (Patient Safety Goals 2P Safety)
+              </div>
+            </div>
+            <div class="mission-item-box">
+              <div class="mission-number">2</div>
+              <div class="mission-text">
+                <strong>พัฒนาสมรรถนะบุคลากร:</strong> ส่งเสริมและพัฒนาความเชี่ยวชาญเฉพาะทางของบุคลากรทางการพยาบาลอย่างต่อเนื่อง
+              </div>
+            </div>
+            <div class="mission-item-box">
+              <div class="mission-number">3</div>
+              <div class="mission-text">
+                <strong>วิจัย นวัตกรรม และ R2R:</strong> สร้างสรรค์ผลงานวิชาการและนวัตกรรมพยาบาลเพื่อตอบสนองต่อปัญหาสุขภาพเฉพาะในพื้นที่ชายแดน
+              </div>
+            </div>
+            <div class="mission-item-box">
+              <div class="mission-number">4</div>
+              <div class="mission-text">
+                <strong>ทีมงานและเครือข่ายชุมชน:</strong> ส่งเสริมการทำงานเป็นทีมและสร้างเครือข่ายความร่วมมือด้านสุขภาพชุมชนอย่างยั่งยืน
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ส่วนปฏิญญาพยาบาลและค่านิยม NKNURSE (Full-Screen Values Grid) -->
+      <section class="values-section-box" aria-label="ค่านิยมและวัฒนธรรมองค์กร NKNURSE">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; border-bottom: 1.5px solid var(--primary-200); padding-bottom: 16px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 42px; height: 42px; border-radius: 50%; background: var(--primary-600); color: white; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+              <i class="fa-solid fa-hand-holding-heart"></i>
+            </div>
+            <div>
+              <h3 style="font-size: 19px; font-weight: 700; color: var(--slate-900); margin: 0;">
+                ปฏิญญาพยาบาลและค่านิยมองค์กร (NKNURSE)
+              </h3>
+              <p style="font-size: 13px; color: var(--slate-600); margin: 2px 0 0;">
+                หลักยึดเหนี่ยวจิตใจและวัฒนธรรมการดูแลผู้ป่วยด้วยหัวใจความเป็นมนุษย์
+              </p>
+            </div>
+          </div>
+          <span style="background: var(--primary-100); color: var(--primary-800); font-weight: 700; font-size: 12px; padding: 4px 12px; border-radius: var(--radius-full);">
+            7 แกนหลักสู่ความเป็นเลิศ
+          </span>
+        </div>
+
+        <div class="values-grid-7">
+          <!-- N -->
+          <div class="value-pill-card">
+            <div class="value-letter-badge">N</div>
+            <div class="value-title-en">Network</div>
+            <div class="value-title-th">สร้างเครือข่าย</div>
+            <div class="value-desc">สร้างเครือข่ายความร่วมมือด้านการดูแลสุขภาพชุมชนและสหสาขาวิชาชีพ</div>
+          </div>
+
+          <!-- K -->
+          <div class="value-pill-card">
+            <div class="value-letter-badge">K</div>
+            <div class="value-title-en">Knowledge</div>
+            <div class="value-title-th">มีองค์ความรู้</div>
+            <div class="value-desc">พัฒนาทักษะวิชาชีพ ศึกษาต่อเนื่อง และสร้างสรรค์งานวิจัยนวัตกรรม R2R</div>
+          </div>
+
+          <!-- N -->
+          <div class="value-pill-card">
+            <div class="value-letter-badge">N</div>
+            <div class="value-title-en">Niceness</div>
+            <div class="value-title-th">อ่อนโยน นุ่มนวล</div>
+            <div class="value-desc">บริการด้วยความสุภาพ อ่อนโยน ให้เกียรติและสร้างความอบอุ่นใจแก่ผู้รับบริการ</div>
+          </div>
+
+          <!-- U -->
+          <div class="value-pill-card">
+            <div class="value-letter-badge">U</div>
+            <div class="value-title-en">Unity</div>
+            <div class="value-title-th">เป็นหนึ่งเดียว</div>
+            <div class="value-desc">ความสามัคคี รวมพลังเป็นหนึ่งเดียวในการขับเคลื่อนภารกิจด้านการพยาบาล</div>
+          </div>
+
+          <!-- R -->
+          <div class="value-pill-card">
+            <div class="value-letter-badge">R</div>
+            <div class="value-title-en">Responsibility</div>
+            <div class="value-title-th">รับผิดชอบหน้าที่</div>
+            <div class="value-desc">รับผิดชอบต่อผู้ป่วยและสังคม ปฏิบัติตามมาตรฐานและจริยธรรมวิชาชีพเคร่งครัด</div>
+          </div>
+
+          <!-- S -->
+          <div class="value-pill-card">
+            <div class="value-letter-badge">S</div>
+            <div class="value-title-en">Smart</div>
+            <div class="value-title-th">ฉลาด เฉียบคม</div>
+            <div class="value-desc">มีไหวพริบ ทันสมัย ตัดสินใจทางคลินิกอย่างแม่นยำ ปรับตัวพร้อมรับมือทุกสถานการณ์</div>
+          </div>
+
+          <!-- E -->
+          <div class="value-pill-card">
+            <div class="value-letter-badge">E</div>
+            <div class="value-title-en">Empathy</div>
+            <div class="value-title-th">เอื้ออาทร</div>
+            <div class="value-desc">เปี่ยมด้วยความเมตตา เข้าใจความรู้สึก และยึดผู้รับบริการเป็นศูนย์กลาง</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer ท้ายเว็บไซต์ -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-col footer-about">
+        <h4>กลุ่มการพยาบาล โรงพยาบาลแม่สอด</h4>
+        <p>
+          มุ่งมั่นพัฒนาการบริการพยาบาลที่ได้มาตรฐานสากล บริการด้วยหัวใจความเป็นมนุษย์ ดำรงไว้ซึ่งจริยธรรมวิชาชีพ เพื่อสุขภาวะที่ดีของผู้รับบริการในพื้นที่ชายแดน
+        </p>
+        <div class="footer-emergency-card">
+          <div class="footer-emergency-icon">
+            <i class="fa-solid fa-truck-medical"></i>
+          </div>
+          <div class="footer-emergency-text">
+            <strong>อุบัติเหตุ - ฉุกเฉิน (EMS 24 ชม.)</strong>
+            <span>โทร. 1669 หรือ 055-541600</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>ข้อมูลการติดต่อ</h4>
+        <ul class="footer-contact-list">
+          <li>
+            <i class="fa-solid fa-location-dot"></i>
+            <span>เลขที่ 11 ถนนศรีพานิช ตำบลแม่สอด อำเภอแม่สอด จังหวัดตาก 63110</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-phone"></i>
+            <span>โทรศัพท์กลาง: 055-531229, 055-531224</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-user-nurse"></i>
+            <span>กลุ่มภารกิจด้านการพยาบาล: ต่อเบอร์ภายใน 1120, 1121</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>หน่วยงานที่เกี่ยวข้อง</h4>
+        <ul class="footer-links-list">
+          <li><a href="https://maesothospital.go.th/" target="_blank"><i class="fa-solid fa-angle-right"></i> โรงพยาบาลแม่สอด</a></li>
+          <li><a href="https://www.nhso.go.th" target="_blank"><i class="fa-solid fa-angle-right"></i> สปสช.</a></li>
+          <li><a href="https://www.tnmc.or.th" target="_blank"><i class="fa-solid fa-angle-right"></i> สภาการพยาบาล</a></li>
+          <li><a href="structure.html"><i class="fa-solid fa-angle-right"></i> โครงสร้างการบริหารงานพยาบาล</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 กลุ่มการพยาบาล โรงพยาบาลแม่สอด (Mae Sot Hospital). สงวนลิขสิทธิ์</p>
+      <p>ระบบสารสนเทศและการสื่อสารงานพยาบาล</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบจัดการข่าวสารและกิจกรรม - กลุ่มการพยาบาล โรงพยาบาลแม่สอด</title>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="apple-touch-icon" href="images/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .badge-pin {
+      background: #ffedd5;
+      color: #ea580c;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .badge-views {
+      background: #f1f5f9;
+      color: #475569;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f8fafc;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px dashed #cbd5e1;
+      cursor: pointer;
+      font-weight: 600;
+      color: #0f172a;
+    }
+    .checkbox-container input {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+    .file-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fee2e2;
+      color: #b91c1c;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    #admin-alert-modal.hidden {
+      display: none !important;
+    }
+    .custom-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+    .custom-modal-box {
+      background: #ffffff;
+      width: 90%;
+      max-width: 420px;
+      padding: 30px 24px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      animation: modalPopScale 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes modalPopScale { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .custom-modal-icon {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+    }
+    .custom-modal-icon.success { background: #dcfce7; color: #16a34a; }
+    .custom-modal-icon.error { background: #fee2e2; color: #ef4444; }
+    .custom-modal-icon.warning { background: #fef3c7; color: #d97706; }
+    .custom-modal-title { font-size: 20px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+    .custom-modal-desc { font-size: 15px; color: #64748b; margin-bottom: 24px; line-height: 1.6; }
+    .custom-modal-btn {
+      width: 100%;
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: none;
+      background: #0284c7;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .custom-modal-btn:hover { background: #0369a1; }
+
+    /* Admin Tabs Navigation */
+    .admin-tabs-nav {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .admin-tab-btn {
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1.5px solid #cbd5e1;
+      background: #ffffff;
+      color: #475569;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .admin-tab-btn:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+      border-color: #94a3b8;
+    }
+    .admin-tab-btn.active {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0284c7;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.28);
+    }
+    .btn-info-star {
+      background: #f0fdfa;
+      color: #0d9488;
+      border: 1.5px solid #99f6e4;
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+      margin-left: 4px;
+    }
+    .btn-info-star:hover {
+      background: #0d9488;
+      color: #ffffff;
+      border-color: #0d9488;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(13, 148, 136, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar-wrapper">
+    <div class="navbar-container">
+      <div class="brand-section">
+        <div class="brand-logo-wrap">
+          <img src="images/logo.png" alt="โลโก้" class="brand-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/f7/Emblem_of_the_Ministry_of_Public_Health_of_Thailand.svg'">
+        </div>
+        <div class="brand-text">
+          <h2>ระบบจัดการเนื้อหา (Admin Portal)</h2>
+          <p id="current-user-display">ผู้ใช้งาน: กำลังตรวจสอบ...</p>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i> ดูหน้าเว็บหลัก</a>
+        <a href="developer.html" id="link-dev" class="nav-btn hidden"><i class="fa-solid fa-code"></i> เมนูผู้พัฒนา</a>
+        <button class="nav-btn btn-danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="admin-box">
+    <!-- แถบสลับเมนูหลัก (Tabs) -->
+    <div class="admin-tabs-nav">
+      <button type="button" id="tab-btn-posts" class="admin-tab-btn active" onclick="switchAdminTab('posts')">
+        <i class="fa-solid fa-newspaper"></i> 1. จัดการข่าวสารและกิจกรรม
+      </button>
+      <button type="button" id="tab-btn-hero" class="admin-tab-btn" onclick="switchAdminTab('hero')">
+        <i class="fa-solid fa-wand-magic-sparkles" style="color: #f59e0b;"></i> 2. ปรับเปลี่ยนภาพไฮไลท์เด่นบนสุด (Hero Banner)
+      </button>
+    </div>
+
+    <!-- แท็บ 1: จัดการข่าวสารและกิจกรรม -->
+    <div id="section-posts-manage">
+    <div class="form-card">
+      <h3 id="form-mode-title" style="margin-bottom: 18px; color: #0284c7;">
+        <i class="fa-solid fa-plus-circle"></i> เพิ่มข่าวประชาสัมพันธ์ / กิจกรรมใหม่
+      </h3>
+
+      <div>
+        <input type="hidden" id="edit-id" value="">
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+          <div class="form-group">
+            <label>หมวดหมู่</label>
+            <select id="category">
+              <option value="news">ข่าวประชาสัมพันธ์</option>
+              <option value="activity">กิจกรรม</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>การปักหมุดความสำคัญ</label>
+            <label class="checkbox-container">
+              <input type="checkbox" id="is_pinned">
+              <span><i class="fa-solid fa-thumbtack" style="color: #ea580c;"></i> ปักหมุดไว้บนสุด (Pin to Top)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>หัวข้อเรื่อง</label>
+          <input type="text" id="title" placeholder="เช่น อบรมเชิงปฏิบัติการพัฒนาทักษะวิชาชีพพยาบาล">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+          <div class="form-group">
+            <label>รูปภาพประกอบข่าว / กิจกรรม (เลือกได้หลายรูป)</label>
+            <input type="file" id="image" accept="image/*" multiple onchange="previewSelectedImages(event)">
+            <div id="image-hint" style="font-size: 12px; color: #64748b; margin-top: 4px;">เลือกได้หลายรูปพร้อมกัน (รูปแรกจะถูกใช้เป็นรูปหน้าปกหลัก)</div>
+            <div id="image-preview-list" style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px;"></div>
+          </div>
+          <div class="form-group">
+            <label>เอกสารแนบเพิ่มเติม (PDF / Word) [ถ้ามี]</label>
+            <input type="file" id="document" accept=".pdf,.doc,.docx">
+            <div id="file-hint" style="font-size: 12px; color: #64748b; margin-top: 4px;"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>เนื้อหารายละเอียด (ข้อความฉบับเต็ม)</label>
+          <textarea id="description" rows="5" placeholder="ใส่เนื้อหาข่าวหรือรายละเอียดกิจกรรมที่นี่..."></textarea>
+        </div>
+
+        <div>
+          <button type="button" id="btn-save" class="btn-submit" onclick="savePostData()">
+            <i class="fa-solid fa-cloud-arrow-up"></i> บันทึกข้อมูลขึ้นหน้าเว็บ
+          </button>
+          <button type="button" id="btn-cancel" class="btn-cancel hidden" onclick="resetForm()">
+            ยกเลิกการแก้ไข
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3>รายการที่เผยแพร่อยู่ในปัจจุบัน</h3>
+        <button class="btn-outline" onclick="loadPosts()"><i class="fa-solid fa-rotate"></i> รีเฟรช</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>รูป</th>
+            <th>หัวข้อ / ปักหมุด</th>
+            <th>หมวดหมู่</th>
+            <th>ไฟล์แนบ</th>
+            <th>จัดการ</th>
+          </tr>
+        </thead>
+        <tbody id="posts-list"></tbody>
+      </table>
+    </div>
+    </div> <!-- /#section-posts-manage -->
+
+    <!-- แท็บ 2: ปรับเปลี่ยนภาพไฮไลท์เด่นบนสุด (Hero Banner) -->
+    <div id="section-hero-manage" class="hidden">
+      <div class="form-card" style="border: 2px solid #bae6fd; box-shadow: 0 4px 20px rgba(2, 132, 199, 0.08);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; border-bottom: 1.5px solid #f1f5f9; padding-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h3 style="color: #0369a1; display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+              <i class="fa-solid fa-wand-magic-sparkles" style="color: #f59e0b;"></i> ปรับเปลี่ยนภาพไฮไลท์เด่นด้านบนสุด (Hero Banner Showcase)
+            </h3>
+            <p style="font-size: 13.5px; color: #64748b;">
+              กำหนดรูปภาพ ข้อความ และป้ายกำกับที่จะนำขึ้นไปโชว์ในส่วนหัวของหน้าแรก (ตรงข้ามข้อความต้อนรับ)
+            </p>
+          </div>
+          <button type="button" class="btn-outline" style="border-color: #f97316; color: #ea580c; font-weight: 600;" onclick="resetHeroToDefault()">
+            <i class="fa-solid fa-rotate-left"></i> คืนค่าภาพทีมผู้บริหารเริ่มต้น
+          </button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1.15fr 1fr; gap: 32px; align-items: start;">
+          <!-- ฝั่งซ้าย: ฟอร์มตั้งค่า -->
+          <div>
+            <div class="form-group">
+              <label style="font-weight: 700; color: #0f172a;">
+                <i class="fa-solid fa-camera" style="color: #0284c7;"></i> อัปโหลดรูปภาพใหม่ (หรือเลือกจากข่าวด้านล่าง)
+              </label>
+              <input type="file" id="hero-file-input" accept="image/*" onchange="previewHeroFile(event)">
+              <input type="hidden" id="hero-current-image" value="">
+              <div style="font-size: 12px; color: #64748b; margin-top: 5px;">
+                แนะนำภาพแนวนอน อัตราส่วน 16:9 หรือ 4:3 (ระบบจะรักษาสัดส่วนภาพให้อัตโนมัติ ไม่ยืดไม่เบี้ยว)
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label style="font-weight: 700; color: #0f172a;">
+                <i class="fa-solid fa-tag" style="color: #ea580c;"></i> ป้ายข้อความมุมขวาบน (Tag Badge)
+              </label>
+              <input type="text" id="hero-input-tag" placeholder="เช่น Nursing Leadership, ข่าวประชาสัมพันธ์เด่น, กิจกรรมล่าสุด" oninput="updateHeroPreview()">
+            </div>
+
+            <div class="form-group">
+              <label style="font-weight: 700; color: #0f172a;">
+                <i class="fa-solid fa-heading" style="color: #0284c7;"></i> ชื่อหัวข้อภาพ / ข่าวสารหลัก (Title)
+              </label>
+              <input type="text" id="hero-input-title" placeholder="เช่น คณะผู้บริหารและทีมงานบุคลากรทางการพยาบาล" oninput="updateHeroPreview()">
+            </div>
+
+            <div class="form-group">
+              <label style="font-weight: 700; color: #0f172a;">
+                <i class="fa-solid fa-align-left" style="color: #64748b;"></i> คำบรรยายหรือเนื้อหารายละเอียด (Subtitle / Description)
+              </label>
+              <textarea id="hero-input-subtitle" rows="4" placeholder="ใส่คำบรรยายหรือรายละเอียดของข่าวสาร/ภาพไฮไลท์ (ใส่ได้เต็มที่ ไม่จำกัดความยาว)..." oninput="updateHeroPreview()" style="line-height: 1.6; resize: vertical;"></textarea>
+              <div style="font-size: 12px; color: #64748b; margin-top: 4px;">
+                <i class="fa-solid fa-circle-info"></i> รองรับข้อความยาวได้ไม่จำกัด (ระบบบนหน้าแรกจะจัดระเบียบให้มีแถบเลื่อน Scrollbar อัตโนมัติ ไม่บังรูปภาพ)
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label style="font-weight: 700; color: #0f172a;">
+                <i class="fa-solid fa-link" style="color: #059669;"></i> ลิงก์เชื่อมโยงเมื่อคลิกภาพ [ถ้ามี]
+              </label>
+              <input type="text" id="hero-input-link" placeholder="เช่น #news-section หรือ vision.html" oninput="updateHeroPreview()">
+            </div>
+
+            <div style="margin-top: 24px;">
+              <button type="button" id="btn-save-hero" class="btn-submit" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); padding: 12px 24px;" onclick="saveHeroBanner()">
+                <i class="fa-solid fa-cloud-arrow-up"></i> บันทึกภาพไฮไลท์ขึ้นหน้าแรกทันที
+              </button>
+            </div>
+          </div>
+
+          <!-- ฝั่งขวา: พรีวิวเสมือนจริง (Live Interactive Preview) -->
+          <div>
+            <div style="font-weight: 700; font-size: 14.5px; color: #334155; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-eye" style="color: #0284c7;"></i> ตัวอย่างการแสดงผลจริงบนหน้าแรก (Live Preview)
+            </div>
+            
+            <div style="background: radial-gradient(120% 120% at 85% 15%, #f0fdfa 0%, #ffffff 55%, #fff7ed 100%); padding: 24px; border-radius: 20px; border: 1.5px solid #cbd5e1; box-shadow: 0 4px 15px rgba(0,0,0,0.06);">
+              <div class="hero-photo-card" style="box-shadow: 0 10px 25px rgba(13, 148, 136, 0.15); border-radius: 16px; overflow: hidden; position: relative;">
+                <div class="floating-tag" id="preview-hero-tag">
+                  <i class="fa-solid fa-award"></i> Nursing Leadership
+                </div>
+                <img id="preview-hero-img" src="images/welcome-hero.jpg" alt="พรีวิวภาพไฮไลท์" class="hero-img" style="height: 250px; width: 100%; object-fit: cover;">
+                <div class="photo-caption-badge">
+                  <strong id="preview-hero-title">คณะผู้บริหารและทีมงานบุคลากรทางการพยาบาล</strong>
+                  <span id="preview-hero-subtitle">กลุ่มภารกิจด้านการพยาบาล โรงพยาบาลแม่สอด จังหวัดตาก</span>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top: 12px; font-size: 13px; color: #64748b; line-height: 1.5; text-align: center;">
+              <i class="fa-solid fa-circle-check" style="color: #10b981;"></i> เมื่อกดบันทึกสำเร็จ ภาพและข้อความนี้จะอัปเดตขึ้นแสดงบนหน้าแรกทันที
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="admin-alert-modal" class="custom-modal-overlay hidden" style="display: none;">
+    <div class="custom-modal-box">
+      <div id="admin-modal-icon" class="custom-modal-icon"></div>
+      <div id="admin-modal-title" class="custom-modal-title"></div>
+      <div id="admin-modal-desc" class="custom-modal-desc"></div>
+      <div id="admin-modal-actions" style="display: flex; gap: 10px;">
+        <button type="button" class="custom-modal-btn" onclick="closeAdminAlert()">ตกลง</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const backendHost = (window.location.hostname && window.location.hostname !== '') ? window.location.hostname : 'localhost';
+    const API_URL = `http://${backendHost}:4000/api/posts`;
+    const token = localStorage.getItem('nursing_token');
+    const role = localStorage.getItem('nursing_user_role');
+    let modalActionCallback = null;
+
+    if (!token) {
+      window.location.href = 'login.html';
+    }
+
+    document.getElementById('current-user-display').innerText = `ผู้ใช้งาน: ${localStorage.getItem('nursing_user_name') || ''}`;
+    if (role === 'developer') {
+      const devLink = document.getElementById('link-dev');
+      if (devLink) devLink.classList.remove('hidden');
+    }
+
+    function openAlertModal(title, desc, type = 'success', isConfirm = false, onConfirm = null) {
+      const modal = document.getElementById('admin-alert-modal');
+      const icon = document.getElementById('admin-modal-icon');
+      const actions = document.getElementById('admin-modal-actions');
+
+      document.getElementById('admin-modal-title').innerText = title;
+      document.getElementById('admin-modal-desc').innerText = desc;
+
+      icon.className = `custom-modal-icon ${type}`;
+      if (type === 'success') {
+        icon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+      } else if (type === 'error') {
+        icon.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
+      } else {
+        icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+      }
+
+      if (isConfirm) {
+        actions.innerHTML = `
+          <button type="button" class="btn-cancel" style="flex:1; margin:0;" onclick="closeAdminAlert()">ยกเลิก</button>
+          <button type="button" class="custom-modal-btn" style="flex:1; background:#ef4444;" id="btn-admin-confirm-yes">ยืนยัน</button>
+        `;
+        document.getElementById('btn-admin-confirm-yes').onclick = () => {
+          closeAdminAlert();
+          if (onConfirm) onConfirm();
+        };
+      } else {
+        actions.innerHTML = `<button type="button" class="custom-modal-btn" onclick="closeAdminAlert()">ตกลง</button>`;
+      }
+
+      modal.classList.remove('hidden');
+      modal.style.display = 'flex';
+    }
+
+    function closeAdminAlert() {
+      const modal = document.getElementById('admin-alert-modal');
+      modal.classList.add('hidden');
+      modal.style.display = 'none';
+      if (modalActionCallback) {
+        modalActionCallback();
+        modalActionCallback = null;
+      }
+    }
+
+    async function savePostData() {
+      const editId = document.getElementById('edit-id').value;
+      const isEditing = editId !== '';
+      const title = document.getElementById('title').value.trim();
+      const description = document.getElementById('description').value.trim();
+      const imageFiles = document.getElementById('image').files;
+      const docFile = document.getElementById('document').files[0];
+
+      if (!title) {
+        openAlertModal('ข้อมูลไม่ครบถ้วน', 'กรุณาระบุหัวข้อเรื่องก่อนบันทึก', 'warning');
+        return;
+      }
+      if (!description) {
+        openAlertModal('ข้อมูลไม่ครบถ้วน', 'กรุณาระบุเนื้อหารายละเอียดของข่าวหรือกิจกรรม', 'warning');
+        return;
+      }
+      if (!isEditing && (!imageFiles || imageFiles.length === 0)) {
+        openAlertModal('ข้อมูลไม่ครบถ้วน', 'กรุณาเลือกรูปภาพประกอบข่าวอย่างน้อย 1 รูป', 'warning');
+        return;
+      }
+
+      const saveBtn = document.getElementById('btn-save');
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังบันทึกข้อมูล...';
+
+      const formData = new FormData();
+      formData.append('category', document.getElementById('category').value);
+      formData.append('is_pinned', document.getElementById('is_pinned').checked ? '1' : '0');
+      formData.append('title', title);
+      formData.append('description', description);
+      if (imageFiles && imageFiles.length > 0) {
+        for (let i = 0; i < imageFiles.length; i++) {
+          formData.append('images', imageFiles[i]);
+        }
+      }
+      if (docFile) formData.append('document', docFile);
+
+      try {
+        const url = isEditing ? `${API_URL}/${editId}` : API_URL;
+        const method = isEditing ? 'PUT' : 'POST';
+
+        const res = await fetch(url, {
+          method,
+          headers: { 'Authorization': `Bearer ${token}` },
+          body: formData
+        });
+        const result = await res.json();
+
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> บันทึกข้อมูลขึ้นหน้าเว็บ';
+
+        if (res.ok) {
+          openAlertModal(
+            'บันทึกสำเร็จ!',
+            isEditing ? 'อัปเดตข้อมูลข่าวสารเรียบร้อยแล้ว' : 'เผยแพร่ข่าวประชาสัมพันธ์ขึ้นหน้าเว็บเรียบร้อยแล้ว',
+            'success'
+          );
+          modalActionCallback = () => {
+            resetForm();
+            loadPosts();
+          };
+        } else {
+          openAlertModal('เกิดข้อผิดพลาด', result.error || 'ไม่สามารถบันทึกข้อมูลได้', 'error');
+        }
+      } catch (err) {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> บันทึกข้อมูลขึ้นหน้าเว็บ';
+        openAlertModal('การเชื่อมต่อขัดข้อง', 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ Backend ได้', 'error');
+      }
+    }
+
+    let allPostsCache = [];
+
+    async function loadPosts() {
+      try {
+        const res = await fetch(API_URL);
+        const data = await res.json();
+        allPostsCache = data || [];
+        const tbody = document.getElementById('posts-list');
+        tbody.innerHTML = '';
+
+        if (!data || data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#94a3b8;">ยังไม่มีข้อมูลในระบบ</td></tr>';
+          return;
+        }
+
+        data.forEach(item => {
+          tbody.innerHTML += `
+            <tr id="row-post-${item.id}">
+              <td><img src="${item.image_url}" class="thumb" onerror="this.src='https://via.placeholder.com/80x55?text=No+Image'"></td>
+              <td>
+                ${item.is_pinned ? '<span class="badge-pin"><i class="fa-solid fa-thumbtack"></i> ปักหมุด</span><br>' : ''}
+                <strong>${item.title}</strong>
+              </td>
+              <td>${item.category === 'news' ? '<span style="color:#0284c7; font-weight:600;">ข่าวสาร</span>' : '<span style="color:#059669; font-weight:600;">กิจกรรม</span>'}</td>
+              <td>
+                ${item.file_url ? `<a href="${item.file_url}" target="_blank" class="file-chip"><i class="fa-solid fa-file-pdf"></i> เอกสาร</a>` : '<span style="color:#94a3b8; font-size:12px;">ไม่มี</span>'}
+              </td>
+              <td>
+                <button type="button" class="btn-warning" title="แก้ไข" onclick="startEdit(${item.id})"><i class="fa-solid fa-pen"></i></button>
+                <button type="button" class="btn-danger" title="ลบ" onclick="askDelete(${item.id})"><i class="fa-solid fa-trash"></i></button>
+                <button type="button" class="btn-info-star" title="นำขึ้นเป็นภาพไฮไลท์เด่นด้านบนสุด" onclick="setPostAsHero(${item.id})">
+                  <i class="fa-solid fa-star"></i> ไฮไลท์บนสุด
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+      } catch (err) {
+        console.error('โหลดข้อมูลผิดพลาด:', err);
+      }
+    }
+
+    function previewSelectedImages(event) {
+      const previewList = document.getElementById('image-preview-list');
+      if (!previewList) return;
+      previewList.innerHTML = '';
+      const files = event.target.files;
+      if (!files || files.length === 0) return;
+
+      Array.from(files).forEach((file, index) => {
+        if (!file.type.startsWith('image/')) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const thumb = document.createElement('div');
+          thumb.style.cssText = 'position: relative; width: 68px; height: 68px; border-radius: 8px; overflow: hidden; border: 1.5px solid #cbd5e1; box-shadow: 0 2px 5px rgba(0,0,0,0.06);';
+          thumb.innerHTML = `
+            <img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover;">
+            <span style="position: absolute; bottom: 2px; left: 2px; background: rgba(15,23,42,0.75); color: #fff; font-size: 10px; padding: 1px 5px; border-radius: 4px;">${index === 0 ? 'หน้าปก' : '#' + (index + 1)}</span>
+          `;
+          previewList.appendChild(thumb);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function startEdit(id) {
+      try {
+        const res = await fetch(`${API_URL}/${id}`);
+        const data = await res.json();
+
+        document.getElementById('edit-id').value = data.id;
+        document.getElementById('category').value = data.category;
+        document.getElementById('is_pinned').checked = data.is_pinned === 1;
+        document.getElementById('title').value = data.title;
+        document.getElementById('description').value = data.description;
+        document.getElementById('image').value = '';
+        document.getElementById('document').value = '';
+
+        const previewList = document.getElementById('image-preview-list');
+        if (previewList) {
+          previewList.innerHTML = '';
+          let existingImages = [];
+          if (data.gallery_urls) {
+            try { existingImages = JSON.parse(data.gallery_urls); } catch(e){}
+          } else if (data.image_url) {
+            existingImages = [data.image_url];
+          }
+          existingImages.forEach((url, idx) => {
+            const thumb = document.createElement('div');
+            thumb.style.cssText = 'position: relative; width: 68px; height: 68px; border-radius: 8px; overflow: hidden; border: 1.5px solid #cbd5e1;';
+            thumb.innerHTML = `
+              <img src="${url}" style="width: 100%; height: 100%; object-fit: cover;">
+              <span style="position: absolute; bottom: 2px; left: 2px; background: rgba(15,23,42,0.75); color: #fff; font-size: 10px; padding: 1px 5px; border-radius: 4px;">${idx === 0 ? 'หน้าปกเดิม' : '#' + (idx + 1)}</span>
+            `;
+            previewList.appendChild(thumb);
+          });
+        }
+
+        document.getElementById('form-mode-title').innerHTML = `<i class="fa-solid fa-pen-to-square"></i> แก้ไขข้อมูล (ID: ${data.id})`;
+        document.getElementById('form-mode-title').style.color = '#d97706';
+        document.getElementById('image-hint').innerText = '(หากไม่ต้องการเปลี่ยนรูปภาพเดิม ให้เว้นว่างช่องนี้ไว้)';
+        document.getElementById('file-hint').innerText = data.file_url ? '(มีเอกสารเดิมแนบอยู่แล้ว หากไม่เปลี่ยนให้เว้นว่าง)' : '';
+
+        const saveBtn = document.getElementById('btn-save');
+        saveBtn.style.background = '#d97706';
+        saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> บันทึกการแก้ไข';
+
+        document.getElementById('btn-cancel').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (err) {
+        openAlertModal('ผิดพลาด', 'ดึงข้อมูลมาแก้ไขไม่สำเร็จ', 'error');
+      }
+    }
+
+    function resetForm() {
+      document.getElementById('edit-id').value = '';
+      document.getElementById('title').value = '';
+      document.getElementById('description').value = '';
+      document.getElementById('image').value = '';
+      document.getElementById('document').value = '';
+      document.getElementById('is_pinned').checked = false;
+      document.getElementById('image-hint').innerText = 'เลือกได้หลายรูปพร้อมกัน (รูปแรกจะถูกใช้เป็นรูปหน้าปกหลัก)';
+      document.getElementById('file-hint').innerText = '';
+      const previewList = document.getElementById('image-preview-list');
+      if (previewList) previewList.innerHTML = '';
+
+      document.getElementById('form-mode-title').innerHTML = '<i class="fa-solid fa-plus-circle"></i> เพิ่มข่าวประชาสัมพันธ์ / กิจกรรมใหม่';
+      document.getElementById('form-mode-title').style.color = '#0284c7';
+
+      const saveBtn = document.getElementById('btn-save');
+      saveBtn.style.background = '#0284c7';
+      saveBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> บันทึกข้อมูลขึ้นหน้าเว็บ';
+
+      document.getElementById('btn-cancel').classList.add('hidden');
+    }
+
+    // ฟังก์ชันลบข่าว (ส่ง Authorization Token ติดไปด้วย เพื่อบันทึกว่าใครเป็นคนลบ)
+    function askDelete(id) {
+      openAlertModal(
+        'ยืนยันการลบข้อมูล?',
+        'คุณแน่ใจหรือไม่ว่าต้องการลบรายการนี้ ข้อมูลจะถูกลบออกจากระบบทันที',
+        'warning',
+        true,
+        async () => {
+          try {
+            const res = await fetch(`${API_URL}/${id}`, {
+              method: 'DELETE',
+              headers: { 
+                'Authorization': `Bearer ${token}` 
+              }
+            });
+
+            if (res.ok) {
+              const targetRow = document.getElementById(`row-post-${id}`);
+              if (targetRow) targetRow.remove();
+              if (document.getElementById('edit-id').value == id) resetForm();
+            } else {
+              const errData = await res.json();
+              openAlertModal('ผิดพลาด', errData.error || 'ลบข้อมูลไม่สำเร็จ', 'error');
+            }
+          } catch (err) {
+            openAlertModal('ผิดพลาด', 'เกิดข้อผิดพลาดในการเชื่อมต่อ', 'error');
+          }
+        }
+      );
+    }
+
+    // ================= ฟังก์ชันจัดการภาพไฮไลท์เด่นด้านบนสุด (Hero Banner) =================
+    const HERO_API_URL = `http://${backendHost}:4000/api/hero-banner`;
+
+    function switchAdminTab(tabName) {
+      const postsTabBtn = document.getElementById('tab-btn-posts');
+      const heroTabBtn = document.getElementById('tab-btn-hero');
+      const postsSection = document.getElementById('section-posts-manage');
+      const heroSection = document.getElementById('section-hero-manage');
+
+      if (tabName === 'posts') {
+        postsTabBtn.classList.add('active');
+        heroTabBtn.classList.remove('active');
+        postsSection.classList.remove('hidden');
+        heroSection.classList.add('hidden');
+      } else {
+        heroTabBtn.classList.add('active');
+        postsTabBtn.classList.remove('active');
+        heroSection.classList.remove('hidden');
+        postsSection.classList.add('hidden');
+        loadHeroBannerAdmin();
+      }
+    }
+
+    async function loadHeroBannerAdmin() {
+      try {
+        const res = await fetch(HERO_API_URL);
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!data) return;
+
+        document.getElementById('hero-input-tag').value = data.tag || '';
+        document.getElementById('hero-input-title').value = data.title || '';
+        document.getElementById('hero-input-subtitle').value = data.subtitle || '';
+        document.getElementById('hero-input-link').value = data.link_url || '';
+        document.getElementById('hero-current-image').value = data.image_url || '';
+
+        updateHeroPreview();
+      } catch (err) {
+        console.warn('ดึงข้อมูล Hero Banner ไม่สำเร็จ:', err);
+      }
+    }
+
+    function previewHeroFile(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const previewImg = document.getElementById('preview-hero-img');
+        if (previewImg) previewImg.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function updateHeroPreview() {
+      const tagVal = document.getElementById('hero-input-tag').value.trim() || 'Nursing Leadership';
+      const titleVal = document.getElementById('hero-input-title').value.trim() || 'คณะผู้บริหารและทีมงานบุคลากรทางการพยาบาล';
+      const subtitleVal = document.getElementById('hero-input-subtitle').value.trim() || 'กลุ่มภารกิจด้านการพยาบาล โรงพยาบาลแม่สอด จังหวัดตาก';
+      const currentImgVal = document.getElementById('hero-current-image').value || 'images/welcome-hero.jpg';
+
+      const previewTag = document.getElementById('preview-hero-tag');
+      const previewTitle = document.getElementById('preview-hero-title');
+      const previewSubtitle = document.getElementById('preview-hero-subtitle');
+      const previewImg = document.getElementById('preview-hero-img');
+      const fileInput = document.getElementById('hero-file-input');
+
+      if (previewTag) previewTag.innerHTML = `<i class="fa-solid fa-award"></i> ${tagVal}`;
+      if (previewTitle) previewTitle.innerText = titleVal;
+      if (previewSubtitle) previewSubtitle.innerText = subtitleVal;
+
+      if (previewImg && (!fileInput.files || fileInput.files.length === 0)) {
+        previewImg.src = currentImgVal;
+      }
+    }
+
+    async function saveHeroBanner() {
+      const saveBtn = document.getElementById('btn-save-hero');
+      const tag = document.getElementById('hero-input-tag').value.trim();
+      const title = document.getElementById('hero-input-title').value.trim();
+      const subtitle = document.getElementById('hero-input-subtitle').value.trim();
+      const link_url = document.getElementById('hero-input-link').value.trim();
+      const current_image_url = document.getElementById('hero-current-image').value;
+      const fileInput = document.getElementById('hero-file-input');
+
+      if (!title) {
+        openAlertModal('ข้อมูลไม่ครบถ้วน', 'กรุณาระบุหัวข้อหลักของภาพไฮไลท์', 'warning');
+        return;
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังบันทึกข้อมูล...';
+
+      const formData = new FormData();
+      formData.append('tag', tag);
+      formData.append('title', title);
+      formData.append('subtitle', subtitle);
+      formData.append('link_url', link_url);
+      formData.append('current_image_url', current_image_url);
+
+      if (fileInput.files && fileInput.files.length > 0) {
+        formData.append('image', fileInput.files[0]);
+      }
+
+      try {
+        const res = await fetch(HERO_API_URL, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` },
+          body: formData
+        });
+        const result = await res.json();
+
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> บันทึกภาพไฮไลท์ขึ้นหน้าแรกทันที';
+
+        if (res.ok) {
+          openAlertModal('บันทึกสำเร็จ!', 'ภาพไฮไลท์และข้อความด้านบนสุดของหน้าแรกถูกอัปเดตเรียบร้อยแล้ว', 'success');
+          if (result.hero && result.hero.image_url) {
+            document.getElementById('hero-current-image').value = result.hero.image_url;
+          }
+          fileInput.value = '';
+          updateHeroPreview();
+        } else {
+          openAlertModal('เกิดข้อผิดพลาด', result.error || 'ไม่สามารถบันทึกข้อมูลได้', 'error');
+        }
+      } catch (err) {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> บันทึกภาพไฮไลท์ขึ้นหน้าแรกทันที';
+        openAlertModal('การเชื่อมต่อขัดข้อง', 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ Backend ได้', 'error');
+      }
+    }
+
+    function resetHeroToDefault() {
+      openAlertModal(
+        'ยืนยันการคืนค่าเริ่มต้น?',
+        'คุณต้องการเปลี่ยนภาพไฮไลท์ด้านบนสุด กลับเป็นภาพคณะผู้บริหารและข้อความเริ่มต้นของโรงพยาบาลใช่หรือไม่?',
+        'warning',
+        true,
+        async () => {
+          try {
+            const res = await fetch(`${HERO_API_URL}/reset`, {
+              method: 'POST',
+              headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.ok) {
+              openAlertModal('คืนค่าสำเร็จ!', 'ระบบเปลี่ยนกลับเป็นภาพคณะผู้บริหารเริ่มต้นเรียบร้อยแล้ว', 'success');
+              loadHeroBannerAdmin();
+            } else {
+              const errData = await res.json();
+              openAlertModal('ผิดพลาด', errData.error || 'ไม่สามารถคืนค่าได้', 'error');
+            }
+          } catch (err) {
+            openAlertModal('ผิดพลาด', 'เกิดข้อผิดพลาดในการเชื่อมต่อ', 'error');
+          }
+        }
+      );
+    }
+
+    // นำข่าวจากตารางขึ้นเป็นภาพไฮไลท์บนสุด
+    function setPostAsHero(id) {
+      const post = allPostsCache.find(p => p.id == id);
+      if (!post) return;
+
+      switchAdminTab('hero');
+
+      document.getElementById('hero-input-tag').value = post.category === 'news' ? 'ข่าวประชาสัมพันธ์เด่น' : 'กิจกรรมเด่น';
+      document.getElementById('hero-input-title').value = post.title || '';
+      document.getElementById('hero-input-subtitle').value = post.description || '';
+      document.getElementById('hero-input-link').value = '#news-section';
+      document.getElementById('hero-current-image').value = post.image_url || 'images/welcome-hero.jpg';
+      document.getElementById('hero-file-input').value = '';
+
+      updateHeroPreview();
+
+      const previewImg = document.getElementById('preview-hero-img');
+      if (previewImg && post.image_url) {
+        previewImg.src = post.image_url;
+      }
+
+      window.scrollTo({ top: 100, behavior: 'smooth' });
+
+      openAlertModal(
+        'ดึงข้อมูลข่าวขึ้นมาแล้ว!',
+        `ระบบนำข้อมูลและรูปภาพจากเรื่อง "${post.title}" มาใส่ในแบบฟอร์มแล้ว กรุณาตรวจสอบและกดปุ่ม "บันทึกภาพไฮไลท์ขึ้นหน้าแรกทันที" ด้านล่างเพื่อยืนยัน`,
+        'success'
+      );
+    }
+
+    function logout() {
+      localStorage.clear();
+      window.location.href = 'index.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadPosts();
+    });
+  </script>
+</body>
+</html>

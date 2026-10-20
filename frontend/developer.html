@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Portal - ควบคุมระบบ, อนุมัติสิทธิ์ และประวัติการทำงาน</title>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="apple-touch-icon" href="images/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .dev-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 25px;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 10px;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 10px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #64748b;
+      cursor: pointer;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover {
+      background: #e0f2fe;
+      color: #0284c7;
+    }
+    .tab-btn.active {
+      background: #0284c7;
+      color: white;
+    }
+    .log-badge {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-block;
+    }
+    .log-badge.login { background: #e0f2fe; color: #0284c7; }
+    .log-badge.post { background: #dcfce7; color: #16a34a; }
+    .log-badge.edit { background: #fef3c7; color: #d97706; }
+    .log-badge.delete { background: #fee2e2; color: #ef4444; }
+    .log-badge.user { background: #f3e8ff; color: #9333ea; }
+  </style>
+</head>
+<body>
+
+  <header class="navbar-wrapper">
+    <div class="navbar-container">
+      <div class="brand-section">
+        <div class="brand-logo-wrap">
+          <img src="images/logo.png" alt="โลโก้" class="brand-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/f7/Emblem_of_the_Ministry_of_Public_Health_of_Thailand.svg'">
+        </div>
+        <div class="brand-text">
+          <h2>แผงควบคุมผู้พัฒนา (Developer Portal)</h2>
+          <p>จัดการสมาชิก, ตรวจสอบ Audit Logs และรีเซ็ตรหัสผ่าน</p>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="admin.html" class="nav-btn"><i class="fa-solid fa-newspaper"></i> ไปหน้าจัดการข่าว</a>
+        <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i> หน้าแรก</a>
+        <button class="nav-btn btn-danger" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="admin-box" style="max-width: 1100px;">
+    <div class="dev-tabs">
+      <button class="tab-btn active" id="tab-users-btn" onclick="switchTab('users')">
+        <i class="fa-solid fa-users-gear"></i> จัดการบัญชีสมาชิก
+      </button>
+      <button class="tab-btn" id="tab-logs-btn" onclick="switchTab('logs')">
+        <i class="fa-solid fa-clock-rotate-left"></i> ประวัติการใช้งานระบบ (Audit Logs)
+      </button>
+    </div>
+
+    <!-- แท็บ 1: สมาชิก -->
+    <div id="section-users" class="form-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3><i class="fa-solid fa-users-gear" style="color: #0284c7;"></i> รายชื่อผู้ลงทะเบียนขอใช้งานระบบ</h3>
+        <button class="btn-outline" onclick="loadUsers()"><i class="fa-solid fa-rotate-right"></i> รีเฟรชรายชื่อ</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>รหัส</th>
+            <th>ชื่อ - สกุล</th>
+            <th>Username</th>
+            <th>วันที่ลงทะเบียน</th>
+            <th>สถานะ</th>
+            <th>การจัดการสิทธิ์ & รหัสผ่าน</th>
+          </tr>
+        </thead>
+        <tbody id="users-table-body">
+          <tr><td colspan="6" style="text-align: center;">กำลังโหลดข้อมูล...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- แท็บ 2: Logs -->
+    <div id="section-logs" class="form-card hidden">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3><i class="fa-solid fa-clipboard-list" style="color: #0284c7;"></i> บันทึกประวัติกิจกรรมล่าสุด 50 รายการ</h3>
+        <button class="btn-outline" onclick="loadLogs()"><i class="fa-solid fa-rotate-right"></i> รีเฟรช Log</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 180px;">วัน-เวลา</th>
+            <th>ผู้ดำเนินการ</th>
+            <th>การกระทำ (Action)</th>
+            <th>รายละเอียด</th>
+          </tr>
+        </thead>
+        <tbody id="logs-table-body">
+          <tr><td colspan="4" style="text-align: center;">กำลังโหลดข้อมูลประวัติ...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- กล่องยืนยัน -->
+  <div id="dev-modal" class="custom-modal-overlay hidden" style="display: none;">
+    <div class="custom-modal-box">
+      <div id="dev-modal-icon" class="custom-modal-icon"></div>
+      <div id="dev-modal-heading" class="custom-modal-title"></div>
+      <div id="dev-modal-message" class="custom-modal-desc"></div>
+      <div id="dev-modal-input-area" style="margin-bottom: 20px;"></div>
+      <div style="display: flex; gap: 10px;" id="dev-modal-actions">
+        <button type="button" class="btn-cancel" style="flex:1; margin:0;" onclick="closeDevModal()">ยกเลิก</button>
+        <button type="button" id="dev-modal-ok-btn" class="custom-modal-btn" style="flex:1;">ยืนยัน</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const backendHost = (window.location.hostname && window.location.hostname !== '') ? window.location.hostname : 'localhost';
+    const API_BASE = `http://${backendHost}:4000/api`;
+    const token = localStorage.getItem('nursing_token');
+    const role = localStorage.getItem('nursing_user_role');
+
+    if (!token || role !== 'developer') {
+      window.location.href = 'login.html';
+    }
+
+    function switchTab(tab) {
+      const usersSec = document.getElementById('section-users');
+      const logsSec = document.getElementById('section-logs');
+      const usersBtn = document.getElementById('tab-users-btn');
+      const logsBtn = document.getElementById('tab-logs-btn');
+
+      if (tab === 'users') {
+        usersSec.classList.remove('hidden');
+        logsSec.classList.add('hidden');
+        usersBtn.classList.add('active');
+        logsBtn.classList.remove('active');
+        loadUsers();
+      } else {
+        usersSec.classList.add('hidden');
+        logsSec.classList.remove('hidden');
+        usersBtn.classList.remove('active');
+        logsBtn.classList.add('active');
+        loadLogs();
+      }
+    }
+
+    function showDevConfirm(title, message, type, onConfirm, hasInput = false, inputPlaceholder = '') {
+      const modal = document.getElementById('dev-modal');
+      const icon = document.getElementById('dev-modal-icon');
+      const inputArea = document.getElementById('dev-modal-input-area');
+      
+      document.getElementById('dev-modal-heading').innerText = title;
+      document.getElementById('dev-modal-message').innerText = message;
+      inputArea.innerHTML = '';
+
+      if (hasInput) {
+        inputArea.innerHTML = `<input type="text" id="dev-custom-input" placeholder="${inputPlaceholder}" style="width: 100%; padding: 10px; border: 1.5px solid #0284c7; border-radius: 8px; font-size: 15px; outline: none; text-align: center; font-weight: 600;">`;
+      }
+
+      icon.className = `custom-modal-icon ${type}`;
+      if (type === 'success') icon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+      else if (type === 'warning') icon.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i>';
+      else if (type === 'key') icon.innerHTML = '<i class="fa-solid fa-key"></i>';
+      else icon.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+
+      const okBtn = document.getElementById('dev-modal-ok-btn');
+      okBtn.onclick = () => {
+        let val = null;
+        if (hasInput) {
+          val = document.getElementById('dev-custom-input').value.trim();
+          if (!val) {
+            alert('กรุณากรอกข้อมูลในช่อง');
+            return;
+          }
+        }
+        closeDevModal();
+        onConfirm(val);
+      };
+
+      modal.classList.remove('hidden');
+      modal.style.display = 'flex';
+    }
+
+    function closeDevModal() {
+      const modal = document.getElementById('dev-modal');
+      modal.classList.add('hidden');
+      modal.style.display = 'none';
+    }
+
+    async function loadUsers() {
+      try {
+        const res = await fetch(`${API_BASE}/developer/users`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const users = await res.json();
+        const tbody = document.getElementById('users-table-body');
+        tbody.innerHTML = '';
+
+        if (!users || users.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">ยังไม่มีผู้สมัครใช้งาน</td></tr>';
+          return;
+        }
+
+        users.forEach(u => {
+          const isPending = u.status === 'pending';
+          tbody.innerHTML += `
+            <tr>
+              <td>#${u.id}</td>
+              <td><strong>${u.fullname}</strong></td>
+              <td><code>${u.username}</code></td>
+              <td>${u.created_at}</td>
+              <td>
+                <span class="${isPending ? 'badge-pending' : 'badge-approved'}">
+                  ${isPending ? 'รออนุมัติ' : 'อนุมัติแล้ว'}
+                </span>
+              </td>
+              <td>
+                ${u.role === 'developer' ? '<em style="color:#94a3b8; font-size:12px;">ผู้พัฒนาระบบหลัก</em>' : `
+                  ${isPending ? 
+                    `<button class="btn-success" onclick="confirmStatus(${u.id}, 'approved', '${u.fullname}')"><i class="fa-solid fa-check"></i> อนุมัติ</button>` : 
+                    `<button class="btn-warning" onclick="confirmStatus(${u.id}, 'pending', '${u.fullname}')"><i class="fa-solid fa-ban"></i> ระงับสิทธิ์</button>`
+                  }
+                  <button class="btn-outline" style="padding: 5px 10px; margin-right: 5px; font-size: 13px;" onclick="promptResetPassword(${u.id}, '${u.fullname}')"><i class="fa-solid fa-key"></i> รีเซ็ตรหัส</button>
+                  <button class="btn-danger" onclick="confirmDelete(${u.id}, '${u.fullname}')"><i class="fa-solid fa-trash"></i></button>
+                `}
+              </td>
+            </tr>
+          `;
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // โหลด Audit Logs
+    async function loadLogs() {
+      const tbody = document.getElementById('logs-table-body');
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #64748b;">กำลังดึงข้อมูล...</td></tr>';
+      
+      try {
+        const res = await fetch(`${API_BASE}/developer/logs`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (res.status === 401 || res.status === 403) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="4" style="text-align:center; color:#ef4444; padding: 25px;">
+                <i class="fa-solid fa-triangle-exclamation"></i> สิทธิ์หมดอายุหรือไม่ถูกต้อง (Session Expired)<br><br>
+                <button class="btn-submit" onclick="logout()" style="padding: 8px 18px; font-size: 13px;">
+                  คลิกที่นี่เพื่อออกจากระบบและล็อกอินด้วย dev อีกครั้ง
+                </button>
+              </td>
+            </tr>`;
+          return;
+        }
+
+        const logs = await res.json();
+        tbody.innerHTML = '';
+
+        if (!logs || logs.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#94a3b8;">ยังไม่มีประวัติการทำรายการในระบบ</td></tr>';
+          return;
+        }
+
+        logs.forEach(l => {
+          let badgeClass = 'user';
+          if (l.action.includes('เข้าสู่ระบบ')) badgeClass = 'login';
+          else if (l.action.includes('เพิ่ม')) badgeClass = 'post';
+          else if (l.action.includes('แก้ไข') || l.action.includes('ปรับปรุง') || l.action.includes('รหัส')) badgeClass = 'edit';
+          else if (l.action.includes('ลบ')) badgeClass = 'delete';
+
+          tbody.innerHTML += `
+            <tr>
+              <td style="font-size: 13px; color: #64748b;"><i class="fa-regular fa-clock"></i> ${l.created_at}</td>
+              <td><strong>${l.fullname}</strong><br><small style="color:#94a3b8;">(${l.username})</small></td>
+              <td><span class="log-badge ${badgeClass}">${l.action}</span></td>
+              <td style="font-size: 14px; color: #334155;">${l.details || '-'}</td>
+            </tr>
+          `;
+        });
+      } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#ef4444;">ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ กรุณาตรวจสอบว่า Backend รันอยู่หรือไม่</td></tr>';
+      }
+    }
+
+    function confirmStatus(id, newStatus, name) {
+      const isApprove = newStatus === 'approved';
+      showDevConfirm(
+        isApprove ? 'ยืนยันอนุมัติสิทธิ์' : 'ยืนยันระงับสิทธิ์',
+        `คุณต้องการ${isApprove ? 'อนุมัติการเข้าใช้งาน' : 'ระงับสิทธิ์การใช้งาน'} ของคุณ "${name}" ใช่หรือไม่?`,
+        isApprove ? 'success' : 'warning',
+        async () => {
+          await fetch(`${API_BASE}/developer/users/${id}/status`, {
+            method: 'PUT',
+            headers: { 
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}` 
+            },
+            body: JSON.stringify({ status: newStatus })
+          });
+          loadUsers();
+        }
+      );
+    }
+
+    function promptResetPassword(id, name) {
+      showDevConfirm(
+        'ตั้งรหัสผ่านใหม่',
+        `กรอกรหัสผ่านใหม่ที่คุณต้องการกำหนดให้กับคุณ "${name}":`,
+        'key',
+        async (newPassword) => {
+          const res = await fetch(`${API_BASE}/developer/users/${id}/reset-password`, {
+            method: 'PUT',
+            headers: { 
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}` 
+            },
+            body: JSON.stringify({ newPassword })
+          });
+          const data = await res.json();
+          alert(data.message || data.error);
+        },
+        true,
+        'กรอกรหัสผ่านใหม่ (เช่น 1234)'
+      );
+    }
+
+    function confirmDelete(id, name) {
+      showDevConfirm(
+        'ยืนยันลบบัญชีผู้ใช้',
+        `คุณต้องการลบบัญชีของคุณ "${name}" ออกจากระบบถาวรหรือไม่?`,
+        'error',
+        async () => {
+          await fetch(`${API_BASE}/developer/users/${id}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          loadUsers();
+        }
+      );
+    }
+
+    function logout() {
+      localStorage.clear();
+      window.location.href = 'login.html';
+    }
+
+    loadUsers();
+  </script>
+</body>
+</html>
