@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ปฏิทินกิจกรรม - กลุ่มการพยาบาล โรงพยาบาลแม่สอด</title>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="apple-touch-icon" href="images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!-- แถบความคืบหน้าการเลื่อนหน้าจอ -->
+  <div class="scroll-progress-track" aria-hidden="true">
+    <div class="scroll-progress-bar" id="scroll-progress-bar"></div>
+  </div>
+
+  <!-- ================= 1. แถบเมนูด้านบน (Sticky Navbar) ================= -->
+  <header class="navbar-wrapper" id="main-header">
+    <div class="navbar-container">
+      <a href="index.html" class="brand-section" aria-label="หน้าแรกกลุ่มการพยาบาล โรงพยาบาลแม่สอด">
+        <div class="brand-logo-wrap">
+          <img src="images/logo.png" alt="ตราสัญลักษณ์กลุ่มการพยาบาล โรงพยาบาลแม่สอด" class="brand-logo"
+            onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/f7/Emblem_of_the_Ministry_of_Public_Health_of_Thailand.svg'">
+        </div>
+        <div class="brand-text">
+          <h2>กลุ่มการพยาบาล โรงพยาบาลแม่สอด</h2>
+          <p>Nursing Division, Mae Sot Hospital</p>
+        </div>
+      </a>
+
+      <!-- ปุ่ม Toggle สำหรับหน้าจอมือถือ -->
+      <button class="mobile-toggle-btn" onclick="toggleMobileMenu()" aria-label="เปิดเมนูนำทาง">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <!-- ลิงก์เมนูนำทาง -->
+      <nav class="nav-links" id="primary-navigation" aria-label="เมนูหลัก">
+        <a href="index.html" class="nav-btn">
+          <i class="fa-solid fa-house"></i> หน้าแรก
+        </a>
+
+        <!-- ดรอปดาวน์: เกี่ยวกับกลุ่มการพยาบาล -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-btn" onclick="toggleDropdown('about-menu')" aria-expanded="false"
+            aria-controls="about-menu">
+            <i class="fa-solid fa-landmark"></i> เกี่ยวกับกลุ่มการพยาบาล <i class="fa-solid fa-angle-down"></i>
+          </button>
+          <div id="about-menu" class="dropdown-menu hidden" role="menu" aria-label="เมนูเกี่ยวกับกลุ่มการพยาบาล">
+            <a href="vision.html" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-compass"></i></div>
+              <div class="dropdown-item-text">
+                <strong>วิสัยทัศน์ / พันธกิจ</strong>
+                <span>ทิศทางและเป้าหมายองค์กร</span>
+              </div>
+            </a>
+            <a href="structure.html" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-hospital-user"></i></div>
+              <div class="dropdown-item-text">
+                <strong>หน่วยงานภายใน</strong>
+                <span>17 กลุ่มงานการพยาบาลและผังบริหาร</span>
+              </div>
+            </a>
+            <a href="strategy.html" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-chart-line"></i></div>
+              <div class="dropdown-item-text">
+                <strong>แผนยุทธศาสตร์</strong>
+                <span>แผนยุทธศาสตร์และทิศทางการพัฒนา</span>
+              </div>
+            </a>
+            <a href="kpi.html" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ตัวชี้วัด (KPI)</strong>
+                <span>เป้าหมายคุณภาพและความสำเร็จ</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- ดรอปดาวน์: บทบาทหน้าที่ -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-btn" onclick="toggleDropdown('roles-menu')" aria-expanded="false"
+            aria-controls="roles-menu">
+            <i class="fa-solid fa-user-nurse"></i> บทบาทหน้าที่ <i class="fa-solid fa-angle-down"></i>
+          </button>
+          <div id="roles-menu" class="dropdown-menu hidden" role="menu" aria-label="เมนูบทบาทหน้าที่">
+            <a href="roles.html#admin-role" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-gear"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ด้านบริหาร</strong>
+                <span>กำกับคุณภาพ กำลังคน และระบบบริการ</span>
+              </div>
+            </a>
+            <a href="roles.html#academic-role" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ด้านวิชาการ</strong>
+                <span>องค์ความรู้ วิจัย R2R นวัตกรรม</span>
+              </div>
+            </a>
+            <a href="roles.html#service-role" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ด้านบริการ</strong>
+                <span>การพยาบาลแบบองค์รวม ปลอดภัย</span>
+              </div>
+            </a>
+            <a href="roles.html#special-role" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-star"></i></div>
+              <div class="dropdown-item-text">
+                <strong>กิจกรรมพิเศษ</strong>
+                <span>สร้างเสริมสุขภาพและเครือข่ายชุมชน</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- เมนูปฏิทินกิจกรรม (Active) -->
+        <a href="calendar.html" class="nav-btn active">
+          <i class="fa-solid fa-calendar-alt"></i> ปฏิทินกิจกรรม
+        </a>
+
+        <!-- ปุ่มเข้าสู่ระบบสำหรับเจ้าหน้าที่ -->
+        <a href="login.html" id="nav-login-link" class="nav-btn btn-nav-login">
+          <i class="fa-solid fa-right-to-bracket"></i> เข้าสู่ระบบ
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= 2. เนื้อหาหลัก ================= -->
+  <main class="page-body">
+    <div class="subpage-card calendar-page-container">
+      
+      <!-- ส่วนหัวหน้าเว็บ -->
+      <div class="subpage-header-box" style="margin-bottom: 24px;">
+        <div
+          style="display: inline-flex; align-items: center; gap: 8px; background: #ccfbf1; color: #0f766e; padding: 5px 14px; border-radius: 50px; font-size: 13px; font-weight: 700; margin-bottom: 12px;">
+          <i class="fa-solid fa-calendar-days"></i> กำหนดการและตารางกิจกรรมทางการพยาบาล
+        </div>
+        <h1 style="font-size: 28px; font-weight: 800; color: #0f172a; margin: 0 0 8px;">
+          ปฏิทินกิจกรรมและการประชุม
+        </h1>
+        <p style="font-size: 15px; color: #64748b; margin: 0;">
+          ติดตามตารางการอบรมฟื้นฟูวิชาการ การประชุมกลุ่มงาน และกิจกรรมสำคัญของกลุ่มการพยาบาล โรงพยาบาลแม่สอด
+        </p>
+      </div>
+
+      <!-- แถบสถิติสรุปกิจกรรมด้านบน (Top Summary Stats) -->
+      <div class="calendar-top-stats">
+        <div class="cal-stat-card">
+          <div class="cal-stat-icon" style="background: #eff6ff; color: #2563eb;">
+            <i class="fa-solid fa-calendar-check"></i>
+          </div>
+          <div>
+            <div class="cal-stat-num" id="stat-total-events">14</div>
+            <div class="cal-stat-label">กิจกรรมทั้งหมดในเดือนนี้</div>
+          </div>
+        </div>
+
+        <div class="cal-stat-card">
+          <div class="cal-stat-icon" style="background: #f0fdf4; color: #16a34a;">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <div>
+            <div class="cal-stat-num" id="stat-academic-events">5</div>
+            <div class="cal-stat-label">อบรม & สัมมนาวิชาการ</div>
+          </div>
+        </div>
+
+        <div class="cal-stat-card">
+          <div class="cal-stat-icon" style="background: #fff7ed; color: #ea580c;">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <div>
+            <div class="cal-stat-num" id="stat-meeting-events">6</div>
+            <div class="cal-stat-label">การประชุมกลุ่มงาน / กรรมการ</div>
+          </div>
+        </div>
+
+        <div class="cal-stat-card">
+          <div class="cal-stat-icon" style="background: #faf5ff; color: #9333ea;">
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <div>
+            <div class="cal-stat-num" id="stat-today-events">2</div>
+            <div class="cal-stat-label">กิจกรรมสำคัญวันนี้</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ผังหลักของปฏิทิน (ปฏิทินใหญ่ด้านซ้าย + รายการกิจกรรมประจำวันด้านขวา) -->
+      <div class="calendar-layout">
+        
+        <!-- ฝั่งซ้าย: ปฏิทินแสดงผล -->
+        <div class="calendar-main-card">
+          <!-- แถบเครื่องมือควบคุมปฏิทิน (เดือน/ปี, ปุ่มก่อนหน้า-ถัดไป, สลับมุมมอง) -->
+          <div class="calendar-controls-bar">
+            <div class="cal-nav-group">
+              <button type="button" class="cal-btn-icon" onclick="changeMonth(-1)" aria-label="เดือนก่อนหน้า">
+                <i class="fa-solid fa-chevron-left"></i>
+              </button>
+              <div class="cal-current-label" id="cal-month-year-title">ตุลาคม 2569</div>
+              <button type="button" class="cal-btn-icon" onclick="changeMonth(1)" aria-label="เดือนถัดไป">
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+              <button type="button" class="btn-subtle" onclick="goToToday()"
+                style="padding: 7px 16px; border-radius: 10px; font-weight: 600; font-size: 13px; background: #f0fdfa; color: #0d9488; border: 1.5px solid #ccfbf1; cursor: pointer;">
+                <i class="fa-solid fa-clock-rotate-left"></i> วันนี้
+              </button>
+            </div>
+
+            <!-- สลับมุมมอง (รายเดือน / กำหนดการ) -->
+            <div class="cal-view-modes">
+              <button type="button" class="cal-view-btn active" id="btn-view-month" onclick="switchCalView('month')">
+                <i class="fa-solid fa-calendar-grid"></i> ปฏิทินรายเดือน
+              </button>
+              <button type="button" class="cal-view-btn" id="btn-view-agenda" onclick="switchCalView('agenda')">
+                <i class="fa-solid fa-list-ul"></i> รายการทั้งหมด
+              </button>
+            </div>
+          </div>
+
+          <!-- แถบปุ่มคัดกรองหมวดหมู่กิจกรรม (Filter Tags) -->
+          <div class="cal-filter-tags">
+            <button type="button" class="cal-tag-btn active" onclick="filterCategory('all', this)">
+              <span class="cal-tag-dot" style="background: #64748b;"></span> ทั้งหมด (<span id="count-all">14</span>)
+            </button>
+            <button type="button" class="cal-tag-btn" onclick="filterCategory('academic', this)">
+              <span class="cal-tag-dot" style="background: #3b82f6;"></span> อบรมวิชาการ (<span id="count-academic">5</span>)
+            </button>
+            <button type="button" class="cal-tag-btn" onclick="filterCategory('meeting', this)">
+              <span class="cal-tag-dot" style="background: #22c55e;"></span> ประชุมกลุ่มงาน (<span id="count-meeting">6</span>)
+            </button>
+            <button type="button" class="cal-tag-btn" onclick="filterCategory('community', this)">
+              <span class="cal-tag-dot" style="background: #f97316;"></span> กิจกรรมโรงพยาบาล (<span id="count-community">2</span>)
+            </button>
+            <button type="button" class="cal-tag-btn" onclick="filterCategory('quality', this)">
+              <span class="cal-tag-dot" style="background: #a855f7;"></span> งานพัฒนาคุณภาพ HA (<span id="count-quality">1</span>)
+            </button>
+          </div>
+
+          <!-- ช่องค้นหากิจกรรมด่วน -->
+          <div style="position: relative; margin-bottom: 20px;">
+            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 16px; top: 13px; color: #94a3b8;"></i>
+            <input type="text" id="cal-search-input" placeholder="ค้นหาชื่อกิจกรรม, วิทยากร หรือห้องประชุม..."
+              oninput="handleCalendarSearch(this.value)"
+              style="width: 100%; padding: 10px 16px 10px 42px; border-radius: 12px; border: 1.5px solid #e2e8f0; font-family: 'Sarabun', sans-serif; font-size: 14px; outline: none; transition: all 0.2s ease;">
+          </div>
+
+          <!-- ตารางปฏิทินรายเดือน (Month Grid View) -->
+          <div id="calendar-month-view">
+            <!-- แถวชื่อวัน 7 วัน -->
+            <div class="calendar-month-grid" style="margin-bottom: 8px;">
+              <div class="cal-weekday-header weekend">อาทิตย์</div>
+              <div class="cal-weekday-header">จันทร์</div>
+              <div class="cal-weekday-header">อังคาร</div>
+              <div class="cal-weekday-header">พุธ</div>
+              <div class="cal-weekday-header">พฤหัสบดี</div>
+              <div class="cal-weekday-header">ศุกร์</div>
+              <div class="cal-weekday-header weekend">เสาร์</div>
+            </div>
+
+            <!-- ช่องวันที่ 35-42 วันจะถูกเรนเดอร์โดย JavaScript -->
+            <div class="calendar-month-grid" id="calendar-days-container">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <!-- มุมมองรายการทั้งหมด (Agenda List View - ซ่อนอยู่เริ่มต้น) -->
+          <div id="calendar-agenda-view" style="display: none;">
+            <div id="agenda-all-list" style="display: flex; flex-direction: column; gap: 14px;">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- ฝั่งขวา: รายการกิจกรรมประจำวันที่เลือก (Daily Agenda Sidebar) -->
+        <div class="calendar-sidebar-card">
+          <div class="sidebar-agenda-header">
+            <div>
+              <span style="font-size: 12px; font-weight: 700; color: #0d9488; text-transform: uppercase;">กำหนดการประจำวัน</span>
+              <h3 id="sidebar-selected-date-title" style="margin: 2px 0 0; font-size: 17px; font-weight: 800; color: var(--slate-900);">
+                22 ตุลาคม 2569
+              </h3>
+            </div>
+            <button type="button" class="btn-subtle" onclick="openSuggestModal()"
+              style="font-size: 12.5px; font-weight: 700; color: #0f766e; background: #ccfbf1; border: 1px solid #99f6e4; padding: 6px 12px; border-radius: 8px; cursor: pointer;">
+              <i class="fa-solid fa-plus"></i> เสนอกิจกรรม
+            </button>
+          </div>
+
+          <!-- รายการกิจกรรมของวันที่เลือก -->
+          <div class="sidebar-agenda-list" id="sidebar-day-events">
+            <!-- Rendered by JS -->
+          </div>
+
+          <!-- กล่องปุ่มฟังก์ชันเพิ่มเติมด้านล่าง -->
+          <div style="margin-top: auto; padding-top: 18px; border-top: 1px solid #f1f5f9; display: flex; flex-direction: column; gap: 10px;">
+            <button type="button" onclick="exportToGoogleCalendar(activeSelectedEvent)"
+              style="display: flex; align-items: center; justify-content: center; gap: 8px; background: #ffffff; border: 1.5px solid #cbd5e1; color: var(--slate-700); padding: 10px; border-radius: 12px; font-weight: 600; font-size: 13.5px; cursor: pointer; transition: all 0.2s ease;">
+              <i class="fa-brands fa-google" style="color: #ea4335;"></i> บันทึกลง Google Calendar
+            </button>
+            <button type="button" onclick="printCalendar()"
+              style="display: flex; align-items: center; justify-content: center; gap: 8px; background: #f8fafc; border: 1px solid #e2e8f0; color: var(--slate-600); padding: 8px; border-radius: 12px; font-weight: 600; font-size: 13px; cursor: pointer;">
+              <i class="fa-solid fa-print"></i> พิมพ์ตารางกิจกรรม
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ================= 3. Modal ป๊อปอัปดูรายละเอียดกิจกรรม ================= -->
+  <div id="event-detail-modal" class="custom-modal-overlay hidden" style="display: none;" onclick="closeEventModal(event)">
+    <div class="unit-modal-box" onclick="event.stopPropagation()" style="max-width: 620px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px;">
+        <span id="modal-event-category-badge" style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 50px; font-size: 12.5px; font-weight: 700; background: #eff6ff; color: #1d4ed8;">
+          อบรมวิชาการ
+        </span>
+        <button type="button" class="btn-close-modal" onclick="closeEventModal()">&times;</button>
+      </div>
+
+      <h2 id="modal-event-title" style="font-size: 20px; font-weight: 800; color: #0f172a; line-height: 1.4; margin: 0 0 16px;">
+        ชื่อกิจกรรม
+      </h2>
+
+      <!-- ข้อมูลวัน เวลา สถานที่ -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #f8fafc; border-radius: 16px; padding: 16px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 38px; height: 38px; border-radius: 10px; background: #ccfbf1; color: #0f766e; display: flex; align-items: center; justify-content: center; font-size: 16px;">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+          <div>
+            <div style="font-size: 11.5px; color: #64748b; font-weight: 600;">วันและเวลา</div>
+            <div id="modal-event-time" style="font-size: 13.5px; font-weight: 700; color: #0f172a;">09:00 - 12:00 น.</div>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 38px; height: 38px; border-radius: 10px; background: #ffedd5; color: #c2410c; display: flex; align-items: center; justify-content: center; font-size: 16px;">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <div>
+            <div style="font-size: 11.5px; color: #64748b; font-weight: 600;">สถานที่จัดงาน</div>
+            <div id="modal-event-location" style="font-size: 13.5px; font-weight: 700; color: #0f172a;">ห้องประชุมเพชรชมพู</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- รายละเอียดกิจกรรม -->
+      <div style="margin-bottom: 20px;">
+        <h4 style="font-size: 14px; font-weight: 700; color: #334155; margin: 0 0 8px;">
+          <i class="fa-solid fa-circle-info" style="color: #0d9488;"></i> รายละเอียดและวัตถุประสงค์
+        </h4>
+        <p id="modal-event-desc" style="font-size: 14px; color: #475569; line-height: 1.7; margin: 0;">
+          คำอธิบายกิจกรรม
+        </p>
+      </div>
+
+      <!-- ผู้รับผิดชอบ/วิทยากร และกลุ่มเป้าหมาย -->
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; font-size: 13.5px; color: #475569;">
+        <div>
+          <strong><i class="fa-solid fa-user-tie" style="color: #0d9488;"></i> วิทยากร / ผู้รับผิดชอบ:</strong>
+          <span id="modal-event-speaker">พว. นงลักษณ์ ชัยพฤกษ์</span>
+        </div>
+        <div>
+          <strong><i class="fa-solid fa-users" style="color: #0284c7;"></i> กลุ่มเป้าหมาย:</strong>
+          <span id="modal-event-target">พยาบาลวิชาชีพทุกกลุ่มงาน</span>
+        </div>
+      </div>
+
+      <!-- ปุ่ม Action ใน Modal -->
+      <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button type="button" class="btn-unit-action-back" onclick="closeEventModal()">
+          ปิดหน้าต่าง
+        </button>
+        <button type="button" class="btn-unit-action-ext" id="modal-btn-add-gcal">
+          <i class="fa-brands fa-google"></i> เพิ่มลง Google Calendar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 4. Modal เสนอจัดกิจกรรมใหม่ ================= -->
+  <div id="suggest-event-modal" class="custom-modal-overlay hidden" style="display: none;" onclick="closeSuggestModal(event)">
+    <div class="unit-modal-box" onclick="event.stopPropagation()" style="max-width: 540px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+        <h3 style="margin: 0; font-size: 18px; font-weight: 800; color: #0f172a;">
+          <i class="fa-solid fa-calendar-plus" style="color: #0d9488;"></i> แจ้งจัดกิจกรรม / การประชุม
+        </h3>
+        <button type="button" class="btn-close-modal" onclick="closeSuggestModal()">&times;</button>
+      </div>
+
+      <form onsubmit="handleSuggestSubmit(event)" style="display: flex; flex-direction: column; gap: 14px;">
+        <div>
+          <label style="display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px;">ชื่อกิจกรรม / หัวข้อการประชุม *</label>
+          <input type="text" required placeholder="เช่น อบรมฟื้นฟูทักษะการช่วยชีวิต..." style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-family: 'Sarabun'; outline: none;">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px;">หมวดหมู่ *</label>
+            <select required style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-family: 'Sarabun';">
+              <option value="academic">อบรมวิชาการ</option>
+              <option value="meeting">ประชุมกลุ่มงาน</option>
+              <option value="community">กิจกรรมโรงพยาบาล</option>
+              <option value="quality">งานพัฒนาคุณภาพ HA</option>
+            </select>
+          </div>
+          <div>
+            <label style="display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px;">วันที่จัดกิจกรรม *</label>
+            <input type="date" required style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-family: 'Sarabun';">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label style="display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px;">เวลาเริ่ม - สิ้นสุด *</label>
+            <input type="text" placeholder="09:00 - 12:00 น." required style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-family: 'Sarabun';">
+          </div>
+          <div>
+            <label style="display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px;">สถานที่ / ห้องประชุม *</label>
+            <input type="text" placeholder="ห้องประชุมเพชรชมพู" required style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-family: 'Sarabun';">
+          </div>
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px;">หน่วยงานที่จัด / ผู้ประสานงาน</label>
+          <input type="text" placeholder="กลุ่มงานการพยาบาลผู้ป่วยหนัก เบอร์ต่อ 1387" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-family: 'Sarabun';">
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px;">
+          <button type="button" class="btn-unit-action-back" onclick="closeSuggestModal()">ยกเลิก</button>
+          <button type="submit" class="btn-unit-action-ext">ส่งข้อมูลกิจกรรม</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= 5. ท้ายหน้าเว็บ (Footer) ================= -->
+  <footer class="footer-wrapper">
+    <div class="footer-container">
+      <div class="footer-brand-col">
+        <div class="footer-brand-header">
+          <div class="brand-logo-wrap" style="width: 54px; height: 54px; margin: 0;">
+            <img src="images/logo.png" alt="ตราสัญลักษณ์กลุ่มการพยาบาล โรงพยาบาลแม่สอด" class="brand-logo">
+          </div>
+          <div>
+            <h3>กลุ่มการพยาบาล โรงพยาบาลแม่สอด</h3>
+            <p>Nursing Division, Mae Sot Hospital</p>
+          </div>
+        </div>
+        <p class="footer-desc">
+          มุ่งมั่นสู่ความเป็นเลิศด้านบริการการพยาบาลที่ได้มาตรฐานสากล ด้วยหัวใจความเป็นมนุษย์
+        </p>
+      </div>
+
+      <div class="footer-links-col">
+        <h4>ลิงก์ด่วนภายในเว็บ</h4>
+        <ul>
+          <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> หน้าแรก</a></li>
+          <li><a href="structure.html"><i class="fa-solid fa-angle-right"></i> หน่วยงานภายใน (17 กลุ่มงาน)</a></li>
+          <li><a href="calendar.html"><i class="fa-solid fa-angle-right"></i> ปฏิทินกิจกรรม</a></li>
+          <li><a href="vision.html"><i class="fa-solid fa-angle-right"></i> วิสัยทัศน์และพันธกิจ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 กลุ่มการพยาบาล โรงพยาบาลแม่สอด (Mae Sot Hospital). สงวนลิขสิทธิ์</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    // =========================================================================
+    // ข้อมูลกิจกรรมจำลองสำหรับปฏิทินกิจกรรมทางการพยาบาล
+    // =========================================================================
+    const calendarEvents = [
+      {
+        id: 1,
+        title: "อบรมฟื้นฟูทักษะการช่วยฟื้นคืนชีพขั้นสูง (ACLS) รุ่นที่ 2",
+        category: "academic",
+        categoryLabel: "อบรมวิชาการ",
+        date: "2026-10-22", // วันนี้
+        time: "08:30 - 16:30 น.",
+        location: "ห้องประชุมเพชรชมพู ชั้น 5 อาคารเฉลิมพระเกียรติฯ",
+        speaker: "ทีมแพทย์เวชศาสตร์ฉุกเฉิน และพว. วันเพ็ญ สุริยะ (กลุ่มงาน ER)",
+        target: "พยาบาลวิชาชีพทุกกลุ่มงาน (รุ่นละ 40 คน)",
+        desc: "อบรมเชิงปฏิบัติการจำลองสถานการณ์เสมือนจริงในการกู้ชีพผู้ป่วยภาวะวิกฤต การใช้เครื่องกระตุกไฟฟ้าหัวใจ และการบริหารยาช่วยชีวิต"
+      },
+      {
+        id: 2,
+        title: "การประชุมคณะกรรมการบริหารทางการพยาบาล ประจำเดือนตุลาคม",
+        category: "meeting",
+        categoryLabel: "ประชุมกลุ่มงาน",
+        date: "2026-10-22", // วันนี้
+        time: "13:30 - 16:00 น.",
+        location: "ห้องประชุมกลุ่มภารกิจด้านการพยาบาล ชั้น 2",
+        speaker: "นางสุภาวรรณ ยะดอนใจ (รอง ผอ.ฝ่ายการพยาบาล)",
+        target: "หัวหน้ากลุ่มงานการพยาบาลทั้ง 17 กลุ่มงาน",
+        desc: "ติดตามผลการดำเนินงานตามตัวชี้วัด KPI สรุปสถานการณ์อัตรากำลังคน และเตรียมความพร้อมรับการตรวจประเมินคุณภาพ HA"
+      },
+      {
+        id: 3,
+        title: "สัมมนาเชิงปฏิบัติการการพัฒนาโจทย์วิจัยจากงานประจำสู่งานวิจัย (R2R)",
+        category: "academic",
+        categoryLabel: "อบรมวิชาการ",
+        date: "2026-10-25",
+        time: "09:00 - 15:30 น.",
+        location: "ห้องประชุมสัมมนาวิชาการ อาคารเฉลิมพระเกียรติฯ",
+        speaker: "ดร.พว. ชนิกา วัฒนกุล (กลุ่มงานวิจัยและพัฒนา)",
+        target: "พยาบาลผู้สนใจทำวิจัยและผู้รับผิดชอบงานคุณภาพ",
+        desc: "เทคนิคการตั้งโจทย์วิจัยจากปัญหาหน้างานจริง การเขียนข้อเสนอโครงการวิจัย และการนำผลวิจัยไปใช้พัฒนาคุณภาพการพยาบาล"
+      },
+      {
+        id: 4,
+        title: "กิจกรรมรณรงค์วันล้างมือโลกและสุขอนามัยในโรงพยาบาล",
+        category: "community",
+        categoryLabel: "กิจกรรมโรงพยาบาล",
+        date: "2026-10-15",
+        time: "09:00 - 12:00 น.",
+        location: "ลานกิจกรรม ชั้น 1 อาคารผู้ป่วยนอก",
+        speaker: "พว. นงลักษณ์ ชัยพฤกษ์ และทีมพยาบาล IC",
+        target: "บุคลากรทางการแพทย์ ผู้ป่วย และญาติ",
+        desc: "สาธิตการล้างมือ 7 ขั้นตอนอย่างถูกวิธี การแจกเจลแอลกอฮอล์ และการประกวดคลิปสร้างสรรค์ส่งเสริมสุขอนามัยมือ"
+      },
+      {
+        id: 5,
+        title: "ประชุมคณะกรรมการควบคุมและป้องกันการติดเชื้อในโรงพยาบาล (IC Committee)",
+        category: "meeting",
+        categoryLabel: "ประชุมกลุ่มงาน",
+        date: "2026-10-27",
+        time: "10:00 - 12:00 น.",
+        location: "ห้องประชุมสิรินธร ชั้น 3",
+        speaker: "ประธานคณะกรรมการ IC",
+        target: "พยาบาล ICN และตัวแทนพยาบาลทุกหอผู้ป่วย",
+        desc: "สรุปรายงานอุบัติการณ์การติดเชื้อในโรงพยาบาลรอบไตรมาส และพิจารณามาตรการควบคุมเชื้อดื้อยา"
+      },
+      {
+        id: 6,
+        title: "ซ้อมแผนรับมืออุบัติเหตุหมู่และภัยพิบัติประจำปี 2569 (Mass Casualty Drill)",
+        category: "community",
+        categoryLabel: "กิจกรรมโรงพยาบาล",
+        date: "2026-10-29",
+        time: "13:00 - 17:00 น.",
+        location: "ลานจอดรถฉุกเฉิน อาคารอุบัติเหตุและฉุกเฉิน",
+        speaker: "ทีมคณะกรรมการซ้อมแผนภัยพิบัติ โรงพยาบาลแม่สอด",
+        target: "ทีมกู้ชีพ ER, ห้องผ่าตัด, ICU, ธนาคารเลือด และเครือข่ายกู้ภัย",
+        desc: "ซักซ้อมบทบาทการคัดแยกผู้ป่วย การระดมพลฉุกเฉิน และการสื่อสารในภาวะวิกฤตชายแดน"
+      },
+      {
+        id: 7,
+        title: "การตรวจประเมินคุณภาพการพยาบาลภายใน (Internal Survey Nursing HA)",
+        category: "quality",
+        categoryLabel: "งานพัฒนาคุณภาพ HA",
+        date: "2026-10-30",
+        time: "08:30 - 16:30 น.",
+        location: "หอผู้ป่วยในและหน่วยงานบริการทางการพยาบาลทุกจุด",
+        speaker: "ทีมผู้ตรวจประเมินคุณภาพภายใน รพ.แม่สอด",
+        target: "ทุกกลุ่มงานการพยาบาล",
+        desc: "ตรวจประเมินตามมาตรฐาน 3P, Patient Safety Goals และการดูแลผู้ป่วยตามมาตรฐานวิชาชีพ"
+      },
+      {
+        id: 8,
+        title: "การประชุมวิชาการพยาบาลผู้ป่วยวิสัญญีและความปลอดภัยของผู้ป่วย",
+        category: "academic",
+        categoryLabel: "อบรมวิชาการ",
+        date: "2026-11-04",
+        time: "09:00 - 12:00 น.",
+        location: "ห้องประชุมวิชาการ อาคารผ่าตัด",
+        speaker: "พว. จุฬารัตน์ บรรณสาร และวิสัญญีแพทย์",
+        target: "วิสัญญีพยาบาลและพยาบาลห้องพักฟื้น",
+        desc: "แนวปฏิบัติการระงับความรู้สึกในผู้ป่วยที่มีโรคประจำตัวซับซ้อนและการจัดการทางเดินหายใจส่วนบน"
+      },
+      {
+        id: 9,
+        title: "กิจกรรมเชิดชูเกียรติผู้บริจาคอวัยวะและดวงตา 'สะพานบุญแห่งชีวิต'",
+        category: "community",
+        categoryLabel: "กิจกรรมโรงพยาบาล",
+        date: "2026-11-10",
+        time: "10:00 - 11:30 น.",
+        location: "ห้องประชุมเพชรชมพู",
+        speaker: "ศูนย์รับบริจาคและปลูกถ่ายอวัยวะ สภากาชาดไทย",
+        target: "ครอบครัวผู้บริจาคอวัยวะ และบุคลากรทางการแพทย์",
+        desc: "พิธีมอบเกียรติบัตรขอบคุณครอบครัวผู้บริจาคอวัยวะเพื่อต่อลมหายใจให้แก่ผู้ป่วยระยะท้าย"
+      },
+      {
+        id: 10,
+        title: "ประชุมเชิงปฏิบัติการการใช้ระบบบันทึกทางการพยาบาลอิเล็กทรอนิกส์ (Smart Nursing Note)",
+        category: "academic",
+        categoryLabel: "อบรมวิชาการ",
+        date: "2026-11-12",
+        time: "13:00 - 16:00 น.",
+        location: "ห้องคอมพิวเตอร์และสารสนเทศ ชั้น 3",
+        speaker: "ทีมเทคโนโลยีสารสนเทศทางการพยาบาล",
+        target: "พยาบาลวิชาชีพตัวแทนทุกกลุ่มงาน",
+        desc: "ฝึกปฏิบัติการบันทึก Focus Charting ผ่านแท็บเล็ตข้างเตียงผู้ป่วย เพื่อลดภาระงานเอกสารและเพิ่มเวลาดูแลผู้ป่วย"
+      }
+    ];
+
+    // สถานะปัจจุบันของปฏิทิน
+    let currentCalDate = new Date(2026, 9, 22); // ตุลาคม 2569 (เดือนเป็น 0-indexed: 9 = ตุลาคม)
+    let selectedDateStr = "2026-10-22";
+    let activeCategory = "all";
+    let activeSearchKeyword = "";
+    let activeSelectedEvent = calendarEvents[0];
+
+    const thaiMonthNames = [
+      "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+      "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+    ];
+
+    function formatThaiDate(dateStr) {
+      const parts = dateStr.split('-');
+      const y = parseInt(parts[0]) + 543;
+      const m = thaiMonthNames[parseInt(parts[1]) - 1];
+      const d = parseInt(parts[2]);
+      return `${d} ${m} ${y}`;
+    }
+
+    // เรนเดอร์ปฏิทินรายเดือน
+    function renderCalendar() {
+      const year = currentCalDate.getFullYear();
+      const month = currentCalDate.getMonth();
+
+      // แสดงชื่อเดือนและปี พ.ศ.
+      document.getElementById('cal-month-year-title').innerText = `${thaiMonthNames[month]} ${year + 543}`;
+
+      // หาวันแรกของเดือนและจำนวนวันในเดือน
+      const firstDayIndex = new Date(year, month, 1).getDay(); // 0 = วันอาทิตย์
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const prevMonthDays = new Date(year, month, 0).getDate();
+
+      const container = document.getElementById('calendar-days-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      // วันของเดือนก่อนหน้า (ช่องสีจาง)
+      for (let i = firstDayIndex - 1; i >= 0; i--) {
+        const d = prevMonthDays - i;
+        const cell = document.createElement('div');
+        cell.className = 'cal-day-cell other-month';
+        cell.innerHTML = `<span class="cal-day-number">${d}</span>`;
+        container.appendChild(cell);
+      }
+
+      // วันของเดือนปัจจุบัน
+      for (let day = 1; day <= daysInMonth; day++) {
+        const monthStr = String(month + 1).padStart(2, '0');
+        const dayStr = String(day).padStart(2, '0');
+        const dateKey = `${year}-${monthStr}-${dayStr}`;
+
+        const isToday = dateKey === "2026-10-22";
+        const isSelected = dateKey === selectedDateStr;
+
+        const cell = document.createElement('div');
+        cell.className = `cal-day-cell ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}`;
+        cell.onclick = () => selectDate(dateKey);
+
+        let html = `<span class="cal-day-number">${day}</span>`;
+
+        // ค้นหากิจกรรมในวันนี้ที่ตรงกับฟิลเตอร์
+        const dayEvents = calendarEvents.filter(e => {
+          const matchDate = e.date === dateKey;
+          const matchCat = activeCategory === 'all' || e.category === activeCategory;
+          const matchSearch = activeSearchKeyword === '' || 
+            e.title.toLowerCase().includes(activeSearchKeyword.toLowerCase()) ||
+            e.location.toLowerCase().includes(activeSearchKeyword.toLowerCase());
+          return matchDate && matchCat && matchSearch;
+        });
+
+        // แสดงแท็กกิจกรรมสั้นๆ ในช่องวัน
+        dayEvents.slice(0, 2).forEach(ev => {
+          let catClass = 'cal-event-academic';
+          if (ev.category === 'meeting') catClass = 'cal-event-meeting';
+          if (ev.category === 'community') catClass = 'cal-event-community';
+          if (ev.category === 'quality') catClass = 'cal-event-quality';
+
+          html += `
+            <div class="cal-event-pill ${catClass}" onclick="event.stopPropagation(); openEventDetailModal(${ev.id})">
+              <span>•</span> ${ev.title}
+            </div>
+          `;
+        });
+
+        if (dayEvents.length > 2) {
+          html += `<div style="font-size: 10.5px; color: #0f766e; font-weight: 700; margin-top: 2px;">+ อีก ${dayEvents.length - 2} กิจกรรม</div>`;
+        }
+
+        cell.innerHTML = html;
+        container.appendChild(cell);
+      }
+
+      // วันของเดือนถัดไปเพื่อให้ครบแถว 7 วัน
+      const totalCells = firstDayIndex + daysInMonth;
+      const nextDays = (7 - (totalCells % 7)) % 7;
+      for (let j = 1; j <= nextDays; j++) {
+        const cell = document.createElement('div');
+        cell.className = 'cal-day-cell other-month';
+        cell.innerHTML = `<span class="cal-day-number">${j}</span>`;
+        container.appendChild(cell);
+      }
+
+      renderSidebarEvents();
+      renderAgendaView();
+      updateCounts();
+    }
+
+    // เลือกวันที่และอัปเดตแถบด้านขวา
+    function selectDate(dateKey) {
+      selectedDateStr = dateKey;
+      renderCalendar();
+    }
+
+    // เรนเดอร์กิจกรรมประจำวันที่เลือกใน Sidebar
+    function renderSidebarEvents() {
+      const container = document.getElementById('sidebar-day-events');
+      const titleEl = document.getElementById('sidebar-selected-date-title');
+      if (!container || !titleEl) return;
+
+      titleEl.innerText = formatThaiDate(selectedDateStr);
+
+      const dayEvents = calendarEvents.filter(e => {
+        const matchDate = e.date === selectedDateStr;
+        const matchCat = activeCategory === 'all' || e.category === activeCategory;
+        return matchDate && matchCat;
+      });
+
+      if (dayEvents.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 36px 16px; background: #f8fafc; border-radius: 16px; border: 1.5px dashed #cbd5e1;">
+            <i class="fa-solid fa-calendar-xmark" style="font-size: 32px; color: #94a3b8; margin-bottom: 10px; display: block;"></i>
+            <h5 style="color: #0f172a; margin-bottom: 4px;">ไม่มีกิจกรรมในวันนี้</h5>
+            <p style="font-size: 13px; color: #64748b; margin: 0;">คลิกเลือกดูวันอื่นที่มีแถบกิจกรรม หรือคลิกเสนอกิจกรรมใหม่</p>
+          </div>
+        `;
+        return;
+      }
+
+      activeSelectedEvent = dayEvents[0];
+
+      container.innerHTML = dayEvents.map(ev => `
+        <article class="agenda-item-card" onclick="openEventDetailModal(${ev.id})">
+          <div class="agenda-item-time">
+            <i class="fa-solid fa-clock"></i> ${ev.time}
+          </div>
+          <h4 class="agenda-item-title">${ev.title}</h4>
+          <div class="agenda-item-meta">
+            <i class="fa-solid fa-location-dot" style="color: #ea580c;"></i> ${ev.location}
+          </div>
+          <div style="font-size: 12px; color: #0d9488; font-weight: 700; margin-top: 8px; display: flex; align-items: center; justify-content: space-between;">
+            <span><i class="fa-solid fa-tag"></i> ${ev.categoryLabel}</span>
+            <span style="color: #0284c7;">ดูรายละเอียด <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // เรนเดอร์มุมมองกำหนดการทั้งหมด (Agenda List)
+    function renderAgendaView() {
+      const container = document.getElementById('agenda-all-list');
+      if (!container) return;
+
+      let list = calendarEvents.filter(e => {
+        const matchCat = activeCategory === 'all' || e.category === activeCategory;
+        const matchSearch = activeSearchKeyword === '' || 
+          e.title.toLowerCase().includes(activeSearchKeyword.toLowerCase()) ||
+          e.location.toLowerCase().includes(activeSearchKeyword.toLowerCase());
+        return matchCat && matchSearch;
+      });
+
+      // เรียงตามวันที่
+      list.sort((a, b) => a.date.localeCompare(b.date));
+
+      if (list.length === 0) {
+        container.innerHTML = `<div style="text-align: center; padding: 40px; color: #64748b;">ไม่พบกิจกรรมที่ตรงกับคำค้นหา</div>`;
+        return;
+      }
+
+      container.innerHTML = list.map(ev => `
+        <div class="agenda-item-card" onclick="openEventDetailModal(${ev.id})" style="display: flex; gap: 16px; align-items: center;">
+          <div style="text-align: center; padding: 10px 14px; background: #f0fdfa; border: 1.5px solid #ccfbf1; border-radius: 12px; min-width: 90px;">
+            <div style="font-size: 12px; color: #0f766e; font-weight: 700;">${formatThaiDate(ev.date).split(' ')[1]}</div>
+            <div style="font-size: 22px; font-weight: 800; color: #0f172a;">${ev.date.split('-')[2]}</div>
+          </div>
+          <div style="flex: 1;">
+            <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 4px;">
+              <span class="staff-badge rn" style="font-size: 11px;">${ev.categoryLabel}</span>
+              <span style="font-size: 12px; color: #64748b;"><i class="fa-solid fa-clock"></i> ${ev.time}</span>
+            </div>
+            <h4 style="margin: 0 0 4px; font-size: 15.5px; color: #0f172a; font-weight: 700;">${ev.title}</h4>
+            <div style="font-size: 13px; color: #64748b;"><i class="fa-solid fa-location-dot" style="color: #ea580c;"></i> ${ev.location}</div>
+          </div>
+          <button type="button" class="btn-subtle" style="padding: 8px 14px; border-radius: 8px; font-size: 13px; color: #0d9488; background: #f0fdfa; border: 1px solid #99f6e4;">
+            รายละเอียด <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    // อัปเดตตัวเลขสรุป
+    function updateCounts() {
+      const allCount = calendarEvents.length;
+      const acadCount = calendarEvents.filter(e => e.category === 'academic').length;
+      const meetCount = calendarEvents.filter(e => e.category === 'meeting').length;
+      const commCount = calendarEvents.filter(e => e.category === 'community').length;
+      const qualCount = calendarEvents.filter(e => e.category === 'quality').length;
+
+      document.getElementById('count-all').innerText = allCount;
+      document.getElementById('count-academic').innerText = acadCount;
+      document.getElementById('count-meeting').innerText = meetCount;
+      document.getElementById('count-community').innerText = commCount;
+      document.getElementById('count-quality').innerText = qualCount;
+
+      document.getElementById('stat-total-events').innerText = allCount;
+      document.getElementById('stat-academic-events').innerText = acadCount;
+      document.getElementById('stat-meeting-events').innerText = meetCount;
+    }
+
+    // ฟังก์ชันเลื่อนเปลี่ยนเดือน
+    function changeMonth(delta) {
+      currentCalDate.setMonth(currentCalDate.getMonth() + delta);
+      renderCalendar();
+    }
+
+    function goToToday() {
+      currentCalDate = new Date(2026, 9, 22);
+      selectedDateStr = "2026-10-22";
+      renderCalendar();
+    }
+
+    // สลับฟิลเตอร์หมวดหมู่
+    function filterCategory(cat, btn) {
+      activeCategory = cat;
+      document.querySelectorAll('.cal-tag-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderCalendar();
+    }
+
+    // ค้นหากิจกรรม
+    function handleCalendarSearch(query) {
+      activeSearchKeyword = query.trim();
+      renderCalendar();
+    }
+
+    // สลับมุมมอง (Month View vs Agenda View)
+    function switchCalView(mode) {
+      const monthView = document.getElementById('calendar-month-view');
+      const agendaView = document.getElementById('calendar-agenda-view');
+      const btnMonth = document.getElementById('btn-view-month');
+      const btnAgenda = document.getElementById('btn-view-agenda');
+
+      if (mode === 'month') {
+        monthView.style.display = 'block';
+        agendaView.style.display = 'none';
+        btnMonth.classList.add('active');
+        btnAgenda.classList.remove('active');
+      } else {
+        monthView.style.display = 'none';
+        agendaView.style.display = 'block';
+        btnMonth.classList.remove('active');
+        btnAgenda.classList.add('active');
+      }
+    }
+
+    // Modal รายละเอียดกิจกรรม
+    function openEventDetailModal(id) {
+      const ev = calendarEvents.find(e => e.id === id);
+      if (!ev) return;
+      activeSelectedEvent = ev;
+
+      document.getElementById('modal-event-title').innerText = ev.title;
+      document.getElementById('modal-event-category-badge').innerText = ev.categoryLabel;
+      document.getElementById('modal-event-time').innerText = `${formatThaiDate(ev.date)} (${ev.time})`;
+      document.getElementById('modal-event-location').innerText = ev.location;
+      document.getElementById('modal-event-desc').innerText = ev.desc;
+      document.getElementById('modal-event-speaker').innerText = ev.speaker;
+      document.getElementById('modal-event-target').innerText = ev.target;
+
+      document.getElementById('modal-btn-add-gcal').onclick = () => exportToGoogleCalendar(ev);
+
+      const modal = document.getElementById('event-detail-modal');
+      modal.classList.remove('hidden');
+      modal.style.display = 'flex';
+    }
+
+    function closeEventModal(e) {
+      if (!e || e.target.id === 'event-detail-modal' || e.target.closest('.btn-close-modal') || e.target.closest('.btn-unit-action-back')) {
+        const modal = document.getElementById('event-detail-modal');
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+      }
+    }
+
+    // Modal เสนอกิจกรรม
+    function openSuggestModal() {
+      const modal = document.getElementById('suggest-event-modal');
+      modal.classList.remove('hidden');
+      modal.style.display = 'flex';
+    }
+
+    function closeSuggestModal(e) {
+      if (!e || e.target.id === 'suggest-event-modal' || e.target.closest('.btn-close-modal') || e.target.closest('.btn-unit-action-back')) {
+        const modal = document.getElementById('suggest-event-modal');
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+      }
+    }
+
+    function handleSuggestSubmit(e) {
+      e.preventDefault();
+      alert('ขอบคุณสำหรับการแจ้งข้อมูลกิจกรรม! เจ้าหน้าที่ผู้ดูแลระบบจะตรวจสอบและบรรจุลงในปฏิทินต่อไป');
+      closeSuggestModal();
+    }
+
+    // สร้างลิงก์ส่งต่อไปยัง Google Calendar
+    function exportToGoogleCalendar(ev) {
+      if (!ev) return;
+      const title = encodeURIComponent(ev.title);
+      const details = encodeURIComponent(`${ev.desc}\nวิทยากร: ${ev.speaker}\nกลุ่มเป้าหมาย: ${ev.target}`);
+      const location = encodeURIComponent(ev.location);
+      const dateNoHyphen = ev.date.replace(/-/g, '');
+      const dates = `${dateNoHyphen}T090000/${dateNoHyphen}T160000`;
+      
+      const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}&dates=${dates}`;
+      window.open(gcalUrl, '_blank');
+    }
+
+    function printCalendar() {
+      window.print();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCalendar();
+    });
+  </script>
+</body>
+
+</html>

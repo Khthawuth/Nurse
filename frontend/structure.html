@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>โครงสร้างการบริหาร - กลุ่มการพยาบาล โรงพยาบาลแม่สอด</title>
+  <title>หน่วยงานภายใน - กลุ่มการพยาบาล โรงพยาบาลแม่สอด</title>
   <link rel="icon" type="image/png" href="images/logo.png">
   <link rel="apple-touch-icon" href="images/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -511,10 +511,10 @@
               </div>
             </a>
             <a href="structure.html" class="dropdown-item active" role="menuitem">
-              <div class="dropdown-item-icon"><i class="fa-solid fa-sitemap"></i></div>
+              <div class="dropdown-item-icon"><i class="fa-solid fa-hospital-user"></i></div>
               <div class="dropdown-item-text">
-                <strong>โครงสร้างการบริหาร</strong>
-                <span>สายการบังคับบัญชาและกลุ่มงาน</span>
+                <strong>หน่วยงานภายใน</strong>
+                <span>17 กลุ่มงานการพยาบาลและผังบริหาร</span>
               </div>
             </a>
             <a href="strategy.html" class="dropdown-item" role="menuitem">
@@ -596,6 +596,11 @@
           </div>
         </div>
 
+        <!-- เมนูปฏิทินกิจกรรม -->
+        <a href="calendar.html" class="nav-btn">
+          <i class="fa-solid fa-calendar-alt"></i> ปฏิทินกิจกรรม
+        </a>
+
         <a href="javascript:void(0)" class="nav-btn"
           onclick="alert('งานวิจัยและวิชาการ กำลังอยู่ในระหว่างอัปเดตข้อมูล')">
           <i class="fa-solid fa-book-open"></i> งานวิจัยและวิชาการ
@@ -615,69 +620,44 @@
       <div class="subpage-header-box">
         <div
           style="display: inline-flex; align-items: center; gap: 8px; background: #ccfbf1; color: #0f766e; padding: 5px 14px; border-radius: 50px; font-size: 13px; font-weight: 700; margin-bottom: 12px;">
-          <i class="fa-solid fa-sitemap"></i> โครงสร้างการจัดองค์กรทางการพยาบาล
+          <i class="fa-solid fa-hospital-user"></i> กลุ่มงานและหน่วยงานทางการพยาบาล
         </div>
         <h1 style="font-size: 28px; font-weight: 800; color: #0f172a; margin: 0 0 8px;">
-          โครงสร้างการบริหารกลุ่มการพยาบาล
+          หน่วยงานภายใน
         </h1>
         <p style="font-size: 15px; color: #64748b; margin: 0;">
-          ภารกิจด้านการพยาบาล กลุ่มการพยาบาล โรงพยาบาลแม่สอด จังหวัดตาก
+          ข้อมูลและช่องทางติดต่อหน่วยงานภายใน (17 กลุ่มงานการพยาบาล โรงพยาบาลแม่สอด จังหวัดตาก)
         </p>
 
         <!-- แถบสลับหน้าย่อย -->
         <div class="subpage-nav-tabs">
           <a href="vision.html" class="subpage-tab-link"><i class="fa-solid fa-compass"></i> วิสัยทัศน์ / พันธกิจ</a>
-          <a href="structure.html" class="subpage-tab-link active"><i class="fa-solid fa-sitemap"></i>
-            โครงสร้างการบริหาร</a>
+          <a href="structure.html" class="subpage-tab-link active"><i class="fa-solid fa-hospital-user"></i>
+            หน่วยงานภายใน</a>
           <a href="strategy.html" class="subpage-tab-link"><i class="fa-solid fa-chart-line"></i> แผนยุทธศาสตร์</a>
           <a href="kpi.html" class="subpage-tab-link"><i class="fa-solid fa-arrow-trend-up"></i> ตัวชี้วัด (KPI)</a>
+          <a href="calendar.html" class="subpage-tab-link"><i class="fa-solid fa-calendar-alt"></i> ปฏิทินกิจกรรม</a>
         </div>
       </div>
 
-      <div class="org-chart-wrapper">
-        <!-- 1. ลำดับสายการบังคับบัญชาระดับบริหาร (2-Tier Executive Hierarchy Tree) -->
-        <div class="hierarchy-executive-tree">
+      <!-- แถบสลับมุมมองระหว่าง 17 กลุ่มงาน (สไตล์รูปที่สอง) และ ผังสายการบังคับบัญชาบริหาร -->
+      <div style="display: flex; gap: 10px; margin: 24px 0 16px; flex-wrap: wrap;">
+        <button type="button" class="cluster-filter-btn active" id="btn-mode-cards" onclick="toggleStructureMode('cards')">
+          <i class="fa-solid fa-grid-2"></i> 17 กลุ่มงานการพยาบาล (การ์ดไอคอน สไตล์รูปที่ 2)
+        </button>
+        <button type="button" class="cluster-filter-btn" id="btn-mode-tree" onclick="toggleStructureMode('tree')">
+          <i class="fa-solid fa-sitemap"></i> ผังสายการบังคับบัญชาระดับบริหาร
+        </button>
+      </div>
 
-          <!-- ระดับที่ 1: ผู้อำนวยการโรงพยาบาลแม่สอด -->
-          <div class="director-card">
-            <div class="director-photo-wrap">
-              <img src="images/ผอ.png" alt="ผู้อำนวยการโรงพยาบาลแม่สอด"
-                onerror="this.src='https://cdn-icons-png.flaticon.com/512/387/387561.png'">
-            </div>
-            <div class="exec-details">
-              <span class="exec-role-badge"><i class="fa-solid fa-award"></i> ผู้อำนวยการโรงพยาบาลแม่สอด</span>
-              <h3>นพ.ศักรินทร์ ธนเกียรติสกุล</h3>
-              <p>ผู้อำนวยการโรงพยาบาลแม่สอด จังหวัดตาก</p>
-              <div
-                style="font-size: 12.5px; color: #0f766e; margin-top: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; background: rgba(13, 148, 136, 0.1); padding: 4px 14px; border-radius: 50px;">
-                <i class="fa-solid fa-quote-left"></i> มุ่งมั่นพัฒนาคุณภาพบริการ สู่มาตรฐานสากลด้วยหัวใจ <i
-                  class="fa-solid fa-quote-right"></i>
-              </div>
-            </div>
-          </div>
-
-          <!-- เส้นเชื่อมแนวดิ่งจาก ผอ. สู่ รอง ผอ.ฝ่ายการพยาบาล -->
-          <div class="hierarchy-connector-vertical"></div>
-
-          <!-- ระดับที่ 2: รองผู้อำนวยการฝ่ายการพยาบาล (หัวหน้าพยาบาล) -->
-          <div class="nursing-director-card">
-            <div class="nursing-director-photo-wrap">
-              <img src="images/รอง.jpg" alt="รองผู้อำนวยการฝ่ายการพยาบาล"
-                onerror="this.src='https://cdn-icons-png.flaticon.com/512/387/387561.png'">
-            </div>
-            <div class="exec-details">
-              <span class="exec-role-badge nurse-badge"><i class="fa-solid fa-user-nurse"></i>
-                รองผู้อำนวยการฝ่ายการพยาบาล (หัวหน้าพยาบาล)</span>
-              <h3>นางสุภาวรรณ ยะดอนใจ</h3>
-              <div style="font-size: 12.5px; color: #0d9488; margin-top: 6px; font-weight: 700;">
-                <i class="fa-solid fa-phone"></i> กลุ่มภารกิจด้านการพยาบาล: ต่อเบอร์ภายใน 1387
-              </div>
-            </div>
-          </div>
-
+      <!-- ================= มุมมองที่ 1: 17 กลุ่มงานการพยาบาล สไตล์รูปที่สอง ================= -->
+      <div id="view-cards-container">
+        <div class="internal-units-header">
+          <h2>หน่วยงานภายใน</h2>
+          <p>ข้อมูลและช่องทางติดต่อหน่วยงานภายใน</p>
         </div>
 
-        <!-- 2. แถบควบคุม: ค้นหากลุ่มงาน & ปุ่มฟิลเตอร์คลัสเตอร์ -->
+        <!-- แถบควบคุม: ค้นหากลุ่มงาน & ปุ่มฟิลเตอร์คลัสเตอร์ -->
         <div class="controls-panel">
           <div class="org-search-box">
             <i class="fa-solid fa-magnifying-glass" style="color: #94a3b8;"></i>
@@ -704,9 +684,56 @@
           </div>
         </div>
 
-        <!-- 3. ตารางแสดงการ์ดทั้ง 17 กลุ่มงานตามผังราชการจริง -->
-        <div class="groups-grid" id="groups-container">
-          <!-- Rendered dynamically by JavaScript -->
+        <!-- กริดแสดงการ์ดทั้ง 17 กลุ่มงาน (สไตล์รูปที่สอง) -->
+        <div class="units-v2-grid" id="groups-container">
+          <!-- Rendered dynamically by JavaScript from js/units-data.js -->
+        </div>
+      </div>
+
+      <!-- ================= มุมมองที่ 2: ผังสายการบังคับบัญชาระดับบริหาร ================= -->
+      <div id="view-tree-container" style="display: none;">
+        <div class="org-chart-wrapper">
+          <!-- ลำดับสายการบังคับบัญชาระดับบริหาร (2-Tier Executive Hierarchy Tree) -->
+          <div class="hierarchy-executive-tree">
+
+            <!-- ระดับที่ 1: ผู้อำนวยการโรงพยาบาลแม่สอด -->
+            <div class="director-card">
+              <div class="director-photo-wrap">
+                <img src="images/ผอ.png" alt="ผู้อำนวยการโรงพยาบาลแม่สอด"
+                  onerror="this.src='https://cdn-icons-png.flaticon.com/512/387/387561.png'">
+              </div>
+              <div class="exec-details">
+                <span class="exec-role-badge"><i class="fa-solid fa-award"></i> ผู้อำนวยการโรงพยาบาลแม่สอด</span>
+                <h3>นพ.ศักรินทร์ ธนเกียรติสกุล</h3>
+                <p>ผู้อำนวยการโรงพยาบาลแม่สอด จังหวัดตาก</p>
+                <div
+                  style="font-size: 12.5px; color: #0f766e; margin-top: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; background: rgba(13, 148, 136, 0.1); padding: 4px 14px; border-radius: 50px;">
+                  <i class="fa-solid fa-quote-left"></i> มุ่งมั่นพัฒนาคุณภาพบริการ สู่มาตรฐานสากลด้วยหัวใจ <i
+                    class="fa-solid fa-quote-right"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- เส้นเชื่อมแนวดิ่งจาก ผอ. สู่ รอง ผอ.ฝ่ายการพยาบาล -->
+            <div class="hierarchy-connector-vertical"></div>
+
+            <!-- ระดับที่ 2: รองผู้อำนวยการฝ่ายการพยาบาล (หัวหน้าพยาบาล) -->
+            <div class="nursing-director-card">
+              <div class="nursing-director-photo-wrap">
+                <img src="images/รอง.jpg" alt="รองผู้อำนวยการฝ่ายการพยาบาล"
+                  onerror="this.src='https://cdn-icons-png.flaticon.com/512/387/387561.png'">
+              </div>
+              <div class="exec-details">
+                <span class="exec-role-badge nurse-badge"><i class="fa-solid fa-user-nurse"></i>
+                  รองผู้อำนวยการฝ่ายการพยาบาล (หัวหน้าพยาบาล)</span>
+                <h3>นางสุภาวรรณ ยะดอนใจ</h3>
+                <div style="font-size: 12.5px; color: #0d9488; margin-top: 6px; font-weight: 700;">
+                  <i class="fa-solid fa-phone"></i> กลุ่มภารกิจด้านการพยาบาล: ต่อเบอร์ภายใน 1387
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
@@ -831,7 +858,12 @@
           </li>
           <li>
             <a href="structure.html">
-              <i class="fa-solid fa-angle-right"></i> โครงสร้างการบริหารงานพยาบาล
+              <i class="fa-solid fa-angle-right"></i> หน่วยงานภายใน (17 กลุ่มงาน)
+            </a>
+          </li>
+          <li>
+            <a href="calendar.html">
+              <i class="fa-solid fa-angle-right"></i> ปฏิทินกิจกรรม
             </a>
           </li>
         </ul>
@@ -846,215 +878,48 @@
   </footer>
 
   <script src="js/app.js"></script>
+  <script src="js/units-data.js"></script>
   <script>
-    // ข้อมูลทั้ง 17 กลุ่มงานตามผังราชการจริงของโรงพยาบาลศูนย์/โรงพยาบาลทั่วไป
-    const orgUnits = [
-      {
-        id: 1,
-        cluster: 'critical',
-        clusterLabel: 'งานวิกฤต ฉุกเฉิน & ผู้ป่วยนอก',
-        name: 'กลุ่มงานการพยาบาลผู้ป่วยอุบัติเหตุและฉุกเฉิน',
-        leader: 'พว. วันเพ็ญ สุริยะ (ตัวอย่าง)',
-        leaderPos: 'หัวหน้ากลุ่มงานการพยาบาลอุบัติเหตุและฉุกเฉิน',
-        avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&auto=format&fit=crop&q=80',
-        rns: true, tns: true,
-        phone: '1387'
-      },
-      {
-        id: 2,
-        cluster: 'critical',
-        clusterLabel: 'งานวิกฤต ฉุกเฉิน & ผู้ป่วยนอก',
-        name: 'กลุ่มงานการพยาบาลผู้ป่วยนอก',
-        leader: 'พว. กัลยา นวลจันทร์ (ตัวอย่าง)',
-        leaderPos: 'หัวหน้ากลุ่มงานการพยาบาลผู้ป่วยนอก',
-        avatar: 'https://images.unsplash.com/photo-1594824813633-5c7423010b99?w=150&auto=format&fit=crop&q=80',
-        rns: true, tns: true,
-        phone: '1387'
-      },
-      {
-        id: 3,
-        cluster: 'critical',
-        clusterLabel: 'งานวิกฤต ฉุกเฉิน & ผู้ป่วยนอก',
-        name: 'กลุ่มงานการพยาบาลผู้ป่วยหนัก',
-        leader: 'พว. นิภาวรรณ สมศักดิ์ (ตัวอย่าง)',
-        leaderPos: 'หัวหน้ากลุ่มงานการพยาบาลผู้ป่วยหนัก (ICU)',
-        avatar: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&auto=format&fit=crop&q=80',
-        rns: true, tns: true,
-        phone: '1387'
-      },
-      {
-        id: 4,
-        cluster: 'specialty',
-        clusterLabel: 'บริการและตรวจรักษาพิเศษ',
-        name: 'กลุ่มงานการพยาบาลผู้คลอด',
-        leader: 'พว. มาลี วรรณโชติ (ตัวอย่าง)',
-        leaderPos: 'หัวหน้ากลุ่มงานการพยาบาลผู้คลอด (LR)',
-        avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&auto=format&fit=crop&q=80',
-        rns: true, tns: true,
-        phone: '1387'
-      },
-      {
-        id: 5,
-        cluster: 'critical',
-        clusterLabel: 'งานวิกฤต ฉุกเฉิน & ผู้ป่วยนอก',
-        name: 'กลุ่มงานการพยาบาลผู้ป่วยห้องผ่าตัด',
-        leader: 'พว. ธนภรณ์ รักษ์สกุล (ตัวอย่าง)',
-        leaderPos: 'หัวหน้ากลุ่มงานการพยาบาลห้องผ่าตัด (OR)',
-        avatar: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&auto=format&fit=crop&q=80',
-        rns: true, tns: true,
-        phone: '1387'
-      },
-      {
-        id: 6,
-        cluster: 'critical',
-        clusterLabel: 'งานวิกฤต ฉุกเฉิน & ผู้ป่วยนอก',
-        name: 'กลุ่มงานการพยาบาลวิสัญญี',
-        leader: 'พว. จุฬารัตน์ บรรณสาร (ตัวอย่าง)',
-        leaderPos: 'หัวหน้ากลุ่มงานการพยาบาลวิสัญญี',
-        avatar: 'https://images.unsplash.com/photo-1594824813633-5c7423010b99?w=150&auto=format&fit=crop&q=80',
-        rns: true, tns: true,
-        phone: '1387'
-      },
-      {
-        id: 7,
-        cluster: 'inpatient',
-        clusterLabel: 'ผู้ป่วยในตามสาขา (IPD)',
-        name: 'กลุ่มงานการพยาบาลผู้ป่วยอายุรกรรม',
-        leader: 'พว. สุชาดา ชัยมงคล (ตัวอย่าง)',
-        leaderPos: 'หัวหน้ากลุ่มงานผู้ป่วยอายุรกรรม',
-        avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&auto=format&fit=crop&q=80',
-        rns: true, tns: true,
-        phone: '1387'
-      },
-      {
-        id: 8,
-        cluster: 'inpatient',
-        clusterLabel: 'ผู้ป่วยในตามสาขา (IPD)',
-        name: 'กลุ่มงานการพยาบาลผู้ป่วยศัลยกรรม',
-        leader: 'พว. ปวีณา ธนกิจ (ตัวอย่าง)',
-        leaderPos: 'หัวหน้ากลุ่มงานผู้ป่วยศัลยกรรม',
-        avatar: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&auto=format&fit=crop&q=80',
-        rns: true, tns: true,
-        phone: '1387'
-      },
-      {
-        id: 9,
-        cluster: 'inpatient',
-        clusterLabel: 'ผู้ป่วยในตามสาขา (IPD)',
-        name: 'กลุ่มงานการพยาบาลผู้ป่วยสูติ-นรีเวช',
-        leader: 'พว. วราภรณ์ มงคลพงษ์ (ตัวอย่าง)',
-        leaderPos: 'หัวหน้ากลุ่มงานสูติ-นรีเวช',
-        avatar: 'https://images.unsplash.com/photo-1594824813633-5c7423010b99?w=150&auto=format&fit=crop&q=80',
-        rns: true, tns: true,
-        phone: '1387'
-      },
-      {
-        id: 10,
-        cluster: 'inpatient',
-        clusterLabel: 'ผู้ป่วยในตามสาขา (IPD)',
-        name: 'กลุ่มงานการพยาบาลจิตเวช',
-        leader: 'พว. ขนิษฐา กิจเจริญ (ตัวอย่าง)',
-        leaderPos: 'หัวหน้ากลุ่มงานจิตเวช',
-        avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&auto=format&fit=crop&q=80',
-        rns: true, tns: true,
-        phone: '1387'
-      },
-      {
-        id: 11,
-        cluster: 'specialty',
-        clusterLabel: 'บริการและตรวจรักษาพิเศษ',
-        name: 'กลุ่มงานการพยาบาลผู้ป่วยอุบัติเหตุและแผลไหม้',
-        leader: 'พว. ธีรนันท์ สุรเดช (ตัวอย่าง)',
-        leaderPos: 'หัวหน้ากลุ่มงานอุบัติเหตุและแผลไหม้ (Burn Unit)',
-        avatar: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&auto=format&fit=crop&q=80',
-        rns: true, tns: true,
-        phone: '1387'
-      },
-      {
-        id: 12,
-        cluster: 'specialty',
-        clusterLabel: 'บริการและตรวจรักษาพิเศษ',
-        name: 'กลุ่มงานการพยาบาลผู้ป่วยออร์โธปิดิกส์',
-        leader: 'พว. อมรรัตน์ แก้วใส (ตัวอย่าง)',
-        leaderPos: 'หัวหน้ากลุ่มงานออร์โธปิดิกส์',
-        avatar: 'https://images.unsplash.com/photo-1594824813633-5c7423010b99?w=150&auto=format&fit=crop&q=80',
-        rns: true, tns: true,
-        phone: '1387'
-      },
-      {
-        id: 13,
-        cluster: 'inpatient',
-        clusterLabel: 'ผู้ป่วยในตามสาขา (IPD)',
-        name: 'กลุ่มงานการพยาบาลผู้ป่วยโสต ศอ นาสิก จักษุ',
-        leader: 'พว. ดวงแข ปัญญาวงศ์ (ตัวอย่าง)',
-        leaderPos: 'หัวหน้ากลุ่มงาน ENT & Eye',
-        avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&auto=format&fit=crop&q=80',
-        rns: true, tns: true,
-        phone: '1387'
-      },
-      {
-        id: 14,
-        cluster: 'quality',
-        clusterLabel: 'พัฒนาคุณภาพ วิชาการ & IC',
-        name: 'กลุ่มงานการพยาบาลด้านการควบคุมและป้องกันการติดเชื้อ',
-        leader: 'พว. นงลักษณ์ ชัยพฤกษ์ (ตัวอย่าง)',
-        leaderPos: 'หัวหน้างานพยาบาล IC (Infection Control)',
-        avatar: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&auto=format&fit=crop&q=80',
-        rns: true, tns: true,
-        phone: '1387'
-      },
-      {
-        id: 15,
-        cluster: 'specialty',
-        clusterLabel: 'บริการและตรวจรักษาพิเศษ',
-        name: 'กลุ่มงานการพยาบาลตรวจรักษาพิเศษ',
-        leader: 'พว. ทิพวรรณ สว่างเนตร (ตัวอย่าง)',
-        leaderPos: 'หัวหน้ากลุ่มงานตรวจรักษาพิเศษ (ไตเทียม/เคมีบำบัด)',
-        avatar: 'https://images.unsplash.com/photo-1594824813633-5c7423010b99?w=150&auto=format&fit=crop&q=80',
-        rns: true, tns: true,
-        phone: '1387'
-      },
-      {
-        id: 16,
-        cluster: 'quality',
-        clusterLabel: 'พัฒนาคุณภาพ วิชาการ & IC',
-        name: 'กลุ่มงานวิจัยและพัฒนาทางการพยาบาล',
-        leader: 'ดร.พว. ชนิกา วัฒนกุล (ตัวอย่าง)',
-        leaderPos: 'หัวหน้ากลุ่มงานวิจัยและนวัตกรรม (R2R)',
-        avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&auto=format&fit=crop&q=80',
-        rns: true, tns: true,
-        phone: '1387'
-      },
-      {
-        id: 17,
-        cluster: 'specialty',
-        clusterLabel: 'บริการและตรวจรักษาพิเศษ',
-        name: 'กลุ่มงานการพยาบาลการรับบริจาค ปลูกถ่ายอวัยวะและเนื้อเยื่อ',
-        leader: 'พว. รุ่งทิพย์ เจริญผล (ตัวอย่าง)',
-        leaderPos: 'ผู้ประสานงานการปลูกถ่ายอวัยวะ (Organ Donation)',
-        avatar: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&auto=format&fit=crop&q=80',
-        rns: true, tns: false,
-        phone: '1387'
-      }
-    ];
-
     let currentFilter = 'all';
     let currentSearchKeyword = '';
 
+    // ฟังก์ชันสลับระหว่างมุมมองการ์ด (สไตล์รูปที่ 2) และ ผังสายการบังคับบัญชาระดับบริหาร
+    function toggleStructureMode(mode) {
+      const cardsView = document.getElementById('view-cards-container');
+      const treeView = document.getElementById('view-tree-container');
+      const btnCards = document.getElementById('btn-mode-cards');
+      const btnTree = document.getElementById('btn-mode-tree');
+
+      if (mode === 'cards') {
+        cardsView.style.display = 'block';
+        treeView.style.display = 'none';
+        btnCards.classList.add('active');
+        btnTree.classList.remove('active');
+      } else {
+        cardsView.style.display = 'none';
+        treeView.style.display = 'block';
+        btnCards.classList.remove('active');
+        btnTree.classList.add('active');
+      }
+    }
+
+    // ฟังก์ชันเรนเดอร์การ์ดทั้ง 17 กลุ่มงานตามแบบรูปที่สอง
     function renderOrgUnits() {
       const container = document.getElementById('groups-container');
       if (!container) return;
 
+      const dataSource = typeof unitsData !== 'undefined' ? unitsData : [];
+
       let list = currentFilter === 'all'
-        ? orgUnits
-        : orgUnits.filter(u => u.cluster === currentFilter);
+        ? dataSource
+        : dataSource.filter(u => u.cluster === currentFilter);
 
       if (currentSearchKeyword.trim() !== '') {
         const q = currentSearchKeyword.toLowerCase().trim();
         list = list.filter(u =>
           u.name.toLowerCase().includes(q) ||
-          u.leader.toLowerCase().includes(q) ||
-          u.clusterLabel.toLowerCase().includes(q)
+          (u.leader && u.leader.toLowerCase().includes(q)) ||
+          (u.clusterLabel && u.clusterLabel.toLowerCase().includes(q))
         );
       }
 
@@ -1070,35 +935,43 @@
       }
 
       container.innerHTML = list.map(u => `
-        <article class="group-card" onclick="openUnitModal(${u.id})">
-          <div class="group-card-header">
-            <div class="group-number-pill">${u.id}</div>
-            <div class="group-leader-avatar">
-              <img src="${u.avatar}" alt="${u.leader}">
-            </div>
-            <div>
-              <div class="group-card-title">${u.name}</div>
-              <div class="group-card-lead-name"><i class="fa-solid fa-user-tie"></i> ${u.leader}</div>
-            </div>
+        <article class="unit-card-v2" onclick="handleCardNavigate('${u.detailUrl}')" style="cursor: pointer;">
+          <!-- 1. ภาพไอคอนเวกเตอร์สไตล์รูปที่สอง (ทั้ง 17 กลุ่มการพยาบาล) -->
+          <div class="unit-card-v2-illustration">
+            ${u.iconSvg || `<img src="${u.iconImage || 'images/logo.png'}" alt="${u.name}">`}
           </div>
-          <div class="group-card-body">
-            <div style="font-size: 12px; color: #64748b;">สายงาน: <strong style="color: #0f766e;">${u.clusterLabel}</strong></div>
-            <div class="staff-badge-list">
-              ${u.rns ? '<span class="staff-badge rn"><i class="fa-solid fa-check"></i> พยาบาลวิชาชีพ</span>' : ''}
-              ${u.tns ? '<span class="staff-badge tn"><i class="fa-solid fa-check"></i> พยาบาลเทคนิค</span>' : ''}
-            </div>
-          </div>
-          <div class="group-card-footer">
-            <span><i class="fa-solid fa-phone"></i> ภายใน: ${u.phone}</span>
-            <span class="btn-view-unit">ดูข้อมูล <i class="fa-solid fa-arrow-right"></i></span>
+
+          <!-- 2. ชื่อกลุ่มงาน -->
+          <h3 class="unit-card-v2-title">${u.name}</h3>
+
+          <!-- 3. ลิงก์และปุ่มกด -->
+          <div class="unit-card-v2-actions">
+            <!-- โค้ดไว้ให้ว่าเมื่อคลิกแล้วจะเด้งไปหน้าเว็บต่างๆ (เปิดในแท็บใหม่) -->
+            <a href="${u.websiteUrl}" target="_blank" rel="noopener noreferrer" class="unit-website-link" onclick="event.stopPropagation()">
+              เข้าสู่เว็บไซต์ <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <span class="unit-website-subtext">เปิดในแท็บใหม่</span>
+
+            <!-- โค้ดไว้ให้ในการเมื่อคลิกแล้วจะโหลดอีกหน้านึงเพื่อดูข้อมูล -->
+            <a href="${u.detailUrl}" class="unit-detail-link-btn" onclick="event.stopPropagation()">
+              <i class="fa-solid fa-circle-info"></i> ดูข้อมูลกลุ่มงาน
+            </a>
           </div>
         </article>
       `).join('');
     }
 
+    function handleCardNavigate(url) {
+      if (url) {
+        window.location.href = url;
+      }
+    }
+
     function filterOrgCluster(cluster, btn) {
       currentFilter = cluster;
-      document.querySelectorAll('.cluster-filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.cluster-filter-nav .cluster-filter-btn').forEach(b => {
+        b.classList.remove('active');
+      });
       if (btn) btn.classList.add('active');
       renderOrgUnits();
     }
@@ -1106,30 +979,6 @@
     function handleOrgSearch(val) {
       currentSearchKeyword = val || '';
       renderOrgUnits();
-    }
-
-    function openUnitModal(id) {
-      const unit = orgUnits.find(u => u.id === id);
-      if (!unit) return;
-
-      document.getElementById('modal-unit-num').innerText = unit.id;
-      document.getElementById('modal-unit-title').innerText = unit.name;
-      document.getElementById('modal-unit-cluster').innerText = unit.clusterLabel;
-      document.getElementById('modal-lead-img').src = unit.avatar;
-      document.getElementById('modal-lead-name').innerText = unit.leader;
-      document.getElementById('modal-lead-pos').innerText = `${unit.leaderPos} (โทรภายใน: ${unit.phone})`;
-
-      const modal = document.getElementById('unit-detail-modal');
-      modal.classList.remove('hidden');
-      modal.style.display = 'flex';
-    }
-
-    function closeUnitModal(e) {
-      if (!e || e.target.id === 'unit-detail-modal' || e.target.closest('.btn-close-modal') || e.target.closest('.custom-modal-btn')) {
-        const modal = document.getElementById('unit-detail-modal');
-        modal.classList.add('hidden');
-        modal.style.display = 'none';
-      }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
