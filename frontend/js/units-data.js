@@ -36,7 +36,7 @@ const unitsData = [
     ],
     // SVG Illustration: รถพยาบาล + เจ้าหน้าที่กู้ชีพฉุกเฉิน (สไตล์รูปที่สอง)
     iconSvg: `
-      <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
         <!-- รถพยาบาล -->
         <rect x="22" y="38" width="94" height="48" rx="8" fill="#F8FAFC" stroke="#0D9488" stroke-width="2.5"/>
         <rect x="30" y="44" width="22" height="18" rx="4" fill="#E0F2FE" stroke="#0284C7" stroke-width="1.5"/>
@@ -86,7 +86,7 @@ const unitsData = [
     ],
     // SVG Illustration: ผู้ป่วยสวมหน้ากากออกซิเจน/ดมยา และหมวกผ่าตัด (สไตล์รูปที่สอง)
     iconSvg: `
-      <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
         <circle cx="80" cy="70" r="54" fill="#E0F2FE" opacity="0.6"/>
         <circle cx="80" cy="70" r="44" fill="#38BDF8" opacity="0.3"/>
         <!-- ใบหน้าผู้ป่วย -->
@@ -131,7 +131,7 @@ const unitsData = [
     ],
     // SVG Illustration: หัวใจมีพลาสเตอร์ยา แคปซูล ยาเม็ด สื่อถึงการรักษาฟื้นฟู (สไตล์รูปที่สอง)
     iconSvg: `
-      <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
         <circle cx="80" cy="70" r="50" fill="#FFF1F2" opacity="0.7"/>
         <!-- หัวใจสีแดงสดใส -->
         <path d="M80 44C70 28 46 32 44 54C42 74 72 96 80 102C88 96 118 74 116 54C114 32 90 28 80 44Z" fill="#F43F5E"/>
@@ -183,7 +183,7 @@ const unitsData = [
     ],
     // SVG Illustration: วงกลมสีชมพู พร้อมกระดาษ แว่นขยาย หลอดไฟไอเดีย สกรีน RESEARCH (สไตล์รูปที่สอง)
     iconSvg: `
-      <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
         <!-- วงกลมพื้นหลังสีชมพูพาสเทล -->
         <circle cx="80" cy="70" r="50" fill="#FCE7F3"/>
         <path d="M42 45C52 35 65 30 80 30C95 30 108 35 118 45" stroke="#EC4899" stroke-width="6" stroke-linecap="round"/>
@@ -228,7 +228,7 @@ const unitsData = [
     ],
     // SVG Illustration: ทีมแพทย์และพยาบาลในชุดเขียวผ่าตัดรอบโคมไฟ (สไตล์รูปที่สอง)
     iconSvg: `
-      <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
         <ellipse cx="80" cy="108" rx="56" ry="16" fill="#0D9488" fill-opacity="0.3"/>
         <!-- โคมไฟผ่าตัดเหนือเตียง -->
         <ellipse cx="80" cy="30" rx="30" ry="8" fill="#E2E8F0" stroke="#64748B" stroke-width="2"/>
@@ -279,7 +279,7 @@ const unitsData = [
     ],
     // SVG Illustration: รูปสรีระหญิงตั้งครรภ์และทารกในครรภ์ (สไตล์รูปที่สอง)
     iconSvg: `
-      <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
         <circle cx="80" cy="70" r="50" fill="#FFF7ED" opacity="0.8"/>
         <!-- สรีระหญิงตั้งครรภ์โทนสีพีช/ส้มอบอุ่น -->
         <path d="M68 28C68 22 74 18 80 18C86 18 92 22 92 28C92 34 86 38 80 38C74 38 68 34 68 28Z" fill="#FDBA74"/>
@@ -324,7 +324,7 @@ const unitsData = [
     ],
     // SVG Illustration: พยาบาลหญิงถือโล่ป้องกันเชื้อไวรัส (สไตล์รูปที่สอง)
     iconSvg: `
-      <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
         <!-- รัศมีแห่งความปลอดภัย -->
         <circle cx="80" cy="70" r="50" fill="#ECFDF5" opacity="0.8"/>
         <!-- บุคลากรพยาบาลด้านซ้าย -->
@@ -372,7 +372,7 @@ const unitsData = [
     ],
     // SVG Illustration: จอมอนิเตอร์ผู้ป่วยหนัก คลื่นหัวใจ และเตียง ICU
     iconSvg: `
-      <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
         <rect x="25" y="32" width="110" height="76" rx="10" fill="#0F172A" stroke="#38BDF8" stroke-width="2.5"/>
         <rect x="33" y="40" width="94" height="60" rx="6" fill="#020617"/>
         <!-- กราฟคลื่นไฟฟ้าหัวใจสีเขียวนีออน -->
@@ -412,7 +412,7 @@ const unitsData = [
     ],
     // SVG Illustration: คลินิกผู้ป่วยนอก เคาน์เตอร์ซักประวัติและหูฟังแพทย์
     iconSvg: `
-      <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
         <circle cx="80" cy="70" r="50" fill="#E0F2FE" opacity="0.7"/>
         <!-- เคาน์เตอร์ตรวจผู้ป่วยนอก -->
         <rect x="34" y="74" width="92" height="36" rx="8" fill="#FFFFFF" stroke="#0284C7" stroke-width="2"/>
@@ -456,7 +456,7 @@ const unitsData = [
     ],
     // SVG Illustration: แฟ้มผู้ป่วยอายุรกรรม หูฟังแพทย์ ยาแคปซูล
     iconSvg: `
-      <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
         <rect x="42" y="32" width="76" height="88" rx="8" fill="#FFFFFF" stroke="#0D9488" stroke-width="2.5"/>
         <rect x="58" y="26" width="44" height="12" rx="4" fill="#14B8A6"/>
         <circle cx="80" cy="32" r="2.5" fill="#FFFFFF"/>
@@ -499,7 +499,7 @@ const unitsData = [
     ],
     // SVG Illustration: เครื่องมือผ่าตัด ผ้าพันแผล การเย็บแผลสมาน
     iconSvg: `
-      <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
         <circle cx="80" cy="70" r="48" fill="#F0FDF4" opacity="0.8"/>
         <!-- ถาดเครื่องมือศัลยกรรม -->
         <rect x="34" y="65" width="92" height="42" rx="10" fill="#E2E8F0" stroke="#64748B" stroke-width="2"/>
@@ -545,7 +545,7 @@ const unitsData = [
     ],
     // SVG Illustration: มารดาอุ้มทารกแรกเกิดในอ้อมแขนอย่างอบอุ่น
     iconSvg: `
-      <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
         <circle cx="80" cy="70" r="48" fill="#FDF2F8" opacity="0.8"/>
         <!-- ศีรษะและเส้นผมมารดา -->
         <circle cx="72" cy="46" r="14" fill="#FED7AA"/>
@@ -585,7 +585,7 @@ const unitsData = [
     ],
     // SVG Illustration: สมองแห่งความสุข หัวใจแห่งความอบอุ่น และใบไม้ฟื้นฟูจิตใจ
     iconSvg: `
-      <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
         <circle cx="80" cy="70" r="50" fill="#FAF5FF"/>
         <!-- สมองสีม่วง/ชมพูแห่งความคิดและสติปัญญา -->
         <path d="M76 42C64 42 56 50 56 60C56 66 60 72 64 74C60 78 60 84 64 88C68 92 74 92 78 90C80 94 88 96 92 92C98 92 102 86 100 80C104 76 104 68 100 64C102 56 98 46 88 44C84 42 80 42 76 42Z" fill="#C084FC" opacity="0.6"/>
@@ -624,7 +624,7 @@ const unitsData = [
     ],
     // SVG Illustration: ผ้าพันแผลสมานแผล และหยดความชุ่มชื้นฟื้นฟู
     iconSvg: `
-      <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
         <circle cx="80" cy="70" r="50" fill="#FFF7ED"/>
         <!-- ม้วนผ้าพันแผลเวชภัณฑ์ปลอดเชื้อ -->
         <ellipse cx="64" cy="70" rx="18" ry="24" fill="#FFFFFF" stroke="#EA580C" stroke-width="2"/>
@@ -663,7 +663,7 @@ const unitsData = [
     ],
     // SVG Illustration: กระดูกข้อต่อ ข้อเข่า และการฟื้นฟูการเคลื่อนไหว
     iconSvg: `
-      <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
         <circle cx="80" cy="70" r="50" fill="#F0FDF4"/>
         <!-- โครงสร้างกระดูกข้อต่อ -->
         <!-- กระดูกท่อนบน -->
@@ -707,7 +707,7 @@ const unitsData = [
     ],
     // SVG Illustration: ดวงตาแจ่มใส และสัญลักษณ์การมองเห็น/การได้ยิน
     iconSvg: `
-      <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
         <circle cx="80" cy="70" r="50" fill="#F0F9FF"/>
         <!-- ดวงตาสีฟ้าสดใสแจ่มชัด -->
         <path d="M38 70C48 52 66 44 80 44C94 44 112 52 122 70C112 88 94 96 80 96C66 96 48 88 38 70Z" fill="#FFFFFF" stroke="#0284C7" stroke-width="2.5"/>
@@ -746,7 +746,7 @@ const unitsData = [
     ],
     // SVG Illustration: สองมือประคองหัวใจแห่งการให้ชีวิต มอบโอกาสใหม่
     iconSvg: `
-      <svg viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+      <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
         <circle cx="80" cy="70" r="50" fill="#FFF1F2"/>
         <!-- หัวใจสีแดงเปล่งประกาย -->
         <path d="M80 46C72 32 54 36 52 52C50 68 74 86 80 92C86 86 110 68 108 52C106 36 88 32 80 46Z" fill="#F43F5E"/>

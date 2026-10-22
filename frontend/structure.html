@@ -13,7 +13,7 @@
     href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=2.2">
   <style>
     /* ==========================================================================
        สไตล์โครงสร้างการบริหารระดับ High-Tech Enterprise Healthcare
@@ -277,188 +277,173 @@
       box-shadow: 0 4px 14px rgba(13, 148, 136, 0.3);
     }
 
-    /* 3. ตารางการ์ด 17 กลุ่มงาน */
+    /* 3. ตารางการ์ด 17 กลุ่มงานการพยาบาล สไตล์รูปที่สอง (Units V2 Grid) */
+    .units-v2-grid,
     .groups-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-      margin-bottom: 40px;
+      display: grid !important;
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 22px !important;
+      margin-top: 20px !important;
+      margin-bottom: 40px !important;
     }
 
-    .group-card {
-      background: var(--white);
-      border: 1.5px solid var(--slate-200);
-      border-radius: 20px;
-      padding: 22px 20px;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      cursor: pointer;
-      overflow: hidden;
-    }
-
-    .group-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: #0d9488;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-    }
-
-    .group-card:hover {
-      transform: translateY(-6px);
-      border-color: #0d9488;
-      box-shadow: 0 16px 32px -6px rgba(13, 148, 136, 0.2);
-    }
-
-    .group-card:hover::before {
-      opacity: 1;
-    }
-
-    .group-card-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 14px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--slate-100);
-    }
-
-    .group-number-pill {
-      width: 36px;
-      height: 36px;
-      border-radius: 12px;
-      background: #f0fdfa;
-      color: #0f766e;
-      border: 1.5px solid #99f6e4;
-      font-family: 'Prompt', sans-serif;
-      font-weight: 800;
-      font-size: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .group-leader-avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      border: 2px solid #cbd5e1;
-      overflow: hidden;
-      flex-shrink: 0;
-      background: #f8fafc;
-    }
-
-    .group-leader-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .group-card-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--slate-900);
-      line-height: 1.35;
-      margin-bottom: 3px;
-    }
-
-    .group-card-lead-name {
-      font-size: 12.5px;
-      color: #0d9488;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .group-card-body {
-      flex-grow: 1;
-    }
-
-    .staff-badge-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 10px;
-    }
-
-    .staff-badge {
-      font-size: 11.5px;
-      padding: 3px 9px;
-      border-radius: 6px;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .staff-badge.rn {
-      background: #eff6ff;
-      color: #1d4ed8;
-    }
-
-    .staff-badge.tn {
-      background: #fef3c7;
-      color: #b45309;
-    }
-
-    .group-card-footer {
-      margin-top: 14px;
-      padding-top: 12px;
-      border-top: 1px dashed var(--slate-200);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12.5px;
-      color: var(--slate-500);
-    }
-
-    .btn-view-unit {
-      color: #0d9488;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    /* 4. Modal กล่องรายละเอียดกลุ่มงาน */
-    .unit-modal-box {
-      background: #ffffff;
-      width: 90%;
-      max-width: 540px;
-      border-radius: 24px;
-      padding: 32px;
-      position: relative;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    }
-
-    @media (max-width: 1024px) {
+    @media (max-width: 1200px) {
+      .units-v2-grid,
       .groups-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 20px !important;
       }
+    }
+
+    @media (max-width: 860px) {
+      .units-v2-grid,
+      .groups-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px !important;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .units-v2-grid,
+      .groups-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+    }
+
+    .unit-card-v2,
+    .group-card {
+      background: #ffffff !important;
+      border: 1.5px solid #e2e8f0 !important;
+      border-radius: 20px !important;
+      padding: 26px 18px 22px !important;
+      text-align: center !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      box-shadow: 0 4px 18px -2px rgba(15, 23, 42, 0.04) !important;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      position: relative !important;
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+    }
+
+    .unit-card-v2:hover,
+    .group-card:hover {
+      transform: translateY(-6px) !important;
+      border-color: #14b8a6 !important;
+      box-shadow: 0 16px 36px -6px rgba(13, 148, 136, 0.16), 0 4px 12px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    .unit-card-v2-illustration {
+      width: 120px !important;
+      height: 110px !important;
+      max-width: 120px !important;
+      max-height: 110px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin: 0 auto 18px !important;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      overflow: hidden !important;
+    }
+
+    .unit-card-v2:hover .unit-card-v2-illustration {
+      transform: scale(1.08) !important;
+    }
+
+    .unit-card-v2-illustration svg,
+    .unit-card-v2-illustration img {
+      width: 100% !important;
+      height: 100% !important;
+      max-width: 120px !important;
+      max-height: 110px !important;
+      object-fit: contain !important;
+      display: block !important;
+      margin: 0 auto !important;
+    }
+
+    .unit-card-v2-title {
+      font-size: 15.5px !important;
+      font-weight: 700 !important;
+      color: #0f172a !important;
+      line-height: 1.45 !important;
+      margin: 0 0 16px 0 !important;
+      min-height: 44px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+    }
+
+    .unit-card-v2-actions {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 8px !important;
+      width: 100% !important;
+      margin-top: auto !important;
+    }
+
+    .unit-website-link {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 6px !important;
+      color: #0d9488 !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      text-decoration: none !important;
+      transition: color 0.2s ease, transform 0.2s ease !important;
+    }
+
+    .unit-website-link:hover {
+      color: #0f766e !important;
+      transform: translateY(-1px) !important;
+    }
+
+    .unit-website-subtext {
+      font-size: 11.5px !important;
+      color: #94a3b8 !important;
+      font-weight: 400 !important;
+      margin-top: -6px !important;
+    }
+
+    .unit-detail-link-btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 6px !important;
+      background: #f0fdfa !important;
+      color: #0f766e !important;
+      border: 1px solid #ccfbf1 !important;
+      padding: 6px 14px !important;
+      border-radius: 50px !important;
+      font-size: 12.5px !important;
+      font-weight: 600 !important;
+      text-decoration: none !important;
+      width: 100% !important;
+      transition: all 0.2s ease !important;
+      margin-top: 6px !important;
+      box-sizing: border-box !important;
+    }
+
+    .unit-detail-link-btn:hover {
+      background: #0d9488 !important;
+      color: #ffffff !important;
+      border-color: #0d9488 !important;
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25) !important;
     }
 
     @media (max-width: 680px) {
-
       .director-card,
       .nursing-director-card {
-        padding: 24px 18px;
+        padding: 24px 18px !important;
       }
 
       .exec-details h3 {
-        font-size: 19px;
-      }
-
-      .groups-grid {
-        grid-template-columns: 1fr;
+        font-size: 19px !important;
       }
     }
   </style>
@@ -685,7 +670,7 @@
         </div>
 
         <!-- กริดแสดงการ์ดทั้ง 17 กลุ่มงาน (สไตล์รูปที่สอง) -->
-        <div class="units-v2-grid" id="groups-container">
+        <div class="units-v2-grid" id="groups-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; margin-top: 20px;">
           <!-- Rendered dynamically by JavaScript from js/units-data.js -->
         </div>
       </div>
@@ -877,8 +862,8 @@
     </div>
   </footer>
 
-  <script src="js/app.js"></script>
-  <script src="js/units-data.js"></script>
+  <script src="js/app.js?v=2.2"></script>
+  <script src="js/units-data.js?v=2.2"></script>
   <script>
     let currentFilter = 'all';
     let currentSearchKeyword = '';
@@ -935,25 +920,25 @@
       }
 
       container.innerHTML = list.map(u => `
-        <article class="unit-card-v2" onclick="handleCardNavigate('${u.detailUrl}')" style="cursor: pointer;">
+        <article class="unit-card-v2" onclick="handleCardNavigate('${u.detailUrl}')" style="cursor: pointer; background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 20px; padding: 26px 18px 22px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: space-between; box-shadow: 0 4px 18px -2px rgba(15, 23, 42, 0.04); box-sizing: border-box;">
           <!-- 1. ภาพไอคอนเวกเตอร์สไตล์รูปที่สอง (ทั้ง 17 กลุ่มการพยาบาล) -->
-          <div class="unit-card-v2-illustration">
-            ${u.iconSvg || `<img src="${u.iconImage || 'images/logo.png'}" alt="${u.name}">`}
+          <div class="unit-card-v2-illustration" style="width: 120px; height: 110px; max-width: 120px; max-height: 110px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; overflow: hidden;">
+            ${u.iconSvg || `<img src="${u.iconImage || 'images/logo.png'}" alt="${u.name}" style="max-width:100%; max-height:100%;">`}
           </div>
 
           <!-- 2. ชื่อกลุ่มงาน -->
-          <h3 class="unit-card-v2-title">${u.name}</h3>
+          <h3 class="unit-card-v2-title" style="font-size: 15.5px; font-weight: 700; color: #0f172a; line-height: 1.45; margin: 0 0 16px 0; min-height: 44px; display: flex; align-items: center; justify-content: center; text-align: center;">${u.name}</h3>
 
           <!-- 3. ลิงก์และปุ่มกด -->
-          <div class="unit-card-v2-actions">
+          <div class="unit-card-v2-actions" style="display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; margin-top: auto;">
             <!-- โค้ดไว้ให้ว่าเมื่อคลิกแล้วจะเด้งไปหน้าเว็บต่างๆ (เปิดในแท็บใหม่) -->
-            <a href="${u.websiteUrl}" target="_blank" rel="noopener noreferrer" class="unit-website-link" onclick="event.stopPropagation()">
+            <a href="${u.websiteUrl}" target="_blank" rel="noopener noreferrer" class="unit-website-link" onclick="event.stopPropagation()" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px; color: #0d9488; font-size: 14px; font-weight: 600; text-decoration: none;">
               เข้าสู่เว็บไซต์ <i class="fa-solid fa-arrow-up-right-from-square"></i>
             </a>
-            <span class="unit-website-subtext">เปิดในแท็บใหม่</span>
+            <span class="unit-website-subtext" style="font-size: 11.5px; color: #94a3b8; font-weight: 400; margin-top: -6px;">เปิดในแท็บใหม่</span>
 
             <!-- โค้ดไว้ให้ในการเมื่อคลิกแล้วจะโหลดอีกหน้านึงเพื่อดูข้อมูล -->
-            <a href="${u.detailUrl}" class="unit-detail-link-btn" onclick="event.stopPropagation()">
+            <a href="${u.detailUrl}" class="unit-detail-link-btn" onclick="event.stopPropagation()" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: #f0fdfa; color: #0f766e; border: 1px solid #ccfbf1; padding: 6px 14px; border-radius: 50px; font-size: 12.5px; font-weight: 600; text-decoration: none; width: 100%; margin-top: 6px; box-sizing: border-box;">
               <i class="fa-solid fa-circle-info"></i> ดูข้อมูลกลุ่มงาน
             </a>
           </div>
