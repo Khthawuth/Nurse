@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>เข้าสู่ระบบ | กลุ่มการพยาบาล โรงพยาบาลแม่สอด</title>
   <link rel="icon" type="image/png" href="images/logo.png">
   <link rel="apple-touch-icon" href="images/logo.png">
-  <meta name="description" content="ระบบเข้าสู่ระบบเพื่อจัดการข้อมูลข่าวสารและกิจกรรม กลุ่มภารกิจด้านการพยาบาล โรงพยาบาลแม่สอด">
+  <meta name="description"
+    content="ระบบเข้าสู่ระบบเพื่อจัดการข้อมูลข่าวสารและกิจกรรม กลุ่มภารกิจด้านการพยาบาล โรงพยาบาลแม่สอด">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
   <style>
@@ -20,6 +24,7 @@
       justify-content: center;
       padding: 40px 20px;
     }
+
     .auth-card {
       background: var(--white);
       width: 100%;
@@ -31,6 +36,7 @@
       text-align: center;
       position: relative;
     }
+
     .auth-icon-wrap {
       width: 68px;
       height: 68px;
@@ -44,35 +50,41 @@
       margin: 0 auto 16px;
       box-shadow: 0 4px 14px rgba(13, 148, 136, 0.15);
     }
-    .auth-card h2 { 
-      color: var(--slate-900); 
-      font-size: 24px; 
-      margin-bottom: 6px; 
+
+    .auth-card h2 {
+      color: var(--slate-900);
+      font-size: 24px;
+      margin-bottom: 6px;
       font-weight: 700;
     }
-    .auth-card p.sub { 
-      color: var(--slate-500); 
-      font-size: 14px; 
-      margin-bottom: 26px; 
+
+    .auth-card p.sub {
+      color: var(--slate-500);
+      font-size: 14px;
+      margin-bottom: 26px;
     }
-    .switch-link { 
-      margin-top: 24px; 
-      font-size: 14px; 
-      color: var(--slate-600); 
+
+    .switch-link {
+      margin-top: 24px;
+      font-size: 14px;
+      color: var(--slate-600);
       border-top: 1px solid var(--slate-100);
       padding-top: 18px;
     }
-    .switch-link a { 
-      color: var(--primary-700); 
-      font-weight: 600; 
-      text-decoration: none; 
-      cursor: pointer; 
+
+    .switch-link a {
+      color: var(--primary-700);
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
       transition: color var(--transition-fast);
     }
+
     .switch-link a:hover {
       color: var(--primary-800);
       text-decoration: underline;
     }
+
     .already-logged-box {
       margin-bottom: 20px;
       background: var(--primary-50);
@@ -83,17 +95,20 @@
       font-size: 13.5px;
       color: var(--primary-900);
     }
+
     .already-logged-box strong {
       display: block;
       margin-bottom: 6px;
       color: var(--primary-800);
     }
+
     .already-logged-box .btn-row {
       display: flex;
       gap: 8px;
       justify-content: center;
       margin-top: 10px;
     }
+
     .btn-quick-admin {
       background: var(--primary-700);
       color: white;
@@ -106,10 +121,12 @@
       align-items: center;
       gap: 6px;
     }
+
     .btn-quick-admin:hover {
       background: var(--primary-800);
       color: white;
     }
+
     .btn-quick-logout {
       background: var(--slate-200);
       color: var(--slate-700);
@@ -120,11 +137,23 @@
       font-weight: 600;
       cursor: pointer;
     }
+
     .btn-quick-logout:hover {
       background: var(--slate-300);
     }
 
-    /* กล่องป๊อปอัปแจ้งเตือน Custom Modal */
+    .otp-input-large {
+      letter-spacing: 12px;
+      font-size: 32px !important;
+      font-weight: 800 !important;
+      text-align: center;
+      padding: 12px !important;
+      color: #0f766e !important;
+      background: #f0fdfa !important;
+      border: 2px solid #0d9488 !important;
+      border-radius: 12px !important;
+    }
+
     .custom-modal-overlay {
       position: fixed;
       inset: 0;
@@ -137,6 +166,7 @@
       z-index: 99999;
       animation: modalFadeIn 0.2s ease;
     }
+
     .custom-modal-box {
       background: #ffffff;
       width: 90%;
@@ -147,8 +177,29 @@
       text-align: center;
       animation: modalPopScale 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    @keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes modalPopScale { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes modalPopScale {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
     .custom-modal-icon {
       width: 64px;
       height: 64px;
@@ -159,12 +210,42 @@
       justify-content: center;
       font-size: 32px;
     }
-    .custom-modal-icon.success { background: #dcfce7; color: #16a34a; }
-    .custom-modal-icon.error { background: #fee2e2; color: #ef4444; }
-    .custom-modal-icon.warning { background: #fef3c7; color: #d97706; }
-    .custom-modal-icon.info { background: #e0f2fe; color: #0284c7; }
-    .custom-modal-title { font-size: 20px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
-    .custom-modal-desc { font-size: 14.5px; color: #64748b; margin-bottom: 22px; line-height: 1.6; white-space: pre-line; }
+
+    .custom-modal-icon.success {
+      background: #dcfce7;
+      color: #16a34a;
+    }
+
+    .custom-modal-icon.error {
+      background: #fee2e2;
+      color: #ef4444;
+    }
+
+    .custom-modal-icon.warning {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .custom-modal-icon.info {
+      background: #e0f2fe;
+      color: #0284c7;
+    }
+
+    .custom-modal-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+
+    .custom-modal-desc {
+      font-size: 14.5px;
+      color: #64748b;
+      margin-bottom: 22px;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+
     .custom-modal-btn {
       width: 100%;
       padding: 12px 20px;
@@ -177,17 +258,21 @@
       cursor: pointer;
       transition: background 0.15s ease;
     }
-    .custom-modal-btn:hover { background: #0f766e; }
+
+    .custom-modal-btn:hover {
+      background: #0f766e;
+    }
   </style>
 </head>
+
 <body>
 
-  <!-- แถบ Header -->
   <header class="navbar-wrapper">
     <div class="navbar-container">
       <a href="index.html" class="brand-section">
         <div class="brand-logo-wrap">
-          <img src="images/logo.png" alt="ตราสัญลักษณ์กลุ่มการพยาบาล โรงพยาบาลแม่สอด" class="brand-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/f7/Emblem_of_the_Ministry_of_Public_Health_of_Thailand.svg'">
+          <img src="images/logo.png" alt="ตราสัญลักษณ์กลุ่มการพยาบาล โรงพยาบาลแม่สอด" class="brand-logo"
+            onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/f7/Emblem_of_the_Ministry_of_Public_Health_of_Thailand.svg'">
         </div>
         <div class="brand-text">
           <h2>กลุ่มการพยาบาล โรงพยาบาลแม่สอด</h2>
@@ -200,54 +285,89 @@
     </div>
   </header>
 
-  <!-- กล่องฟอร์มล็อกอิน -->
   <div class="auth-wrapper">
     <div class="auth-card">
-      <div class="auth-icon-wrap">
+      <div class="auth-icon-wrap" id="auth-main-icon">
         <i class="fa-solid fa-shield-halved"></i>
       </div>
       <h2 id="auth-title">เข้าสู่ระบบ</h2>
-      <p id="auth-sub" class="sub">สำหรับเจ้าหน้าที่ผู้มีสิทธิ์จัดการข้อมูลข่าวสาร</p>
+      <p id="auth-sub" class="sub">ระบบยืนยันตัวตน 2 ขั้นตอน (MFA) สำหรับเจ้าหน้าที่</p>
 
-      <!-- กล่องเตือนกรณีเข้าสู่ระบบอยู่แล้ว -->
       <div id="already-logged-banner" class="already-logged-box hidden" style="display: none;">
         <strong><i class="fa-solid fa-circle-check" style="color: #10b981;"></i> คุณกำลังเข้าสู่ระบบอยู่แล้ว</strong>
         <span id="already-user-text"></span>
         <div class="btn-row">
           <a href="admin.html" class="btn-quick-admin"><i class="fa-solid fa-gauge-high"></i> ไปหน้าจัดการ (Admin)</a>
-          <button type="button" class="btn-quick-logout" onclick="clearExistingLogin()"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</button>
+          <button type="button" class="btn-quick-logout" onclick="clearExistingLogin()"><i
+              class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</button>
         </div>
       </div>
 
+      <!-- ขั้นตอนที่ 1: ตรวจสอบ Username/Password -->
       <form id="auth-form" style="text-align: left;">
         <div id="fullname-field" class="form-group hidden">
           <label>ชื่อ - สกุล ผู้ขอใช้งาน</label>
           <input type="text" id="fullname" placeholder="เช่น พว.สมศรี มีสุข">
         </div>
 
-        <div class="form-group">
+        <div id="email-field" class="form-group hidden">
+          <label>อีเมลสำหรับรับรหัส OTP ยืนยันตัวตน <span style="color: #ef4444;">*</span></label>
+          <input type="email" id="email" placeholder="เช่น yourname@hospital.moph.go.th">
+        </div>
+
+        <div class="form-group" id="username-group">
           <label>ชื่อผู้ใช้งาน (Username)</label>
           <input type="text" id="username" required placeholder="กรอกชื่อผู้ใช้ของคุณ" autocomplete="username">
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="password-group">
           <label>รหัสผ่าน (Password)</label>
           <input type="password" id="password" required placeholder="กรอกรหัสผ่าน" autocomplete="current-password">
         </div>
 
-        <button type="submit" id="btn-auth-submit" class="btn-submit" style="width: 100%; margin-top: 10px; padding: 12px 20px; font-size: 15px;">
+        <button type="submit" id="btn-auth-submit" class="btn-submit"
+          style="width: 100%; margin-top: 10px; padding: 12px 20px; font-size: 15px;">
           เข้าสู่ระบบ
         </button>
       </form>
 
-      <div class="switch-link">
+      <!-- ขั้นตอนที่ 2: กรอกรหัส OTP 6 หลักทางอีเมล (บังคับทุกบัญชี) -->
+      <div id="mfa-verify-step" class="hidden" style="display: none; text-align: left; margin-top: 10px;">
+        <div
+          style="background: #f0fdfa; border: 1.5px solid #99f6e4; padding: 14px; border-radius: 12px; margin-bottom: 20px; font-size: 13.5px; color: #0f766e; line-height: 1.6;">
+          <i class="fa-solid fa-envelope-circle-check" style="color: #0d9488; font-size: 18px; margin-right: 6px;"></i>
+          ส่งรหัสผ่าน OTP 6 หลักไปยังอีเมล: <strong id="mfa-masked-email-display" style="color: #0d9488;"></strong> แล้ว
+          (รหัสมีอายุ 5 นาที)
+        </div>
+
+        <form id="mfa-otp-form">
+          <div class="form-group">
+            <label style="font-weight: 700; color: #0f172a; text-align: center; display: block; margin-bottom: 8px;">
+              กรอกรหัสยืนยัน OTP 6 หลัก
+            </label>
+            <input type="text" id="mfa-otp-input" class="otp-input-large" maxlength="6" pattern="[0-9]{6}" required
+              placeholder="••••••" autocomplete="one-time-code">
+          </div>
+
+          <button type="submit" id="btn-verify-otp" class="btn-submit"
+            style="width: 100%; margin-top: 14px; padding: 12px 20px; font-size: 15.5px; background: #0d9488;">
+            <i class="fa-solid fa-key"></i> ยืนยันรหัส OTP เข้าสู่ระบบ
+          </button>
+
+          <button type="button" class="btn-cancel" style="width: 100%; margin-top: 10px; padding: 10px;"
+            onclick="cancelMfaStep()">
+            <i class="fa-solid fa-arrow-left"></i> ย้อนกลับไปหน้าเข้าสู่ระบบ
+          </button>
+        </form>
+      </div>
+
+      <div class="switch-link" id="switch-link-box">
         <span id="switch-text">ยังไม่มีสิทธิ์เข้าใช้งาน?</span>
         <a id="btn-toggle-mode" onclick="toggleAuthMode()">ลงทะเบียนขอสิทธิ์ใช้งานที่นี่</a>
       </div>
     </div>
   </div>
 
-  <!-- กล่องป๊อปอัปแจ้งเตือนกลางจอดีไซน์สวยงาม -->
   <div id="app-modal" class="custom-modal-overlay hidden" style="display: none;">
     <div class="custom-modal-box">
       <div id="modal-icon" class="custom-modal-icon"></div>
@@ -257,63 +377,15 @@
     </div>
   </div>
 
-  <!-- Footer ท้ายเว็บไซต์ -->
-  <footer class="site-footer">
-    <div class="footer-container">
-      <div class="footer-col footer-about">
-        <h4>กลุ่มการพยาบาล โรงพยาบาลแม่สอด</h4>
-        <p>
-          มุ่งมั่นพัฒนาการบริการพยาบาลที่ได้มาตรฐานสากล บริการด้วยหัวใจความเป็นมนุษย์ ดำรงไว้ซึ่งจริยธรรมวิชาชีพ เพื่อสุขภาวะที่ดีของผู้รับบริการในพื้นที่ชายแดน
-        </p>
-        <div class="footer-emergency-card">
-          <div class="footer-emergency-icon">
-            <i class="fa-solid fa-truck-medical"></i>
-          </div>
-          <div class="footer-emergency-text">
-            <strong>อุบัติเหตุ - ฉุกเฉิน (EMS 24 ชม.)</strong>
-            <span>โทร. 1669 หรือ 055-541600</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-col">
-        <h4>ข้อมูลการติดต่อ</h4>
-        <ul class="footer-contact-list">
-          <li>
-            <i class="fa-solid fa-location-dot"></i>
-            <span>เลขที่ 11 ถนนศรีพานิช ตำบลแม่สอด อำเภอแม่สอด จังหวัดตาก 63110</span>
-          </li>
-          <li>
-            <i class="fa-solid fa-phone"></i>
-            <span>โทรศัพท์กลาง: 055-531229, 055-531224</span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>หน่วยงานที่เกี่ยวข้อง</h4>
-        <ul class="footer-links-list">
-          <li><a href="https://maesothospital.go.th/" target="_blank"><i class="fa-solid fa-angle-right"></i> โรงพยาบาลแม่สอด</a></li>
-          <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> หน้าแรก</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2026 กลุ่มการพยาบาล โรงพยาบาลแม่สอด (Mae Sot Hospital). สงวนลิขสิทธิ์</p>
-      <p>ระบบสารสนเทศและการสื่อสารงานพยาบาล</p>
-    </div>
-  </footer>
-
   <script>
-    // ตรวจจับ Host อัตโนมัติ (รองรับทั้ง localhost, 127.0.0.1 หรือ LAN IP)
     const backendHost = (window.location.hostname && window.location.hostname !== '') ? window.location.hostname : 'localhost';
     const API_BASE = `http://${backendHost}:4000/api`;
 
     let isRegisterMode = false;
     let modalCallback = null;
     let autoRedirectTimeout = null;
+    let currentMfaTicket = null;
 
-    // ตรวจสอบว่าผู้ใช้ล็อกอินค้างไว้อยู่แล้วหรือไม่
     window.addEventListener('DOMContentLoaded', () => {
       const existingToken = localStorage.getItem('nursing_token');
       const existingUser = localStorage.getItem('nursing_user_name');
@@ -332,6 +404,8 @@
       localStorage.removeItem('nursing_token');
       localStorage.removeItem('nursing_user_role');
       localStorage.removeItem('nursing_user_name');
+      localStorage.removeItem('nursing_user_id');
+      localStorage.removeItem('nursing_username');
       const banner = document.getElementById('already-logged-banner');
       if (banner) {
         banner.classList.add('hidden');
@@ -350,15 +424,10 @@
       desc.innerText = message;
 
       icon.className = `custom-modal-icon ${type}`;
-      if (type === 'success') {
-        icon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
-      } else if (type === 'error') {
-        icon.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
-      } else if (type === 'warning') {
-        icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
-      } else {
-        icon.innerHTML = '<i class="fa-solid fa-circle-info"></i>';
-      }
+      if (type === 'success') icon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+      else if (type === 'error') icon.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
+      else if (type === 'warning') icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+      else icon.innerHTML = '<i class="fa-solid fa-circle-info"></i>';
 
       modal.classList.remove('hidden');
       modal.style.display = 'flex';
@@ -384,40 +453,47 @@
       const title = document.getElementById('auth-title');
       const sub = document.getElementById('auth-sub');
       const fullnameField = document.getElementById('fullname-field');
+      const emailField = document.getElementById('email-field');
+      const emailInput = document.getElementById('email');
       const submitBtn = document.getElementById('btn-auth-submit');
       const switchText = document.getElementById('switch-text');
       const toggleLink = document.getElementById('btn-toggle-mode');
 
       if (isRegisterMode) {
         title.innerText = 'ลงทะเบียนขอสิทธิ์ใช้งาน';
-        sub.innerText = 'ข้อมูลจะถูกส่งให้ผู้พัฒนาระบบตรวจสอบและอนุมัติ';
+        sub.innerText = 'ระบบจะส่งข้อมูลให้ผู้ดูแลระบบอนุมัติ และใช้อีเมลสำหรับรับรหัส MFA';
         fullnameField.classList.remove('hidden');
+        emailField.classList.remove('hidden');
         document.getElementById('fullname').required = true;
+        emailInput.required = true;
         submitBtn.innerText = 'ส่งคำขอลงทะเบียน';
         switchText.innerText = 'มีบัญชีที่ได้รับอนุมัติแล้ว?';
         toggleLink.innerText = 'เข้าสู่ระบบที่นี่';
       } else {
         title.innerText = 'เข้าสู่ระบบ';
-        sub.innerText = 'สำหรับเจ้าหน้าที่ผู้มีสิทธิ์จัดการข้อมูลข่าวสาร';
+        sub.innerText = 'ระบบยืนยันตัวตน 2 ขั้นตอน (MFA) สำหรับเจ้าหน้าที่';
         fullnameField.classList.add('hidden');
+        emailField.classList.add('hidden');
         document.getElementById('fullname').required = false;
+        emailInput.required = false;
         submitBtn.innerText = 'เข้าสู่ระบบ';
         switchText.innerText = 'ยังไม่มีสิทธิ์เข้าใช้งาน?';
         toggleLink.innerText = 'ลงทะเบียนขอสิทธิ์ใช้งานที่นี่';
       }
     }
 
+    // ล็อกอินขั้น 1
     document.getElementById('auth-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const submitBtn = document.getElementById('btn-auth-submit');
       const username = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value;
       const fullname = document.getElementById('fullname').value.trim();
+      const email = document.getElementById('email').value.trim();
 
       const endpoint = isRegisterMode ? '/register' : '/login';
-      const bodyData = isRegisterMode ? { fullname, username, password } : { username, password };
+      const bodyData = isRegisterMode ? { fullname, username, password, email } : { username, password };
 
-      // แสดงสถานะกำลังประมวลผลบนปุ่ม
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังตรวจสอบข้อมูล...';
 
@@ -429,59 +505,113 @@
         });
         const data = await res.json();
 
+        submitBtn.disabled = false;
+        submitBtn.innerText = isRegisterMode ? 'ส่งคำขอลงทะเบียน' : 'เข้าสู่ระบบ';
+
         if (!res.ok) {
-          submitBtn.disabled = false;
-          submitBtn.innerText = isRegisterMode ? 'ส่งคำขอลงทะเบียน' : 'เข้าสู่ระบบ';
           showAppModal('แจ้งเตือน', data.error || 'เกิดข้อผิดพลาดในการดำเนินการ', 'error');
           return;
         }
 
         if (isRegisterMode) {
-          submitBtn.disabled = false;
-          submitBtn.innerText = 'ส่งคำขอลงทะเบียน';
           showAppModal('ส่งคำขอสำเร็จ', data.message, 'success', () => {
             toggleAuthMode();
           });
-        } else {
-          // บันทึก Token และข้อมูลผู้ใช้ลง localStorage
-          localStorage.setItem('nursing_token', data.token);
-          localStorage.setItem('nursing_user_role', data.user.role);
-          localStorage.setItem('nursing_user_name', data.user.fullname);
+          return;
+        }
 
-          submitBtn.style.background = '#059669';
-          submitBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> เข้าสู่ระบบสำเร็จ กำลังพาไปหน้าแอดมิน...';
+        // บังคับสลับไปหน้ากรอก OTP ทันที
+        if (data.mfa_required) {
+          currentMfaTicket = data.mfa_ticket;
+          document.getElementById('auth-form').style.display = 'none';
+          document.getElementById('switch-link-box').style.display = 'none';
+          document.getElementById('auth-title').innerText = 'ยืนยันรหัส OTP (MFA)';
+          document.getElementById('auth-sub').innerText = 'ระบบความปลอดภัย 2 ขั้นตอนสำหรับเจ้าหน้าที่';
+          document.getElementById('auth-main-icon').innerHTML = '<i class="fa-solid fa-envelope-open-text"></i>';
+          document.getElementById('mfa-masked-email-display').innerText = data.masked_email;
 
-          // ฟังก์ชันนำทางไปหน้าแอดมิน (admin.html) ทันที
-          let isRedirected = false;
-          const goToAdmin = () => {
-            if (isRedirected) return;
-            isRedirected = true;
-            window.location.href = 'admin.html';
-          };
-
-          // แสดงป๊อปอัปแจ้งเตือนสวยงาม พร้อมตั้งเวลานำทางอัตโนมัติใน 1 วินาที
-          showAppModal(
-            'เข้าสู่ระบบสำเร็จ', 
-            `ยินดีต้อนรับคุณ ${data.user.fullname}\nระบบกำลังนำท่านเข้าสู่หน้าจัดการข้อมูล (Admin Portal)...`, 
-            'success', 
-            () => {
-              goToAdmin();
-            }
-          );
-
-          // ทำงานเด้งเข้าหน้าแอดมินอัตโนมัติ ไม่ต้องรอกดปุ่มตกลง
-          autoRedirectTimeout = setTimeout(goToAdmin, 1000);
+          const mfaStep = document.getElementById('mfa-verify-step');
+          mfaStep.classList.remove('hidden');
+          mfaStep.style.display = 'block';
+          document.getElementById('mfa-otp-input').focus();
         }
       } catch (err) {
         submitBtn.disabled = false;
         submitBtn.innerText = isRegisterMode ? 'ส่งคำขอลงทะเบียน' : 'เข้าสู่ระบบ';
-        showAppModal(
-          'การเชื่อมต่อล้มเหลว', 
-          'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ Backend (พอร์ต 4000) ได้\nกรุณาตรวจสอบว่าเซิร์ฟเวอร์กำลังทำงานอยู่ (รันคำสั่ง npm start ในโปรเจกต์)', 
-          'error'
-        );
+        showAppModal('การเชื่อมต่อล้มเหลว', 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ Backend ได้', 'error');
       }
     });
+
+    // ยืนยัน OTP ขั้น 2
+    document.getElementById('mfa-otp-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const otpInput = document.getElementById('mfa-otp-input');
+      const verifyBtn = document.getElementById('btn-verify-otp');
+      const otp = otpInput.value.trim();
+
+      if (otp.length !== 6) {
+        showAppModal('ข้อผิดพลาด', 'กรุณากรอกรหัส OTP ให้ครบ 6 หลัก', 'warning');
+        return;
+      }
+
+      verifyBtn.disabled = true;
+      verifyBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังตรวจสอบรหัส OTP...';
+
+      try {
+        const res = await fetch(`${API_BASE}/login/verify-otp`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mfa_ticket: currentMfaTicket, otp })
+        });
+        const data = await res.json();
+
+        verifyBtn.disabled = false;
+        verifyBtn.innerHTML = '<i class="fa-solid fa-key"></i> ยืนยันรหัส OTP เข้าสู่ระบบ';
+
+        if (!res.ok) {
+          showAppModal('การยืนยันล้มเหลว', data.error || 'รหัส OTP ไม่ถูกต้อง', 'error');
+          return;
+        }
+
+        // บันทึก Token เข้าสู่ระบบสำเร็จ
+        localStorage.setItem('nursing_token', data.token);
+        localStorage.setItem('nursing_user_role', data.user.role);
+        localStorage.setItem('nursing_user_name', data.user.fullname);
+        localStorage.setItem('nursing_user_id', data.user.id);
+        localStorage.setItem('nursing_username', data.user.username);
+
+        const goToAdmin = () => {
+          window.location.href = 'admin.html';
+        };
+
+        showAppModal(
+          'เข้าสู่ระบบสำเร็จ',
+          `ยินดีต้อนรับคุณ ${data.user.fullname}\nกำลังนำท่านเข้าสู่หน้าจัดการข้อมูล (Admin Portal)...`,
+          'success',
+          goToAdmin
+        );
+
+        autoRedirectTimeout = setTimeout(goToAdmin, 1200);
+      } catch (err) {
+        verifyBtn.disabled = false;
+        verifyBtn.innerHTML = '<i class="fa-solid fa-key"></i> ยืนยันรหัส OTP เข้าสู่ระบบ';
+        showAppModal('ข้อผิดพลาด', 'เชื่อมต่อเซิร์ฟเวอร์ล้มเหลว', 'error');
+      }
+    });
+
+    function cancelMfaStep() {
+      currentMfaTicket = null;
+      document.getElementById('mfa-otp-form').reset();
+      document.getElementById('mfa-verify-step').classList.add('hidden');
+      document.getElementById('mfa-verify-step').style.display = 'none';
+
+      document.getElementById('auth-form').style.display = 'block';
+      document.getElementById('switch-link-box').style.display = 'block';
+      document.getElementById('auth-title').innerText = 'เข้าสู่ระบบ';
+      document.getElementById('auth-sub').innerText = 'ระบบยืนยันตัวตน 2 ขั้นตอน (MFA) สำหรับเจ้าหน้าที่';
+      document.getElementById('auth-main-icon').innerHTML = '<i class="fa-solid fa-shield-halved"></i>';
+    }
   </script>
 </body>
+
 </html>

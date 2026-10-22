@@ -11,6 +11,9 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.3",
     "multer": "^1.4.5-lts.1",
+    "nodemailer": "^10.1.7",
+    "otplib": "^13.5.0",
+    "qrcode": "^1.5.4",
     "sqlite3": "^5.1.7"
   }
 }

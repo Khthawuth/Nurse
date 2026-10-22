@@ -1,7 +1,7 @@
 /**
  * กลุ่มการพยาบาล โรงพยาบาลแม่สอด
  * Nursing Division, Mae Sot Hospital
- * Frontend Logic & Interactions
+ * Frontend Logic & Interactions (Modern Healthcare Edition)
  */
 
 let allFetchedPosts = [];
@@ -60,40 +60,6 @@ function formatThaiDate(dateString) {
   return `${day} ${month} ${year}`;
 }
 
-// ================= 3. ดึงข้อมูลข่าวสาร & กิจกรรมหน้าแรก พร้อมระบบแบ่งหน้า (Pagination) & ค้นหาอัจฉริยะ (Live Search) =================
-const POSTS_PER_PAGE = 8;
-let currentNewsPage = 1;
-let currentActivityPage = 1;
-let currentNewsSearch = '';
-let currentActivitySearch = '';
-
-// กรองข่าวประชาสัมพันธ์ตามคำค้นหา
-function getNewsPosts() {
-  let list = allFetchedPosts.filter(p => p.category === 'news');
-  if (currentNewsSearch && currentNewsSearch.trim() !== '') {
-    const q = currentNewsSearch.trim().toLowerCase();
-    list = list.filter(p => 
-      (p.title && p.title.toLowerCase().includes(q)) || 
-      (p.description && p.description.toLowerCase().includes(q))
-    );
-  }
-  return list;
-}
-
-// กรองกิจกรรมตามคำค้นหา
-function getActivityPosts() {
-  let list = allFetchedPosts.filter(p => p.category === 'activity');
-  if (currentActivitySearch && currentActivitySearch.trim() !== '') {
-    const q = currentActivitySearch.trim().toLowerCase();
-    list = list.filter(p => 
-      (p.title && p.title.toLowerCase().includes(q)) || 
-      (p.description && p.description.toLowerCase().includes(q))
-    );
-  }
-  return list;
-}
-
-// แปลงตัวอักษรพิเศษป้องกัน XSS
 function escapeHtml(str) {
   if (!str) return '';
   return String(str)
@@ -104,7 +70,6 @@ function escapeHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
-// ไฮไลท์คำค้นหาที่ตรงกันในข้อความ
 function highlightKeyword(text, keyword) {
   if (!text || !keyword || keyword.trim() === '') return text;
   const escaped = keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -112,7 +77,37 @@ function highlightKeyword(text, keyword) {
   return text.replace(regex, '<mark class="search-highlight-text">$1</mark>');
 }
 
-// จัดการค้นหาข่าวประชาสัมพันธ์ (Live Search)
+// ================= 3. ดึงข้อมูลข่าวสาร & กิจกรรมหน้าแรก (Pagination & Live Search) =================
+const POSTS_PER_PAGE = 8;
+let currentNewsPage = 1;
+let currentActivityPage = 1;
+let currentNewsSearch = '';
+let currentActivitySearch = '';
+
+function getNewsPosts() {
+  let list = allFetchedPosts.filter(p => p.category === 'news');
+  if (currentNewsSearch && currentNewsSearch.trim() !== '') {
+    const q = currentNewsSearch.trim().toLowerCase();
+    list = list.filter(p =>
+      (p.title && p.title.toLowerCase().includes(q)) ||
+      (p.description && p.description.toLowerCase().includes(q))
+    );
+  }
+  return list;
+}
+
+function getActivityPosts() {
+  let list = allFetchedPosts.filter(p => p.category === 'activity');
+  if (currentActivitySearch && currentActivitySearch.trim() !== '') {
+    const q = currentActivitySearch.trim().toLowerCase();
+    list = list.filter(p =>
+      (p.title && p.title.toLowerCase().includes(q)) ||
+      (p.description && p.description.toLowerCase().includes(q))
+    );
+  }
+  return list;
+}
+
 function handleNewsSearch(keyword) {
   currentNewsSearch = keyword || '';
   const clearBtn = document.getElementById('btn-clear-news-search');
@@ -149,7 +144,6 @@ function handleNewsSearch(keyword) {
   }
 }
 
-// ล้างคำค้นหาข่าว
 function clearNewsSearch() {
   currentNewsSearch = '';
   const input = document.getElementById('news-search-input');
@@ -166,7 +160,6 @@ function clearNewsSearch() {
   renderNewsSection(1);
 }
 
-// จัดการค้นหากิจกรรม (Live Search)
 function handleActivitySearch(keyword) {
   currentActivitySearch = keyword || '';
   const clearBtn = document.getElementById('btn-clear-activity-search');
@@ -203,7 +196,6 @@ function handleActivitySearch(keyword) {
   }
 }
 
-// ล้างคำค้นหากิจกรรม
 function clearActivitySearch() {
   currentActivitySearch = '';
   const input = document.getElementById('activity-search-input');
@@ -236,24 +228,23 @@ async function loadDynamicPosts() {
     console.warn('โหลดข้อมูลจาก API ไม่สำเร็จ (หรือเซิร์ฟเวอร์ยังไม่เปิด):', err);
     if (newsGrid) {
       newsGrid.innerHTML = `
-        <div class="empty-state">
-          <i class="fa-solid fa-circle-exclamation" style="color: #f59e0b;"></i>
-          <p>กำลังเชื่อมต่อระบบข้อมูลข่าวสาร...</p>
+        <div class="empty-state" style="grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
+          <i class="fa-solid fa-circle-exclamation" style="color: #f59e0b; font-size: 32px; margin-bottom: 12px; display: block;"></i>
+          <p style="color: #64748b;">กำลังเชื่อมต่อระบบฐานข้อมูลข่าวสาร...</p>
         </div>
       `;
     }
     if (activityGrid) {
       activityGrid.innerHTML = `
-        <div class="empty-state">
-          <i class="fa-solid fa-circle-exclamation" style="color: #f59e0b;"></i>
-          <p>กำลังเชื่อมต่อระบบข้อมูลกิจกรรม...</p>
+        <div class="empty-state" style="grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
+          <i class="fa-solid fa-circle-exclamation" style="color: #f59e0b; font-size: 32px; margin-bottom: 12px; display: block;"></i>
+          <p style="color: #64748b;">กำลังเชื่อมต่อระบบฐานข้อมูลกิจกรรม...</p>
         </div>
       `;
     }
   }
 }
 
-// แสดงรายการข่าวประชาสัมพันธ์ตามหน้าที่เลือก
 function renderNewsSection(page = 1) {
   const newsGrid = document.getElementById('dynamic-news-grid');
   const paginationContainer = document.getElementById('news-pagination');
@@ -265,10 +256,10 @@ function renderNewsSection(page = 1) {
   if (newsList.length === 0) {
     if (currentNewsSearch.trim() !== '') {
       newsGrid.innerHTML = `
-        <div class="empty-search-state">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <h3>ไม่พบข่าวประชาสัมพันธ์ที่ตรงกับ "${escapeHtml(currentNewsSearch)}"</h3>
-          <p>ลองตรวจสอบตัวสะกด หรือค้นหาด้วยคำอื่นที่ใกล้เคียง</p>
+        <div class="empty-search-state" style="grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
+          <i class="fa-solid fa-magnifying-glass" style="font-size: 32px; color: #cbd5e1; margin-bottom: 10px; display: block;"></i>
+          <h3 style="color: #0f172a; margin-bottom: 6px;">ไม่พบข่าวประชาสัมพันธ์ที่ตรงกับ "${escapeHtml(currentNewsSearch)}"</h3>
+          <p style="color: #64748b; margin-bottom: 16px;">ลองตรวจสอบตัวสะกด หรือค้นหาด้วยคำอื่น</p>
           <button type="button" class="btn-outline" onclick="clearNewsSearch()">
             <i class="fa-solid fa-rotate-left"></i> ดูข่าวประชาสัมพันธ์ทั้งหมด
           </button>
@@ -276,9 +267,9 @@ function renderNewsSection(page = 1) {
       `;
     } else {
       newsGrid.innerHTML = `
-        <div class="empty-state">
-          <i class="fa-solid fa-newspaper"></i>
-          <p>ยังไม่มีข่าวประชาสัมพันธ์ในขณะนี้</p>
+        <div class="empty-state" style="grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
+          <i class="fa-solid fa-newspaper" style="font-size: 32px; color: #cbd5e1; margin-bottom: 10px; display: block;"></i>
+          <p style="color: #64748b;">ยังไม่มีข่าวประชาสัมพันธ์ในขณะนี้</p>
         </div>
       `;
     }
@@ -294,8 +285,8 @@ function renderNewsSection(page = 1) {
   const pageItems = newsList.slice(startIndex, startIndex + POSTS_PER_PAGE);
 
   newsGrid.innerHTML = '';
-  pageItems.forEach(item => {
-    newsGrid.innerHTML += createCardHtml(item, currentNewsSearch);
+  pageItems.forEach((item, index) => {
+    newsGrid.innerHTML += createCardHtml(item, currentNewsSearch, index);
   });
 
   if (paginationContainer) {
@@ -305,7 +296,6 @@ function renderNewsSection(page = 1) {
   initScrollReveal();
 }
 
-// แสดงรายการกิจกรรมและโครงการตามหน้าที่เลือก
 function renderActivitySection(page = 1) {
   const activityGrid = document.getElementById('dynamic-activity-grid');
   const paginationContainer = document.getElementById('activity-pagination');
@@ -317,10 +307,10 @@ function renderActivitySection(page = 1) {
   if (activityList.length === 0) {
     if (currentActivitySearch.trim() !== '') {
       activityGrid.innerHTML = `
-        <div class="empty-search-state">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <h3>ไม่พบกิจกรรมที่ตรงกับ "${escapeHtml(currentActivitySearch)}"</h3>
-          <p>ลองตรวจสอบตัวสะกด หรือค้นหาด้วยคำอื่นที่ใกล้เคียง</p>
+        <div class="empty-search-state" style="grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
+          <i class="fa-solid fa-magnifying-glass" style="font-size: 32px; color: #cbd5e1; margin-bottom: 10px; display: block;"></i>
+          <h3 style="color: #0f172a; margin-bottom: 6px;">ไม่พบกิจกรรมที่ตรงกับ "${escapeHtml(currentActivitySearch)}"</h3>
+          <p style="color: #64748b; margin-bottom: 16px;">ลองตรวจสอบตัวสะกด หรือค้นหาด้วยคำอื่น</p>
           <button type="button" class="btn-outline" onclick="clearActivitySearch()">
             <i class="fa-solid fa-rotate-left"></i> ดูกิจกรรมทั้งหมด
           </button>
@@ -328,9 +318,9 @@ function renderActivitySection(page = 1) {
       `;
     } else {
       activityGrid.innerHTML = `
-        <div class="empty-state">
-          <i class="fa-solid fa-calendar-check"></i>
-          <p>ยังไม่มีกิจกรรมในขณะนี้</p>
+        <div class="empty-state" style="grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
+          <i class="fa-solid fa-calendar-check" style="font-size: 32px; color: #cbd5e1; margin-bottom: 10px; display: block;"></i>
+          <p style="color: #64748b;">ยังไม่มีกิจกรรมในขณะนี้</p>
         </div>
       `;
     }
@@ -346,8 +336,8 @@ function renderActivitySection(page = 1) {
   const pageItems = activityList.slice(startIndex, startIndex + POSTS_PER_PAGE);
 
   activityGrid.innerHTML = '';
-  pageItems.forEach(item => {
-    activityGrid.innerHTML += createCardHtml(item, currentActivitySearch);
+  pageItems.forEach((item, index) => {
+    activityGrid.innerHTML += createCardHtml(item, currentActivitySearch, index);
   });
 
   if (paginationContainer) {
@@ -357,15 +347,11 @@ function renderActivitySection(page = 1) {
   initScrollReveal();
 }
 
-// สร้างปุ่มเลขหน้า (1, 2, 3...) และปุ่ม ก่อนหน้า/ถัดไป
 function createPaginationHtml(type, totalPages, currentPage) {
-  if (totalPages <= 1) {
-    return ''; // ไม่เกิน 8 รายการไม่ต้องแสดงปุ่มเปลี่ยนหน้า
-  }
+  if (totalPages <= 1) return '';
 
-  let html = `<nav class="pagination-wrapper" aria-label="การแบ่งหน้า">`;
+  let html = `<nav class="pagination-wrapper" aria-label="การแบ่งหน้า" style="display:flex; justify-content:center; gap:8px; margin-top:30px;">`;
 
-  // ปุ่มก่อนหน้า
   const isFirst = currentPage === 1;
   html += `
     <button type="button" class="pagination-btn prev-btn" ${isFirst ? 'disabled' : ''} 
@@ -374,7 +360,6 @@ function createPaginationHtml(type, totalPages, currentPage) {
     </button>
   `;
 
-  // ปุ่มตัวเลขหน้า 1, 2, 3... เพิ่มขึ้นตามจำนวนเนื้อหา
   for (let p = 1; p <= totalPages; p++) {
     const isActive = p === currentPage;
     html += `
@@ -385,7 +370,6 @@ function createPaginationHtml(type, totalPages, currentPage) {
     `;
   }
 
-  // ปุ่มถัดไป
   const isLast = currentPage === totalPages;
   html += `
     <button type="button" class="pagination-btn next-btn" ${isLast ? 'disabled' : ''} 
@@ -398,29 +382,23 @@ function createPaginationHtml(type, totalPages, currentPage) {
   return html;
 }
 
-// สลับหน้าพร้อมเลื่อนหน้าจอไปยังส่วนของเนื้อหานั้น
 function goToPage(type, targetPage) {
   if (type === 'news') {
     renderNewsSection(targetPage);
     const section = document.getElementById('news-section');
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
   } else if (type === 'activity') {
     renderActivitySection(targetPage);
     const section = document.getElementById('activities-section');
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }
 
-// สร้าง Card HTML พร้อมรองรับไฮไลท์คำค้นหา
-function createCardHtml(item, searchKeyword = '') {
+function createCardHtml(item, searchKeyword = '', index = 0) {
   const isNews = item.category === 'news';
   const categoryLabel = isNews ? 'ข่าวประชาสัมพันธ์' : 'กิจกรรม';
   const dateFormatted = formatThaiDate(item.created_at);
-  const fallbackImg = isNews ? 'images/ประกาศ.png' : 'images/welcome-hero.jpg';
+  const fallbackImg = isNews ? 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=500&auto=format&fit=crop&q=80' : 'images/welcome-hero.jpg';
 
   const safeTitle = escapeHtml(item.title || '');
   const safeDesc = escapeHtml(item.description || '');
@@ -428,10 +406,12 @@ function createCardHtml(item, searchKeyword = '') {
   const displayTitle = searchKeyword ? highlightKeyword(safeTitle, searchKeyword) : safeTitle;
   const displayDesc = searchKeyword ? highlightKeyword(safeDesc, searchKeyword) : safeDesc;
 
+  const delaySec = ((index % 4) * 0.08).toFixed(2);
+
   return `
-    <article class="news-card reveal-on-scroll">
+    <article class="news-card reveal-bounce" style="animation-delay: ${delaySec}s;">
       ${item.is_pinned ? `
-        <div class="pinned-badge">
+        <div class="pinned-badge" style="position:absolute; top:12px; left:12px; background:#ea580c; color:#fff; font-size:11px; font-weight:700; padding:3px 10px; border-radius:50px; z-index:2; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
           <i class="fa-solid fa-thumbtack"></i> ปักหมุด
         </div>` : ''}
       <div class="card-media">
@@ -455,9 +435,9 @@ function createCardHtml(item, searchKeyword = '') {
   `;
 }
 
-// ================= 4. เปิดดูรายละเอียดข่าว (Modal อ่านต่อ) & Photo Gallery =================
-let currentModalImages = []; // รายการรูปภาพทั้งหมดของโพสต์ปัจจุบัน
-let currentLightboxIndex = 0; // ลำดับรูปที่กำลังดูใน Lightbox
+// ================= 4. Modal อ่านต่อ & Photo Gallery =================
+let currentModalImages = [];
+let currentLightboxIndex = 0;
 
 function openPostDetail(event, id) {
   if (event) {
@@ -475,7 +455,6 @@ function openPostDetail(event, id) {
 
   if (modalTitle) modalTitle.innerText = post.title;
 
-  // รวบรวมรูปภาพทั้งหมด (ทั้งจาก gallery_urls และ image_url)
   currentModalImages = [];
   if (post.gallery_urls) {
     try {
@@ -491,22 +470,20 @@ function openPostDetail(event, id) {
     currentModalImages = [post.image_url];
   }
 
-  // รูปภาพหน้าปกหลัก
-  const fallbackImg = post.category === 'news' ? 'images/ประกาศ.png' : 'images/welcome-hero.jpg';
+  const fallbackImg = post.category === 'news' ? 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&auto=format&fit=crop&q=80' : 'images/welcome-hero.jpg';
   const mainImgUrl = currentModalImages.length > 0 ? currentModalImages[0] : fallbackImg;
-  
+
   if (modalImg) {
     modalImg.src = mainImgUrl;
     modalImg.onerror = () => { modalImg.src = fallbackImg; };
   }
 
-  // แสดงแกลเลอรีรูปภาพย่อ (แบบที่ 1: Photo Grid) ถ้ามีรูปมากกว่า 1 รูป
   if (modalGallery) {
     if (currentModalImages.length > 1) {
       modalGallery.classList.remove('hidden');
       modalGallery.innerHTML = '';
 
-      const maxThumbnails = 4; // แสดงตารางสูงสุด 4 ช่อง (ช่องที่ 4 มี +N ถ้ามีรูปเกิน)
+      const maxThumbnails = 4;
       const displayCount = Math.min(currentModalImages.length, maxThumbnails);
 
       for (let i = 0; i < displayCount; i++) {
@@ -530,14 +507,14 @@ function openPostDetail(event, id) {
     }
   }
 
-  let descHtml = `<div style="white-space: pre-wrap; line-height: 1.85;">${post.description || ''}</div>`;
+  let descHtml = `<div style="white-space: pre-wrap; line-height: 1.85;">${escapeHtml(post.description || '')}</div>`;
   if (post.file_url) {
     descHtml += `
       <div style="margin-top: 24px; padding: 16px 20px; background: #fff7ed; border: 1.5px dashed #fb923c; border-radius: 12px;">
         <strong style="color: #c2410c; display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
           <i class="fa-solid fa-paperclip"></i> เอกสารแนบสำหรับดาวน์โหลด:
         </strong>
-        <a href="${post.file_url}" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; background: #ea580c; color: white; padding: 9px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px;">
+        <a href="${post.file_url}" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 8px; background: #ea580c; color: white; padding: 9px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px;">
           <i class="fa-solid fa-file-pdf"></i> คลิกเพื่อเปิดดู / ดาวน์โหลดเอกสารแนบ
         </a>
       </div>
@@ -545,17 +522,16 @@ function openPostDetail(event, id) {
   }
 
   if (modalText) modalText.innerHTML = descHtml;
-  
+
   const modal = document.getElementById('news-modal');
   if (modal) modal.classList.remove('hidden');
 }
 
-// คลิกที่รูปหลักใน Modal เพื่อเปิด Lightbox ดูรูปใหญ่
 function openLightboxCurrent() {
   openLightbox(0);
 }
 
-// ================= 4.5 ระบบ Fullscreen Lightbox Viewer =================
+// ================= 4.5 Fullscreen Lightbox Viewer =================
 function openLightbox(index = 0) {
   if (!currentModalImages || currentModalImages.length === 0) return;
   currentLightboxIndex = index;
@@ -574,7 +550,6 @@ function openLightbox(index = 0) {
 
   if (lightbox) lightbox.classList.remove('hidden');
 
-  // เพิ่มการรองรับกดปุ่มลูกศรบนคีย์บอร์ด
   document.removeEventListener('keydown', handleLightboxKeydown);
   document.addEventListener('keydown', handleLightboxKeydown);
 }
@@ -639,7 +614,7 @@ function openAllModal(category) {
     title.innerHTML = '<i class="fa-solid fa-bullhorn" style="color: var(--primary-600);"></i> ข่าวประชาสัมพันธ์ทั้งหมด';
     const list = allFetchedPosts.filter(p => p.category === 'news');
     if (list.length === 0) {
-      grid.innerHTML = '<div class="empty-state"><p>ยังไม่มีข่าวประชาสัมพันธ์ในขณะนี้</p></div>';
+      grid.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1; text-align:center; padding:30px;"><p>ยังไม่มีข่าวประชาสัมพันธ์ในขณะนี้</p></div>';
     } else {
       list.forEach(item => grid.innerHTML += createCardHtml(item));
     }
@@ -647,7 +622,7 @@ function openAllModal(category) {
     title.innerHTML = '<i class="fa-solid fa-calendar-days" style="color: var(--primary-600);"></i> กิจกรรมทั้งหมด';
     const list = allFetchedPosts.filter(p => p.category === 'activity');
     if (list.length === 0) {
-      grid.innerHTML = '<div class="empty-state"><p>ยังไม่มีกิจกรรมในขณะนี้</p></div>';
+      grid.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1; text-align:center; padding:30px;"><p>ยังไม่มีกิจกรรมในขณะนี้</p></div>';
     } else {
       list.forEach(item => grid.innerHTML += createCardHtml(item));
     }
@@ -666,92 +641,278 @@ function closeAllModal(event) {
 // ================= 6. ตรวจสอบสถานะการล็อกอิน =================
 function checkNavUserStatus() {
   const token = localStorage.getItem('nursing_token');
-  const userRole = localStorage.getItem('nursing_user_role');
   const loginBtn = document.getElementById('nav-login-link');
 
   if (token && loginBtn) {
-    if (userRole === 'developer') {
-      loginBtn.innerHTML = '<i class="fa-solid fa-code"></i> เมนูผู้พัฒนา';
-      loginBtn.href = 'developer.html';
-    } else {
-      loginBtn.innerHTML = '<i class="fa-solid fa-gear"></i> จัดการข้อมูล';
-      loginBtn.href = 'admin.html';
-    }
+    loginBtn.innerHTML = '<i class="fa-solid fa-gauge-high"></i> จัดการข้อมูล (Admin)';
+    loginBtn.href = 'admin.html';
   }
 }
 
-// ================= 7. Scroll Reveal Animation =================
+// ================= 7. Scroll Reveal & Interaction =================
+let scrollRevealObserver = null;
+
 function initScrollReveal() {
   document.body.classList.add('js-enabled');
+  const selector = '.reveal-on-scroll, .reveal-bounce, .reveal-scale, .reveal-stagger';
 
   if (!('IntersectionObserver' in window)) {
-    document.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('is-visible'));
+    document.querySelectorAll(selector).forEach(el => el.classList.add('is-visible'));
     return;
   }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
+  if (!scrollRevealObserver) {
+    scrollRevealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        } else if (entry.boundingClientRect.top > (window.innerHeight || document.documentElement.clientHeight)) {
+          entry.target.classList.remove('is-visible');
+        }
+      });
+    }, {
+      threshold: 0.05,
+      rootMargin: '0px 0px -20px 0px'
     });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -40px 0px'
-  });
+  }
 
-  document.querySelectorAll('.reveal-on-scroll').forEach(el => {
-    observer.observe(el);
+  document.querySelectorAll(selector).forEach(el => {
+    scrollRevealObserver.observe(el);
   });
 }
 
-// ================= 7.5 โหลดภาพและข้อความไฮไลท์ส่วนหัวเว็บ (Hero Banner) =================
-async function loadHeroBanner() {
-  const heroTag = document.getElementById('hero-tag');
-  const heroImg = document.getElementById('hero-img');
-  const heroTitle = document.getElementById('hero-title');
-  const heroSubtitle = document.getElementById('hero-subtitle');
-  const heroCard = document.getElementById('hero-photo-card');
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-  if (!heroImg) return;
+function initScrollInteractions() {
+  const progressBar = document.getElementById('scroll-progress-bar');
+  const backToTopBtn = document.getElementById('back-to-top-btn');
+
+  const onScroll = () => {
+    const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+    if (progressBar) {
+      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+      progressBar.style.width = scrolled + '%';
+    }
+
+    if (backToTopBtn) {
+      if (winScroll > 320) {
+        backToTopBtn.classList.add('is-visible');
+      } else {
+        backToTopBtn.classList.remove('is-visible');
+      }
+    }
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+}
+
+// ================= 7.5 ระบบสไลเดอร์แบนเนอร์หน้าแรก (Hero Carousel) =================
+let heroCurrentSlide = 0;
+let heroSlideCount = 0;
+let heroAutoSlideTimer = null;
+let heroBannersData = [];
+
+async function loadHeroBannerSlider() {
+  const track = document.getElementById('hero-carousel-track');
+  if (!track) return;
 
   try {
     const backendHost = (window.location.hostname && window.location.hostname !== '') ? window.location.hostname : 'localhost';
-    const res = await fetch(`http://${backendHost}:4000/api/hero-banner`);
-    if (!res.ok) return;
-    const data = await res.json();
-    if (!data) return;
-
-    if (heroTag && data.tag) {
-      heroTag.innerHTML = `<i class="fa-solid fa-award"></i> ${escapeHtml(data.tag)}`;
-    }
-    if (heroImg && data.image_url) {
-      heroImg.src = data.image_url;
-      if (data.title) heroImg.alt = data.title;
-    }
-    if (heroTitle && data.title) {
-      heroTitle.innerText = data.title;
-    }
-    if (heroSubtitle && data.subtitle) {
-      heroSubtitle.innerText = data.subtitle;
-    }
-    if (heroCard && data.link_url) {
-      heroCard.style.cursor = 'pointer';
-      heroCard.title = 'คลิกเพื่อดูรายละเอียด';
-      heroCard.onclick = () => {
-        window.location.href = data.link_url;
-      };
+    const res = await fetch(`http://${backendHost}:4000/api/hero-banners`);
+    if (res.ok) {
+      const banners = await res.json();
+      if (Array.isArray(banners) && banners.length > 0) {
+        heroBannersData = banners;
+      }
     }
   } catch (err) {
-    console.debug('ใช้รูปภาพ Hero Banner ค่าเริ่มต้น');
+    console.debug('โหลดแบนเนอร์จาก API ไม่สำเร็จ ใช้ค่าเริ่มต้น:', err);
   }
+
+  if (!heroBannersData || heroBannersData.length === 0) {
+    heroBannersData = [
+      {
+        id: 1,
+        title: '',
+        subtitle: '',
+        image_url: 'images/welcome-hero.jpg',
+        link_url: ''
+      }
+    ];
+  }
+
+  renderHeroSlides(heroBannersData);
+  setupHeroCarouselControls();
+}
+
+function renderHeroSlides(banners) {
+  const track = document.getElementById('hero-carousel-track');
+  const dotsContainer = document.getElementById('hero-carousel-dots');
+  const prevBtn = document.getElementById('hero-carousel-prev');
+  const nextBtn = document.getElementById('hero-carousel-next');
+
+  if (!track) return;
+
+  heroSlideCount = banners.length;
+  heroCurrentSlide = 0;
+
+  track.innerHTML = banners.map((b, idx) => {
+    const hasLink = b.link_url && b.link_url.trim() !== '';
+    const clickAttr = hasLink ? `onclick="window.location.href='${escapeHtml(b.link_url)}'"` : '';
+    const classHasLink = hasLink ? 'has-link' : '';
+
+    const hasCaption = (b.title && b.title.trim()) || (b.subtitle && b.subtitle.trim());
+    let captionHtml = '';
+    if (hasCaption) {
+      captionHtml = `
+        <div class="hero-slide-caption">
+          ${b.tag ? `<span class="hero-slide-tag"><i class="fa-solid fa-award"></i> ${escapeHtml(b.tag)}</span>` : ''}
+          ${b.title ? `<h2 class="hero-slide-title">${escapeHtml(b.title)}</h2>` : ''}
+          ${b.subtitle ? `<p class="hero-slide-subtitle">${escapeHtml(b.subtitle)}</p>` : ''}
+        </div>
+      `;
+    }
+
+    return `
+      <div class="hero-slide ${classHasLink}" ${clickAttr} role="group" aria-roledescription="slide" aria-label="สไลด์ที่ ${idx + 1} จาก ${banners.length}">
+        <img src="${escapeHtml(b.image_url)}" alt="${escapeHtml(b.title || 'แบนเนอร์ประชาสัมพันธ์ โรงพยาบาลแม่สอด')}" class="hero-slide-img" onerror="this.src='images/welcome-hero.jpg'">
+        ${captionHtml}
+      </div>
+    `;
+  }).join('');
+
+  if (dotsContainer) {
+    if (heroSlideCount <= 1) {
+      dotsContainer.classList.add('hidden');
+    } else {
+      dotsContainer.classList.remove('hidden');
+      dotsContainer.innerHTML = banners.map((_, idx) => `
+        <button type="button" class="hero-dot ${idx === 0 ? 'active' : ''}" onclick="goToHeroSlide(${idx})" aria-label="ไปยังสไลด์ที่ ${idx + 1}"></button>
+      `).join('');
+    }
+  }
+
+  if (prevBtn && nextBtn) {
+    if (heroSlideCount <= 1) {
+      prevBtn.classList.add('hidden');
+      nextBtn.classList.add('hidden');
+    } else {
+      prevBtn.classList.remove('hidden');
+      nextBtn.classList.remove('hidden');
+    }
+  }
+
+  updateHeroCarouselView();
+}
+
+function updateHeroCarouselView() {
+  const track = document.getElementById('hero-carousel-track');
+  const dots = document.querySelectorAll('.hero-dot');
+  const slides = document.querySelectorAll('.hero-slide'); // เพิ่มบรรทัดนี้
+
+  if (track) {
+    track.style.transform = `translateX(-${heroCurrentSlide * 100}%)`;
+  }
+
+  // กำหนดคลาส active ให้กับสไลด์ที่กำลังแสดงผลเพื่อให้เริ่มซูมภาพ
+  slides.forEach((slide, idx) => {
+    if (idx === heroCurrentSlide) {
+      slide.classList.add('active');
+    } else {
+      slide.classList.remove('active');
+    }
+  });
+
+  dots.forEach((dot, idx) => {
+    if (idx === heroCurrentSlide) {
+      dot.classList.add('active');
+    } else {
+      dot.classList.remove('active');
+    }
+  });
+}
+
+function moveHeroSlide(direction) {
+  if (heroSlideCount <= 1) return;
+  heroCurrentSlide = (heroCurrentSlide + direction + heroSlideCount) % heroSlideCount;
+  updateHeroCarouselView();
+  restartHeroAutoSlide();
+}
+
+function goToHeroSlide(index) {
+  if (index < 0 || index >= heroSlideCount) return;
+  heroCurrentSlide = index;
+  updateHeroCarouselView();
+  restartHeroAutoSlide();
+}
+
+function startHeroAutoSlide() {
+  if (heroSlideCount <= 1) return;
+  stopHeroAutoSlide();
+  heroAutoSlideTimer = setInterval(() => {
+    heroCurrentSlide = (heroCurrentSlide + 1) % heroSlideCount;
+    updateHeroCarouselView();
+  }, 5000);
+}
+
+function stopHeroAutoSlide() {
+  if (heroAutoSlideTimer) {
+    clearInterval(heroAutoSlideTimer);
+    heroAutoSlideTimer = null;
+  }
+}
+
+function restartHeroAutoSlide() {
+  stopHeroAutoSlide();
+  startHeroAutoSlide();
+}
+
+function setupHeroCarouselControls() {
+  const container = document.getElementById('hero-carousel-card');
+  if (!container) return;
+
+  container.addEventListener('mouseenter', stopHeroAutoSlide);
+  container.addEventListener('mouseleave', startHeroAutoSlide);
+
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  container.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  container.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        moveHeroSlide(1);
+      } else {
+        moveHeroSlide(-1);
+      }
+    }
+  }, { passive: true });
+
+  startHeroAutoSlide();
 }
 
 // ================= 8. Initial Load =================
 document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
-  loadHeroBanner();
+  initScrollInteractions();
+  loadHeroBannerSlider();
   loadDynamicPosts();
   checkNavUserStatus();
+
+  document.querySelectorAll('.subpage-nav-tabs .subpage-tab-link[href^="#"]').forEach(tab => {
+    tab.addEventListener('click', function () {
+      document.querySelectorAll('.subpage-nav-tabs .subpage-tab-link[href^="#"]').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
 });

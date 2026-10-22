@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>บทบาทหน้าที่ - กลุ่มการพยาบาล โรงพยาบาลแม่สอด</title>
+  <meta name="description"
+    content="บทบาทหน้าที่และภารกิจหลัก 4 ด้านของกลุ่มการพยาบาล โรงพยาบาลแม่สอด: ด้านบริหาร, ด้านวิชาการ, ด้านบริการ และกิจกรรมพิเศษ">
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="apple-touch-icon" href="images/logo.png">
+
+  <!-- Google Fonts: Prompt & Sarabun -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Styling สำหรับหน้าบทบาทหน้าที่ */
+    .role-section-card {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-xl);
+      padding: clamp(24px, 3vw, 36px);
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-normal);
+      scroll-margin-top: 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .role-section-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary-300);
+    }
+
+    .role-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1.5px dashed var(--slate-200);
+    }
+
+    .role-icon-box {
+      width: 58px;
+      height: 58px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-xs);
+    }
+
+    .role-admin .role-icon-box {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+    }
+
+    .role-academic .role-icon-box {
+      background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-800) 100%);
+      color: #ffffff;
+    }
+
+    .role-service .role-icon-box {
+      background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+      color: #ffffff;
+    }
+
+    .role-special .role-icon-box {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #ffffff;
+    }
+
+    .role-title-wrap h2 {
+      font-size: clamp(20px, 1.8vw, 24px);
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 4px;
+    }
+
+    .role-title-wrap p {
+      font-size: 13.5px;
+      color: var(--slate-500);
+      margin: 0;
+    }
+
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .role-feature-item {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      transition: all var(--transition-fast);
+    }
+
+    .role-feature-item:hover {
+      background: #ffffff;
+      border-color: var(--primary-400);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-xs);
+    }
+
+    .role-feature-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #ffffff;
+      color: var(--primary-700);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .role-feature-text strong {
+      display: block;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--slate-800);
+      margin-bottom: 4px;
+    }
+
+    .role-feature-text p {
+      font-size: 13px;
+      color: var(--slate-600);
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .role-badge-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .role-admin .role-badge-tag { background: #e0f2fe; color: #0284c7; }
+    .role-academic .role-badge-tag { background: #ccfbf1; color: #0f766e; }
+    .role-service .role-badge-tag { background: #ffedd5; color: #ea580c; }
+    .role-special .role-badge-tag { background: #fef3c7; color: #d97706; }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= 1. แถบเมนูด้านบน (Sticky Navbar) ================= -->
+  <header class="navbar-wrapper" id="main-header">
+    <div class="navbar-container">
+      <a href="index.html" class="brand-section" aria-label="หน้าแรกกลุ่มการพยาบาล โรงพยาบาลแม่สอด">
+        <div class="brand-logo-wrap">
+          <img src="images/logo.png" alt="ตราสัญลักษณ์กลุ่มการพยาบาล โรงพยาบาลแม่สอด" class="brand-logo"
+            onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/f7/Emblem_of_the_Ministry_of_Public_Health_of_Thailand.svg'">
+        </div>
+        <div class="brand-text">
+          <h2>กลุ่มการพยาบาล โรงพยาบาลแม่สอด</h2>
+          <p>Nursing Division, Mae Sot Hospital</p>
+        </div>
+      </a>
+
+      <!-- ปุ่ม Toggle สำหรับหน้าจอมือถือ -->
+      <button class="mobile-toggle-btn" onclick="toggleMobileMenu()" aria-label="เปิดเมนูนำทาง">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <!-- ลิงก์เมนูนำทาง -->
+      <nav class="nav-links" id="primary-navigation" aria-label="เมนูหลัก">
+        <a href="index.html" class="nav-btn">
+          <i class="fa-solid fa-house"></i> หน้าแรก
+        </a>
+
+        <!-- ดรอปดาวน์: เกี่ยวกับกลุ่มการพยาบาล -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-btn" onclick="toggleDropdown('about-menu')" aria-expanded="false"
+            aria-controls="about-menu">
+            <i class="fa-solid fa-landmark"></i> เกี่ยวกับกลุ่มการพยาบาล <i class="fa-solid fa-angle-down"></i>
+          </button>
+          <div id="about-menu" class="dropdown-menu hidden" role="menu" aria-label="เมนูเกี่ยวกับกลุ่มการพยาบาล">
+            <a href="vision.html" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-compass"></i></div>
+              <div class="dropdown-item-text">
+                <strong>วิสัยทัศน์ / พันธกิจ</strong>
+                <span>ทิศทางและเป้าหมายองค์กร</span>
+              </div>
+            </a>
+            <a href="structure.html" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-sitemap"></i></div>
+              <div class="dropdown-item-text">
+                <strong>โครงสร้างการบริหาร</strong>
+                <span>สายการบังคับบัญชาและกลุ่มงาน</span>
+              </div>
+            </a>
+            <a href="strategy.html" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-chart-line"></i></div>
+              <div class="dropdown-item-text">
+                <strong>แผนยุทธศาสตร์</strong>
+                <span>แผนยุทธศาสตร์และทิศทางการพัฒนา</span>
+              </div>
+            </a>
+            <a href="kpi.html" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ตัวชี้วัด (KPI)</strong>
+                <span>เป้าหมายคุณภาพและความสำเร็จ</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- ดรอปดาวน์: บทบาทหน้าที่ (Active Page) -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-btn active" onclick="toggleDropdown('roles-menu')" aria-expanded="false"
+            aria-controls="roles-menu">
+            <i class="fa-solid fa-user-tie"></i> บทบาทหน้าที่ <i class="fa-solid fa-angle-down"></i>
+          </button>
+          <div id="roles-menu" class="dropdown-menu hidden" role="menu" aria-label="เมนูบทบาทหน้าที่">
+            <a href="roles.html#admin-role" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-gear"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ด้านบริหาร</strong>
+                <span>กำกับคุณภาพ กำลังคน และระบบบริการ</span>
+              </div>
+            </a>
+            <a href="roles.html#academic-role" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ด้านวิชาการ</strong>
+                <span>องค์ความรู้ วิจัย R2R นวัตกรรม</span>
+              </div>
+            </a>
+            <a href="roles.html#service-role" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ด้านบริการ</strong>
+                <span>การพยาบาลแบบองค์รวม ปลอดภัย</span>
+              </div>
+            </a>
+            <a href="roles.html#special-role" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-star"></i></div>
+              <div class="dropdown-item-text">
+                <strong>กิจกรรมพิเศษ</strong>
+                <span>สร้างเสริมสุขภาพและเครือข่ายชุมชน</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- ดรอปดาวน์: ข่าวสารและกิจกรรม -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-btn" onclick="toggleDropdown('news-menu')" aria-expanded="false"
+            aria-controls="news-menu">
+            <i class="fa-solid fa-newspaper"></i> ข่าวสารและกิจกรรม <i class="fa-solid fa-angle-down"></i>
+          </button>
+          <div id="news-menu" class="dropdown-menu hidden" role="menu" aria-label="เมนูข่าวสารและกิจกรรม">
+            <a href="index.html#news-section" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-bullhorn"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ข่าวประชาสัมพันธ์</strong>
+                <span>ข่าวสาร ประกาศ และเอกสารสำคัญ</span>
+              </div>
+            </a>
+            <a href="index.html#activities-section" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-calendar-days"></i></div>
+              <div class="dropdown-item-text">
+                <strong>กิจกรรมและโครงการ</strong>
+                <span>ภาพกิจกรรม โครงการ และงานอบรม</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <a href="javascript:void(0)" class="nav-btn"
+          onclick="alert('งานวิจัยและวิชาการ กำลังอยู่ในระหว่างอัปเดตข้อมูล')">
+          <i class="fa-solid fa-book-open"></i> งานวิจัยและวิชาการ
+        </a>
+
+        <!-- ปุ่มเข้าสู่ระบบสำหรับเจ้าหน้าที่ -->
+        <a href="login.html" id="nav-login-link" class="nav-btn btn-nav-login">
+          <i class="fa-solid fa-right-to-bracket"></i> เข้าสู่ระบบ
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= 2. เนื้อหาหน้าบทบาทหน้าที่ ================= -->
+  <main class="page-body">
+    <div class="subpage-card">
+      <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าแรก</a>
+
+      <!-- ส่วนหัวของหน้าเพจ (Subpage Header) -->
+      <div class="subpage-header-box">
+        <div class="hero-badge-wrap">
+          <i class="fa-solid fa-user-tie"></i>
+          <span>ภารกิจและขอบเขตความรับผิดชอบ</span>
+        </div>
+        <h1 style="font-size: clamp(24px, 2.2vw, 32px); color: var(--slate-900); font-weight: 700; margin-bottom: 8px;">
+          บทบาทหน้าที่ กลุ่มการพยาบาล
+        </h1>
+        <p style="color: var(--slate-600); font-size: clamp(14px, 1.1vw, 16px); max-width: 820px; line-height: 1.6;">
+          กรอบภารกิจและความรับผิดชอบหลัก 4 ด้านในการบริหาร ขับเคลื่อน และพัฒนามาตรฐานวิชาชีพการพยาบาล โรงพยาบาลแม่สอด
+        </p>
+
+        <!-- แถบทางลัดสลับไปยังแต่ละด้าน (Quick Role Switcher Tabs) -->
+        <nav class="subpage-nav-tabs" aria-label="เมนูทางลัดไปยังแต่ละด้าน">
+          <a href="#admin-role" class="subpage-tab-link active">
+            <i class="fa-solid fa-gear"></i> ด้านบริหาร
+          </a>
+          <a href="#academic-role" class="subpage-tab-link">
+            <i class="fa-solid fa-graduation-cap"></i> ด้านวิชาการ
+          </a>
+          <a href="#service-role" class="subpage-tab-link">
+            <i class="fa-solid fa-hand-holding-heart"></i> ด้านบริการ
+          </a>
+          <a href="#special-role" class="subpage-tab-link">
+            <i class="fa-solid fa-star"></i> กิจกรรมพิเศษ
+          </a>
+        </nav>
+      </div>
+
+      <!-- 1. ด้านบริหาร -->
+      <section class="role-section-card role-admin" id="admin-role" aria-label="บทบาทหน้าที่ด้านบริหาร">
+        <div class="role-header">
+          <div class="role-icon-box">
+            <i class="fa-solid fa-gear"></i>
+          </div>
+          <div class="role-title-wrap">
+            <span class="role-badge-tag"><i class="fa-solid fa-shield-halved"></i> NURSING ADMINISTRATION</span>
+            <h2>1. บทบาทหน้าที่ด้านบริหาร</h2>
+            <p>กำกับคุณภาพ วางแผนอัตรากำลัง และบริหารจัดการระบบบริการพยาบาลให้มีประสิทธิภาพสูงสุด</p>
+          </div>
+        </div>
+
+        <div class="role-grid">
+          <div class="role-feature-item">
+            <div class="role-feature-icon"><i class="fa-solid fa-users-gear"></i></div>
+            <div class="role-feature-text">
+              <strong>การวางแผนและจัดสรรอัตรากำลัง (Manpower Planning)</strong>
+              <p>วิเคราะห์ภาระงานและจัดสรรพยาบาลวิชาชีพอย่างเหมาะสมตามความรุนแรงของผู้ป่วยในแต่ละหอผู้ป่วย</p>
+            </div>
+          </div>
+
+          <div class="role-feature-item">
+            <div class="role-feature-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+            <div class="role-feature-text">
+              <strong>การประกันคุณภาพการพยาบาล (Nursing QA & NQA)</strong>
+              <p>ติดตามและประเมินผลการปฏิบัติงานตามมาตรฐานวิชาชีพพยาบาลและการรับรองกระบวนการคุณภาพ HA</p>
+            </div>
+          </div>
+
+          <div class="role-feature-item">
+            <div class="role-feature-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="role-feature-text">
+              <strong>การบริหารความเสี่ยงและความปลอดภัย (Risk Management)</strong>
+              <p>พัฒนาระบบเฝ้าระวังเหตุการณ์ไม่พึงประสงค์ (Incident Reporting) และขับเคลื่อนมาตรการ 2P Safety</p>
+            </div>
+          </div>
+
+          <div class="role-feature-item">
+            <div class="role-feature-icon"><i class="fa-solid fa-boxes-packing"></i></div>
+            <div class="role-feature-text">
+              <strong>การบริหารทรัพยากรและเวชภัณฑ์</strong>
+              <p>ควบคุมการเบิกจ่ายเวชภัณฑ์มิใช่ยา และเครื่องมือแพทย์ให้พร้อมใช้ ปลอดภัย และคุ้มค่า</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. ด้านวิชาการ -->
+      <section class="role-section-card role-academic" id="academic-role" aria-label="บทบาทหน้าที่ด้านวิชาการ">
+        <div class="role-header">
+          <div class="role-icon-box">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <div class="role-title-wrap">
+            <span class="role-badge-tag"><i class="fa-solid fa-book-bookmark"></i> ACADEMIC & RESEARCH</span>
+            <h2>2. บทบาทหน้าที่ด้านวิชาการ</h2>
+            <p>พัฒนาองค์ความรู้ วิจัยจากงานประจำสู่งานวิจัย (R2R) และสร้างนวัตกรรมทางการพยาบาล</p>
+          </div>
+        </div>
+
+        <div class="role-grid">
+          <div class="role-feature-item">
+            <div class="role-feature-icon"><i class="fa-solid fa-microscope"></i></div>
+            <div class="role-feature-text">
+              <strong>งานวิจัย R2R และนวัตกรรม (Routine to Research)</strong>
+              <p>ส่งเสริมให้พยาบาลนำปัญหาหน้างานมาศึกษาค้นคว้า และพัฒนานวัตกรรมเพื่อเพิ่มความปลอดภัยให้ผู้รับบริการ</p>
+            </div>
+          </div>
+
+          <div class="role-feature-item">
+            <div class="role-feature-icon"><i class="fa-solid fa-user-graduate"></i></div>
+            <div class="role-feature-text">
+              <strong>การศึกษาต่อเนื่องและการพัฒนาสมรรถนะ (CNEU)</strong>
+              <p>จัดอบรมเชิงปฏิบัติการ การฟื้นฟูทักษะทางคลินิก และสนับสนุนการศึกษาต่อเฉพาะทางของพยาบาล</p>
+            </div>
+          </div>
+
+          <div class="role-feature-item">
+            <div class="role-feature-icon"><i class="fa-solid fa-file-medical"></i></div>
+            <div class="role-feature-text">
+              <strong>แนวปฏิบัติทางคลินิก (Clinical Practice Guidelines - CPG)</strong>
+              <p>จัดทำและทบทวนแนวทางการพยาบาลตามหลักฐานเชิงประจักษ์ (Evidence-Based Practice)</p>
+            </div>
+          </div>
+
+          <div class="role-feature-item">
+            <div class="role-feature-icon"><i class="fa-solid fa-share-nodes"></i></div>
+            <div class="role-feature-text">
+              <strong>การจัดการความรู้ (Knowledge Management - KM)</strong>
+              <p>รวบรวม ถอดบทเรียน และแลกเปลี่ยนเรียนรู้ประสบการณ์ระหว่างพยาบาลผู้เชี่ยวชาญสู่พยาบาลรุ่นใหม่</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. ด้านบริการ -->
+      <section class="role-section-card role-service" id="service-role" aria-label="บทบาทหน้าที่ด้านบริการ">
+        <div class="role-header">
+          <div class="role-icon-box">
+            <i class="fa-solid fa-hand-holding-heart"></i>
+          </div>
+          <div class="role-title-wrap">
+            <span class="role-badge-tag"><i class="fa-solid fa-heart-pulse"></i> CLINICAL CARE & SERVICE</span>
+            <h2>3. บทบาทหน้าที่ด้านบริการ</h2>
+            <p>ให้การพยาบาลแบบองค์รวม ปลอดภัย ได้มาตรฐานวิชาชีพ และดูแลด้วยหัวใจความเป็นมนุษย์</p>
+          </div>
+        </div>
+
+        <div class="role-grid">
+          <div class="role-feature-item">
+            <div class="role-feature-icon"><i class="fa-solid fa-bed-pulse"></i></div>
+            <div class="role-feature-text">
+              <strong>การพยาบาลผู้ป่วยในและผู้ป่วยวิกฤต (Inpatient & Critical Care)</strong>
+              <p>ให้การดูแลผู้ป่วยหนักใน ICU, ผู้ป่วยกึ่งวิกฤต และหอผู้ป่วยทั่วไปตลอด 24 ชั่วโมงอย่างใกล้ชิด</p>
+            </div>
+          </div>
+
+          <div class="role-feature-item">
+            <div class="role-feature-icon"><i class="fa-solid fa-truck-fast"></i></div>
+            <div class="role-feature-text">
+              <strong>การพยาบาลอุบัติเหตุและฉุกเฉิน (Emergency & Trauma Care)</strong>
+              <p>คัดแยกความเร่งด่วนตามหลักสากล (Triage) กู้ชีพขั้นสูง และประสานงานส่งต่อผู้ป่วยวิกฤตอย่างไร้รอยต่อ</p>
+            </div>
+          </div>
+
+          <div class="role-feature-item">
+            <div class="role-feature-icon"><i class="fa-solid fa-hands-holding-circle"></i></div>
+            <div class="role-feature-text">
+              <strong>การพยาบาลแบบองค์รวม (Holistic Nursing Care)</strong>
+              <p>ดูแลครอบคลุมทั้งมิติด้านกายภาพ จิตใจ อารมณ์ สังคม และความเชื่อทางวัฒนธรรมของผู้ป่วย</p>
+            </div>
+          </div>
+
+          <div class="role-feature-item">
+            <div class="role-feature-icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+            <div class="role-feature-text">
+              <strong>ระบบส่งต่อและการดูแลต่อเนื่อง (Continuum of Care)</strong>
+              <p>ประสานงานส่งต่อผู้ป่วยจากโรงพยาบาลสู่การดูแลที่บ้านและชุมชน (Home Health Care)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. กิจกรรมพิเศษ -->
+      <section class="role-section-card role-special" id="special-role" aria-label="บทบาทหน้าที่กิจกรรมพิเศษ">
+        <div class="role-header">
+          <div class="role-icon-box">
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <div class="role-title-wrap">
+            <span class="role-badge-tag"><i class="fa-solid fa-handshake-angle"></i> SPECIAL COMMUNITY MISSIONS</span>
+            <h2>4. บทบาทหน้าที่กิจกรรมพิเศษ</h2>
+            <p>สร้างเสริมสุขภาพ พัฒนาเครือข่ายบริการสุขภาพชุมชนชายแดน และโครงการจิตอาสา</p>
+          </div>
+        </div>
+
+        <div class="role-grid">
+          <div class="role-feature-item">
+            <div class="role-feature-icon"><i class="fa-solid fa-person-shelter"></i></div>
+            <div class="role-feature-text">
+              <strong>งานสร้างเสริมสุขภาพและสาธารณสุขเชิงรุก</strong>
+              <p>ลงพื้นที่ตรวจคัดกรองสุขภาพ ให้ความรู้สุขศึกษา และเฝ้าระวังโรคระบาดในพื้นที่ชุมชนชายแดน</p>
+            </div>
+          </div>
+
+          <div class="role-feature-item">
+            <div class="role-feature-icon"><i class="fa-solid fa-earth-americas"></i></div>
+            <div class="role-feature-text">
+              <strong>เครือข่ายความร่วมมือด้านสาธารณสุขชายแดน</strong>
+              <p>ประสานความร่วมมือระหว่างหน่วยงานรัฐ องค์กรระหว่างประเทศ และเครือข่ายบริการสุขภาพข้ามพรมแดน</p>
+            </div>
+          </div>
+
+          <div class="role-feature-item">
+            <div class="role-feature-icon"><i class="fa-solid fa-hand-holding-medical"></i></div>
+            <div class="role-feature-text">
+              <strong>กิจกรรมพยาบาลอาสาและหน่วยแพทย์เคลื่อนที่</strong>
+              <p>ออกหน่วยแพทย์สงเคราะห์ หน่วยทันตกรรม และบริการดูแลสุขภาพแก่ผู้ด้อยโอกาสในถิ่นทุรกันดาร</p>
+            </div>
+          </div>
+
+          <div class="role-feature-item">
+            <div class="role-feature-icon"><i class="fa-solid fa-ribbon"></i></div>
+            <div class="role-feature-text">
+              <strong>กิจกรรมเฉลิมพระเกียรติและวันสำคัญทางวิชาชีพ</strong>
+              <p>จัดกิจกรรมวันพยาบาลแห่งชาติ โครงการเทิดพระเกียรติสมเด็จย่า และกิจกรรมสร้างขวัญกำลังใจบุคลากร</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer ท้ายเว็บไซต์ -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-col footer-about">
+        <h4>กลุ่มการพยาบาล โรงพยาบาลแม่สอด</h4>
+        <p>
+          มุ่งมั่นพัฒนาการบริการพยาบาลที่ได้มาตรฐานสากล บริการด้วยหัวใจความเป็นมนุษย์ ดำรงไว้ซึ่งจริยธรรมวิชาชีพ เพื่อสุขภาวะที่ดีของผู้รับบริการในพื้นที่ชายแดน
+        </p>
+        <div class="footer-emergency-card">
+          <div class="footer-emergency-icon">
+            <i class="fa-solid fa-truck-medical"></i>
+          </div>
+          <div class="footer-emergency-text">
+            <strong>อุบัติเหตุ - ฉุกเฉิน (EMS 24 ชม.)</strong>
+            <span>โทร. 1669 หรือ 055-541600</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>ข้อมูลการติดต่อ</h4>
+        <ul class="footer-contact-list">
+          <li>
+            <i class="fa-solid fa-location-dot"></i>
+            <span>เลขที่ 11 ถนนศรีพานิช ตำบลแม่สอด อำเภอแม่สอด จังหวัดตาก 63110</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-phone"></i>
+            <span>โทรศัพท์กลาง: 055-531229, 055-531224</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-user-nurse"></i>
+            <span>กลุ่มภารกิจด้านการพยาบาล: ต่อเบอร์ภายใน 1120, 1121</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>หน่วยงานที่เกี่ยวข้อง</h4>
+        <ul class="footer-links-list">
+          <li><a href="https://maesothospital.go.th/" target="_blank"><i class="fa-solid fa-angle-right"></i> โรงพยาบาลแม่สอด</a></li>
+          <li><a href="https://www.nhso.go.th" target="_blank"><i class="fa-solid fa-angle-right"></i> สปสช.</a></li>
+          <li><a href="https://www.tnmc.or.th" target="_blank"><i class="fa-solid fa-angle-right"></i> สภาการพยาบาล</a></li>
+          <li><a href="structure.html"><i class="fa-solid fa-angle-right"></i> โครงสร้างการบริหารงานพยาบาล</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 กลุ่มการพยาบาล โรงพยาบาลแม่สอด (Mae Sot Hospital). สงวนลิขสิทธิ์</p>
+      <p>ระบบสารสนเทศและการสื่อสารงานพยาบาล</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+
+</html>

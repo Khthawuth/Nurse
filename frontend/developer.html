@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Developer Portal - ควบคุมระบบ, อนุมัติสิทธิ์ และประวัติการทำงาน</title>
+  <title>ระบบถูกย้ายไปหน้าจัดการหลัก (Admin Portal)</title>
+  <script>window.location.replace('admin.html');</script>
   <link rel="icon" type="image/png" href="images/logo.png">
   <link rel="apple-touch-icon" href="images/logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -51,6 +52,59 @@
     .log-badge.edit { background: #fef3c7; color: #d97706; }
     .log-badge.delete { background: #fee2e2; color: #ef4444; }
     .log-badge.user { background: #f3e8ff; color: #9333ea; }
+
+    /* Audit Logs Bottom-Right Pagination */
+    .logs-bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid #e2e8f0;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .logs-count-info {
+      font-size: 13.5px;
+      color: #64748b;
+      font-weight: 500;
+    }
+    .logs-pagination-controls {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .pagination-btn-modern {
+      border: 1.5px solid #cbd5e1;
+      background: #ffffff;
+      color: #334155;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .pagination-btn-modern:hover:not(:disabled) {
+      background: #f0f9ff;
+      border-color: #0284c7;
+      color: #0284c7;
+    }
+    .pagination-btn-modern.active {
+      background: #0284c7;
+      border-color: #0284c7;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);
+    }
+    .pagination-btn-modern:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      background: #f1f5f9;
+    }
   </style>
 </head>
 <body>
@@ -111,7 +165,10 @@
     <!-- แท็บ 2: Logs -->
     <div id="section-logs" class="form-card hidden">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h3><i class="fa-solid fa-clipboard-list" style="color: #0284c7;"></i> บันทึกประวัติกิจกรรมล่าสุด 50 รายการ</h3>
+        <div>
+          <h3 style="color: #0284c7; margin-bottom: 4px;"><i class="fa-solid fa-clock-rotate-left" style="color: #0284c7;"></i> ประวัติการทำงานในระบบ (Audit Logs)</h3>
+          <p style="font-size: 13px; color: #64748b; margin: 0;">เก็บบันทึกประวัติตลอด ไม่จำกัดจำนวน (ไม่มีการเก็บเวลาล็อกอินเฉยๆ)</p>
+        </div>
         <button class="btn-outline" onclick="loadLogs()"><i class="fa-solid fa-rotate-right"></i> รีเฟรช Log</button>
       </div>
 
@@ -128,6 +185,12 @@
           <tr><td colspan="4" style="text-align: center;">กำลังโหลดข้อมูลประวัติ...</td></tr>
         </tbody>
       </table>
+
+      <!-- ฟังก์ชันแบ่งหน้าเมื่อเกิน 20 แถว จัดวางฝั่งล่างขวา -->
+      <div class="logs-bottom-bar" id="dev-logs-pagination-bar">
+        <div class="logs-count-info" id="dev-logs-count-info">กำลังประมวลผลรายการ...</div>
+        <div class="logs-pagination-controls" id="dev-logs-pagination-controls"></div>
+      </div>
     </div>
   </div>
 
@@ -264,10 +327,14 @@
       }
     }
 
+    let allDevLogsCache = [];
+    let devLogsCurrentPage = 1;
+    const DEV_LOGS_PER_PAGE = 20;
+
     // โหลด Audit Logs
     async function loadLogs() {
       const tbody = document.getElementById('logs-table-body');
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #64748b;">กำลังดึงข้อมูล...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #64748b; padding: 24px;"><i class="fa-solid fa-spinner fa-spin"></i> กำลังดึงข้อมูล Audit Logs...</td></tr>';
       
       try {
         const res = await fetch(`${API_BASE}/developer/logs`, {
@@ -288,31 +355,88 @@
         }
 
         const logs = await res.json();
-        tbody.innerHTML = '';
-
-        if (!logs || logs.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#94a3b8;">ยังไม่มีประวัติการทำรายการในระบบ</td></tr>';
-          return;
-        }
-
-        logs.forEach(l => {
-          let badgeClass = 'user';
-          if (l.action.includes('เข้าสู่ระบบ')) badgeClass = 'login';
-          else if (l.action.includes('เพิ่ม')) badgeClass = 'post';
-          else if (l.action.includes('แก้ไข') || l.action.includes('ปรับปรุง') || l.action.includes('รหัส')) badgeClass = 'edit';
-          else if (l.action.includes('ลบ')) badgeClass = 'delete';
-
-          tbody.innerHTML += `
-            <tr>
-              <td style="font-size: 13px; color: #64748b;"><i class="fa-regular fa-clock"></i> ${l.created_at}</td>
-              <td><strong>${l.fullname}</strong><br><small style="color:#94a3b8;">(${l.username})</small></td>
-              <td><span class="log-badge ${badgeClass}">${l.action}</span></td>
-              <td style="font-size: 14px; color: #334155;">${l.details || '-'}</td>
-            </tr>
-          `;
-        });
+        allDevLogsCache = Array.isArray(logs) ? logs : [];
+        devLogsCurrentPage = 1;
+        renderDevLogsTable(1);
       } catch (err) {
-        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#ef4444;">ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ กรุณาตรวจสอบว่า Backend รันอยู่หรือไม่</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#ef4444; padding: 20px;">ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ กรุณาตรวจสอบว่า Backend รันอยู่หรือไม่</td></tr>';
+      }
+    }
+
+    function renderDevLogsTable(page = 1) {
+      const tbody = document.getElementById('logs-table-body');
+      const countInfo = document.getElementById('dev-logs-count-info');
+      const paginationControls = document.getElementById('dev-logs-pagination-controls');
+      if (!tbody) return;
+
+      const totalItems = allDevLogsCache.length;
+      if (totalItems === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#94a3b8; padding: 32px;"><i class="fa-solid fa-clipboard-check" style="font-size:32px; display:block; margin-bottom:8px; color:#cbd5e1;"></i> ยังไม่มีประวัติการดำเนินงานในระบบ (ไม่มีการบันทึกการล็อกอินเฉยๆ)</td></tr>';
+        if (countInfo) countInfo.innerText = 'ทั้งหมด 0 รายการ';
+        if (paginationControls) paginationControls.innerHTML = '';
+        return;
+      }
+
+      const totalPages = Math.ceil(totalItems / DEV_LOGS_PER_PAGE);
+      if (page < 1) page = 1;
+      if (page > totalPages) page = totalPages;
+      devLogsCurrentPage = page;
+
+      const startIndex = (page - 1) * DEV_LOGS_PER_PAGE;
+      const endIndex = Math.min(startIndex + DEV_LOGS_PER_PAGE, totalItems);
+      const pageItems = allDevLogsCache.slice(startIndex, endIndex);
+
+      tbody.innerHTML = pageItems.map(l => {
+        let badgeClass = 'user';
+        if (l.action.includes('เพิ่ม') || l.action.includes('สร้าง') || l.action.includes('ลงทะเบียน')) badgeClass = 'post';
+        else if (l.action.includes('แก้ไข') || l.action.includes('ปรับปรุง') || l.action.includes('สลับ') || l.action.includes('รีเซ็ต')) badgeClass = 'edit';
+        else if (l.action.includes('ลบ')) badgeClass = 'delete';
+
+        return `
+          <tr>
+            <td style="font-size: 13px; color: #64748b; white-space: nowrap;"><i class="fa-regular fa-clock" style="margin-right:4px;"></i> ${l.created_at || '-'}</td>
+            <td><strong>${l.fullname || 'ผู้ใช้งาน'}</strong><br><small style="color:#94a3b8;">(@${l.username || '-'})</small></td>
+            <td><span class="log-badge ${badgeClass}">${l.action || '-'}</span></td>
+            <td style="font-size: 13.5px; color: #334155; line-height: 1.5;">${l.details || '-'}</td>
+          </tr>
+        `;
+      }).join('');
+
+      if (countInfo) {
+        countInfo.innerHTML = `แสดงรายการที่ <strong>${startIndex + 1} - ${endIndex}</strong> จากทั้งหมด <strong>${totalItems}</strong> รายการ (บันทึกข้อมูลตลอด)`;
+      }
+
+      if (paginationControls) {
+        if (totalItems <= DEV_LOGS_PER_PAGE) {
+          paginationControls.innerHTML = '';
+        } else {
+          let html = '';
+          html += `
+            <button type="button" class="pagination-btn-modern" ${page === 1 ? 'disabled' : ''} onclick="renderDevLogsTable(${page - 1})">
+              <i class="fa-solid fa-chevron-left"></i> ก่อนหน้า
+            </button>
+          `;
+
+          for (let p = 1; p <= totalPages; p++) {
+            if (p === 1 || p === totalPages || (p >= page - 2 && p <= page + 2)) {
+              html += `
+                <button type="button" class="pagination-btn-modern ${p === page ? 'active' : ''}" onclick="renderDevLogsTable(${p})">
+                  ${p === page ? 'หน้า ' + p : p}
+                </button>
+              `;
+            } else if (p === page - 3 || p === page + 3) {
+              html += `<span style="padding: 0 4px; color: #94a3b8;">...</span>`;
+            }
+          }
+
+          html += `
+            <button type="button" class="pagination-btn-modern" ${page === totalPages ? 'disabled' : ''} onclick="renderDevLogsTable(${page + 1})">
+              ถัดไป <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          `;
+
+          paginationControls.innerHTML = html;
+        }
       }
     }
 

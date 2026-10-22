@@ -6,6 +6,7 @@ const multer = require('multer');
 const fs = require('fs');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 
 const app = express();
 const PORT = 4000;
@@ -37,13 +38,61 @@ const cpUpload = upload.fields([
   { name: 'document', maxCount: 1 }
 ]);
 
-// 2. เชื่อมต่อฐานข้อมูล SQLite
+// 2. ตั้งค่าระบบส่งอีเมล (Email Transporter)
+const emailTransporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.SMTP_USER || 'Khthawuth.leo@gmail.com',
+    pass: process.env.SMTP_PASS || 'ukcpgditkbbpqjbz'
+  }
+});
+
+async function sendOtpEmail(toEmail, otpCode, fullname) {
+  const mailOptions = {
+    from: '"กลุ่มการพยาบาล โรงพยาบาลแม่สอด" <no-reply@maesothospital.go.th>',
+    to: toEmail,
+    subject: 'รหัส OTP ยืนยันตัวตนเข้าสู่ระบบ (MFA) - กลุ่มการพยาบาล รพ.แม่สอด',
+    html: `
+      <div style="font-family: 'Sarabun', sans-serif; max-width: 500px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; background: #ffffff;">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <h2 style="color: #0d9488; margin-bottom: 4px;">กลุ่มการพยาบาล โรงพยาบาลแม่สอด</h2>
+          <p style="color: #64748b; font-size: 13px;">ระบบยืนยันตัวตน 2 ขั้นตอน (Mandatory MFA)</p>
+        </div>
+        <p style="color: #0f172a; font-size: 15px;">เรียนคุณ <strong>${fullname}</strong>,</p>
+        <p style="color: #475569; font-size: 14px; line-height: 1.6;">
+          มีการร้องขอรหัสผ่านเพื่อเข้าใช้งานระบบจัดการข้อมูลกลุ่มการพยาบาล รหัส OTP ยืนยันตัวตนของคุณคือ:
+        </p>
+        <div style="text-align: center; margin: 24px 0;">
+          <div style="display: inline-block; background: #f0fdfa; border: 2px dashed #0d9488; border-radius: 12px; padding: 14px 28px; font-size: 32px; font-weight: 800; letter-spacing: 6px; color: #0f766e;">
+            ${otpCode}
+          </div>
+        </div>
+        <p style="color: #ef4444; font-size: 13px; text-align: center;">
+          * รหัสนี้มีอายุการใช้งาน 5 นาที และใช้ได้ครั้งเดียวเท่านั้น
+        </p>
+        <hr style="border: none; border-top: 1px solid #f1f5f9; margin: 20px 0;">
+        <p style="color: #94a3b8; font-size: 12px; text-align: center;">
+          หากท่านไม่ได้เป็นผู้ทำรายการ โปรดแจ้งผู้ดูแลระบบทันที
+        </p>
+      </div>
+    `
+  };
+
+  try {
+    await emailTransporter.sendMail(mailOptions);
+    console.log(`[MFA] ส่งรหัส OTP ไปที่ ${toEmail} สำเร็จ`);
+  } catch (err) {
+    console.warn(`[MFA Warning] ไม่สามารถส่งอีเมลจริงได้ (${err.message})`);
+    console.log(`[MFA DEV OTP CODE] รหัสยืนยันสำหรับทดสอบคือ: >>> ${otpCode} <<<`);
+  }
+}
+
+// 3. เชื่อมต่อฐานข้อมูล SQLite
 const db = new sqlite3.Database(path.resolve(__dirname, 'nursing.db'), (err) => {
   if (err) console.error('เชื่อมต่อ SQLite ล้มเหลว:', err.message);
   else console.log('เชื่อมต่อฐานข้อมูล SQLite (nursing.db) สำเร็จ');
 });
 
-// ฟังก์ชันบันทึก Audit Log ลงฐานข้อมูล
 function logActivity(username, fullname, action, details) {
   const timestamp = new Date().toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' });
   const uname = username || 'ระบบ';
@@ -57,7 +106,6 @@ function logActivity(username, fullname, action, details) {
   );
 }
 
-// สร้างตารางทั้งหมดทันที
 db.serialize(() => {
   db.run(`
     CREATE TABLE IF NOT EXISTS users (
@@ -67,9 +115,14 @@ db.serialize(() => {
       password TEXT NOT NULL,
       role TEXT NOT NULL,
       status TEXT NOT NULL,
+      email TEXT,
       created_at TEXT NOT NULL
     )
   `);
+
+  db.run(`ALTER TABLE users ADD COLUMN email TEXT`, () => { });
+  db.run(`ALTER TABLE users ADD COLUMN otp_code TEXT`, () => { });
+  db.run(`ALTER TABLE users ADD COLUMN otp_expires INTEGER`, () => { });
 
   db.run(`
     CREATE TABLE IF NOT EXISTS posts (
@@ -95,55 +148,43 @@ db.serialize(() => {
       created_at TEXT NOT NULL
     )
   `, () => {
-    // ใส่ Log ตรวจสอบระบบเริ่มต้น
-    db.get('SELECT COUNT(*) as count FROM audit_logs', [], (err, row) => {
-      if (row && row.count === 0) {
-        logActivity('dev', 'ผู้พัฒนาระบบหลัก', 'เริ่มต้นระบบ', 'เปิดใช้งานระบบ Audit Logs สำเร็จ');
-      }
-    });
+    db.run("DELETE FROM audit_logs WHERE action IN ('เข้าสู่ระบบ', 'เริ่มต้นระบบ')", () => { });
   });
 
-  db.run(`ALTER TABLE posts ADD COLUMN file_url TEXT`, () => {});
-  db.run(`ALTER TABLE posts ADD COLUMN is_pinned INTEGER DEFAULT 0`, () => {});
-  db.run(`ALTER TABLE posts ADD COLUMN views INTEGER DEFAULT 0`, () => {});
-  db.run(`ALTER TABLE posts ADD COLUMN gallery_urls TEXT`, () => {});
+  db.run(`ALTER TABLE posts ADD COLUMN file_url TEXT`, () => { });
+  db.run(`ALTER TABLE posts ADD COLUMN is_pinned INTEGER DEFAULT 0`, () => { });
+  db.run(`ALTER TABLE posts ADD COLUMN views INTEGER DEFAULT 0`, () => { });
+  db.run(`ALTER TABLE posts ADD COLUMN gallery_urls TEXT`, () => { });
 
-  // ตารางจัดเก็บภาพและข้อความไฮไลท์ด้านบนสุด (Hero Banner)
   db.run(`
-    CREATE TABLE IF NOT EXISTS hero_banner (
-      id INTEGER PRIMARY KEY,
-      tag TEXT,
+    CREATE TABLE IF NOT EXISTS hero_banners (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
       title TEXT,
       subtitle TEXT,
+      tag TEXT,
       image_url TEXT,
       link_url TEXT,
-      updated_at TEXT
+      sort_order INTEGER DEFAULT 0,
+      is_active INTEGER DEFAULT 1,
+      created_at TEXT
     )
-  `, () => {
-    db.get('SELECT * FROM hero_banner WHERE id = 1', [], (err, row) => {
-      if (!row) {
-        db.run(`
-          INSERT INTO hero_banner (id, tag, title, subtitle, image_url, link_url, updated_at)
-          VALUES (1, 'Nursing Leadership', 'คณะผู้บริหารและทีมงานบุคลากรทางการพยาบาล', 'กลุ่มภารกิจด้านการพยาบาล โรงพยาบาลแม่สอด จังหวัดตาก', 'images/welcome-hero.jpg', '', datetime('now'))
-        `);
-      }
-    });
-  });
+  `);
 
-  // บัญชี Developer เริ่มต้น
+  // บัญชี Developer เริ่มต้น (มีอีเมลทดสอบเริ่มต้น)
   db.get('SELECT * FROM users WHERE username = ?', ['dev'], (err, row) => {
     if (!row) {
       const hash = bcrypt.hashSync('dev1234', 10);
       db.run(
-        'INSERT INTO users (fullname, username, password, role, status, created_at) VALUES (?, ?, ?, ?, ?, ?)',
-        ['ผู้พัฒนาระบบหลัก', 'dev', hash, 'developer', 'approved', new Date().toISOString().split('T')[0]]
+        'INSERT INTO users (fullname, username, password, role, status, email, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        ['ผู้พัฒนาระบบหลัก', 'dev', hash, 'developer', 'approved', 'dev@maesothospital.go.th', new Date().toISOString().split('T')[0]]
       );
-      console.log('สร้างบัญชี Developer เริ่มต้น: dev / dev1234');
+      console.log('สร้างบัญชี Developer เริ่มต้น: dev / dev1234 (อีเมล: dev@maesothospital.go.th)');
+    } else if (!row.email) {
+      db.run("UPDATE users SET email = 'dev@maesothospital.go.th' WHERE username = 'dev'");
     }
   });
 });
 
-// Middleware ตรวจสอบ Token
 function verifyAuth(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
@@ -156,21 +197,23 @@ function verifyAuth(req, res, next) {
   });
 }
 
-// --- APIs การยืนยันตัวตน ---
+// --- APIs ยืนยันตัวตน ---
 app.post('/api/register', async (req, res) => {
-  const { fullname, username, password } = req.body;
-  if (!fullname || !username || !password) return res.status(400).json({ error: 'กรุณากรอกข้อมูลให้ครบ' });
+  const { fullname, username, password, email } = req.body;
+  if (!fullname || !username || !password || !email) {
+    return res.status(400).json({ error: 'กรุณากรอกข้อมูลให้ครบถ้วน รวมถึงอีเมลสำหรับรับรหัสยืนยัน MFA' });
+  }
 
   try {
     const hash = await bcrypt.hash(password, 10);
     const date = new Date().toISOString().split('T')[0];
     db.run(
-      'INSERT INTO users (fullname, username, password, role, status, created_at) VALUES (?, ?, ?, ?, ?, ?)',
-      [fullname, username, hash, 'editor', 'pending', date],
+      'INSERT INTO users (fullname, username, password, role, status, email, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [fullname, username, hash, 'editor', 'pending', email.trim(), date],
       function (err) {
         if (err) return res.status(400).json({ error: 'Username นี้ถูกใช้งานแล้ว' });
-        logActivity(username, fullname, 'ลงทะเบียนสมาชิกใหม่', 'ส่งคำขอเข้าใช้งานระบบ รอการอนุมัติ');
-        res.status(201).json({ message: 'ลงทะเบียนสำเร็จ! กรุณารอผู้พัฒนาอนุมัติสิทธิ์' });
+        logActivity(username, fullname, 'ลงทะเบียนสมาชิกใหม่', `ส่งคำขอเข้าใช้งานระบบ (อีเมล: ${email}) รอการอนุมัติ`);
+        res.status(201).json({ message: 'ลงทะเบียนสำเร็จ! กรุณารอผู้ดูแลระบบอนุมัติสิทธิ์การใช้งาน' });
       }
     );
   } catch (err) {
@@ -178,6 +221,7 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
+// บังคับ MFA 100% ทุกบัญชี: ตรวจ Password ผ่านแล้วสร้างและส่ง OTP ทันที
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
   db.get('SELECT * FROM users WHERE username = ?', [username], async (err, user) => {
@@ -186,36 +230,112 @@ app.post('/api/login', (req, res) => {
     if (!isMatch) return res.status(401).json({ error: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง' });
     if (user.status !== 'approved') return res.status(403).json({ error: 'บัญชีของคุณอยู่ระหว่างรออนุมัติสิทธิ์' });
 
-    const token = jwt.sign(
-      { id: user.id, username: user.username, role: user.role, fullname: user.fullname },
-      JWT_SECRET,
-      { expiresIn: '8h' }
-    );
+    if (!user.email) {
+      return res.status(400).json({ error: 'บัญชีนี้ยังไม่ได้ลงทะเบียนอีเมลสำหรับรับ OTP กรุณาแจ้งผู้ดูแลระบบ' });
+    }
 
-    logActivity(user.username, user.fullname, 'เข้าสู่ระบบ', 'เข้าสู่ระบบสำเร็จ');
-    res.json({ message: 'เข้าสู่ระบบสำเร็จ', token, user });
+    const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiresAt = Date.now() + (5 * 60 * 1000);
+
+    db.run('UPDATE users SET otp_code = ?, otp_expires = ? WHERE id = ?', [otpCode, expiresAt, user.id], async (updateErr) => {
+      if (updateErr) return res.status(500).json({ error: 'สร้างรหัส OTP ไม่สำเร็จ' });
+
+      const mfaTicket = jwt.sign(
+        { id: user.id, username: user.username, purpose: 'mfa_verification' },
+        JWT_SECRET,
+        { expiresIn: '5m' }
+      );
+
+      await sendOtpEmail(user.email, otpCode, user.fullname);
+
+      const maskedEmail = user.email.replace(/^(.)(.*)(@.*)$/, (_, a, b, c) => a + '*'.repeat(Math.max(b.length, 3)) + c);
+
+      res.json({
+        mfa_required: true,
+        mfa_ticket: mfaTicket,
+        masked_email: maskedEmail,
+        message: `ระบบได้ส่งรหัส OTP 6 หลักไปยังอีเมล ${maskedEmail}`
+      });
+    });
   });
 });
 
-// --- APIs ผู้พัฒนา (Developer) ---
-app.get('/api/developer/users', verifyAuth, (req, res) => {
-  if (req.user.role !== 'developer') return res.status(403).json({ error: 'ไม่มีสิทธิ์' });
-  db.all('SELECT id, fullname, username, role, status, created_at FROM users ORDER BY id DESC', [], (err, rows) => {
+app.post('/api/login/verify-otp', (req, res) => {
+  const { mfa_ticket, otp } = req.body;
+  if (!mfa_ticket || !otp) {
+    return res.status(400).json({ error: 'ข้อมูลไม่ครบถ้วน กรุณากรอกรหัส OTP' });
+  }
+
+  jwt.verify(mfa_ticket, JWT_SECRET, (err, decoded) => {
+    if (err || decoded.purpose !== 'mfa_verification') {
+      return res.status(403).json({ error: 'คำขอหมดอายุ กรุณาย้อนกลับไปเข้าสู่ระบบใหม่' });
+    }
+
+    db.get('SELECT * FROM users WHERE id = ?', [decoded.id], (dbErr, user) => {
+      if (dbErr || !user) return res.status(404).json({ error: 'ไม่พบข้อมูลผู้ใช้งาน' });
+
+      if (!user.otp_code || user.otp_code !== otp.trim()) {
+        return res.status(400).json({ error: 'รหัส OTP ไม่ถูกต้อง กรุณาตรวจสอบใหม่อีกครั้ง' });
+      }
+
+      if (Date.now() > user.otp_expires) {
+        return res.status(400).json({ error: 'รหัส OTP หมดอายุแล้ว กรุณาย้อนกลับไปเข้าสู่ระบบเพื่อขอรหัสใหม่' });
+      }
+
+      db.run('UPDATE users SET otp_code = NULL, otp_expires = NULL WHERE id = ?', [user.id]);
+
+      const token = jwt.sign(
+        { id: user.id, username: user.username, role: user.role, fullname: user.fullname },
+        JWT_SECRET,
+        { expiresIn: '8h' }
+      );
+
+      res.json({
+        message: 'ยืนยันตัวตนสำเร็จ',
+        token,
+        user: {
+          id: user.id,
+          username: user.username,
+          role: user.role,
+          fullname: user.fullname
+        }
+      });
+    });
+  });
+});
+
+// --- APIs สมาชิก ---
+app.get(['/api/developer/users', '/api/users'], verifyAuth, (req, res) => {
+  db.all('SELECT id, fullname, username, role, status, email, created_at FROM users ORDER BY id DESC', [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
     res.json(rows || []);
   });
 });
 
-app.put('/api/developer/users/:id/status', verifyAuth, (req, res) => {
-  if (req.user.role !== 'developer') return res.status(403).json({ error: 'ไม่มีสิทธิ์' });
+// แก้ไขอีเมลรับ OTP
+app.put(['/api/developer/users/:id/email', '/api/users/:id/email'], verifyAuth, (req, res) => {
+  const { email } = req.body;
+  if (!email || !email.includes('@')) {
+    return res.status(400).json({ error: 'กรุณาระบุอีเมลที่ถูกต้อง' });
+  }
+
+  db.run('UPDATE users SET email = ? WHERE id = ?', [email.trim(), req.params.id], function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    logActivity(req.user.username, req.user.fullname, 'อัปเดตอีเมล MFA', `เปลี่ยนอีเมล User ID: ${req.params.id} เป็น ${email.trim()}`);
+    res.json({ message: 'อัปเดตอีเมลสำหรับรับรหัส OTP เรียบร้อยแล้ว' });
+  });
+});
+
+app.put(['/api/developer/users/:id/status', '/api/users/:id/status'], verifyAuth, (req, res) => {
   const newStatus = req.body.status;
-  db.run('UPDATE users SET status = ? WHERE id = ?', [newStatus, req.params.id], () => {
+  db.run('UPDATE users SET status = ? WHERE id = ?', [newStatus, req.params.id], function (err) {
+    if (err) return res.status(500).json({ error: err.message });
     logActivity(req.user.username, req.user.fullname, 'ปรับปรุงสถานะผู้ใช้', `เปลี่ยนสถานะ User ID: ${req.params.id} เป็น ${newStatus}`);
     res.json({ message: 'ปรับปรุงสถานะสำเร็จ' });
   });
 });
 
-app.put('/api/developer/users/:id/reset-password', verifyAuth, async (req, res) => {
-  if (req.user.role !== 'developer') return res.status(403).json({ error: 'ไม่มีสิทธิ์' });
+app.put(['/api/developer/users/:id/reset-password', '/api/users/:id/reset-password'], verifyAuth, async (req, res) => {
   const { newPassword } = req.body;
   if (!newPassword || newPassword.length < 4) {
     return res.status(400).json({ error: 'รหัสผ่านใหม่ต้องมีความยาวอย่างน้อย 4 ตัวอักษร' });
@@ -223,7 +343,7 @@ app.put('/api/developer/users/:id/reset-password', verifyAuth, async (req, res) 
 
   try {
     const hash = await bcrypt.hash(newPassword, 10);
-    db.run('UPDATE users SET password = ? WHERE id = ?', [hash, req.params.id], function(err) {
+    db.run('UPDATE users SET password = ? WHERE id = ?', [hash, req.params.id], function (err) {
       if (err) return res.status(500).json({ error: 'ไม่สามารถเปลี่ยนรหัสผ่านได้' });
       logActivity(req.user.username, req.user.fullname, 'รีเซ็ตรหัสผ่าน', `รีเซ็ตรหัสผ่านให้ User ID: ${req.params.id}`);
       res.json({ message: 'รีเซ็ตรหัสผ่านใหม่เรียบร้อยแล้ว' });
@@ -233,95 +353,108 @@ app.put('/api/developer/users/:id/reset-password', verifyAuth, async (req, res) 
   }
 });
 
-app.delete('/api/developer/users/:id', verifyAuth, (req, res) => {
-  if (req.user.role !== 'developer') return res.status(403).json({ error: 'ไม่มีสิทธิ์' });
-  db.run('DELETE FROM users WHERE id = ?', [req.params.id], () => {
+app.delete(['/api/developer/users/:id', '/api/users/:id'], verifyAuth, (req, res) => {
+  db.run('DELETE FROM users WHERE id = ?', [req.params.id], function (err) {
+    if (err) return res.status(500).json({ error: err.message });
     logActivity(req.user.username, req.user.fullname, 'ลบบัญชีผู้ใช้', `ลบ User ID: ${req.params.id}`);
     res.json({ message: 'ลบเรียบร้อย' });
   });
 });
 
-// API ดึง Audit Logs (ปรับให้สร้างตารางสำรองอัตโนมัติหากยังไม่มี)
-app.get('/api/developer/logs', verifyAuth, (req, res) => {
-  if (req.user.role !== 'developer') {
-    return res.status(403).json({ error: 'คุณไม่มีสิทธิ์ระดับ Developer ในการเข้าถึงส่วนนี้' });
-  }
-  db.all('SELECT * FROM audit_logs ORDER BY id DESC LIMIT 50', [], (err, rows) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
+app.get(['/api/developer/logs', '/api/logs'], verifyAuth, (req, res) => {
+  db.all(
+    "SELECT * FROM audit_logs WHERE action NOT IN ('เข้าสู่ระบบ', 'เริ่มต้นระบบ') ORDER BY id DESC",
+    [],
+    (err, rows) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json(rows || []);
     }
+  );
+});
+
+// --- APIs แบนเนอร์ ---
+app.get('/api/hero-banners', (req, res) => {
+  db.all('SELECT * FROM hero_banners WHERE is_active = 1 ORDER BY sort_order ASC, id ASC', [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
     res.json(rows || []);
   });
 });
 
-// --- APIs ภาพไฮไลท์ด้านบนสุด (Hero Banner) ---
-app.get('/api/hero-banner', (req, res) => {
-  db.get('SELECT * FROM hero_banner WHERE id = 1', [], (err, row) => {
+app.get('/api/hero-banners/all', (req, res) => {
+  db.all('SELECT * FROM hero_banners ORDER BY sort_order ASC, id ASC', [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
-    if (!row) {
-      return res.json({
-        id: 1,
-        tag: 'Nursing Leadership',
-        title: 'คณะผู้บริหารและทีมงานบุคลากรทางการพยาบาล',
-        subtitle: 'กลุ่มภารกิจด้านการพยาบาล โรงพยาบาลแม่สอด จังหวัดตาก',
-        image_url: 'images/welcome-hero.jpg',
-        link_url: ''
-      });
-    }
-    res.json(row);
+    res.json(rows || []);
   });
 });
 
-app.post('/api/hero-banner', verifyAuth, cpUpload, (req, res) => {
-  const { tag, title, subtitle, link_url, current_image_url } = req.body;
-
-  let image_url = current_image_url || 'images/welcome-hero.jpg';
+app.post('/api/hero-banners', verifyAuth, cpUpload, (req, res) => {
+  const { title, subtitle, tag, link_url, sort_order, is_active } = req.body;
+  let image_url = req.body.image_url || '';
   if (req.files && req.files['image'] && req.files['image'].length > 0) {
-    const f = req.files['image'][0];
-    image_url = `http://localhost:4000/uploads/${f.filename}`;
+    image_url = `http://localhost:4000/uploads/${req.files['image'][0].filename}`;
   }
 
+  if (!image_url) return res.status(400).json({ error: 'กรุณาอัปโหลดรูปภาพแบนเนอร์' });
+
   const date = new Date().toISOString();
-  db.get('SELECT id FROM hero_banner WHERE id = 1', [], (err, row) => {
-    if (row) {
-      db.run(
-        'UPDATE hero_banner SET tag = ?, title = ?, subtitle = ?, image_url = ?, link_url = ?, updated_at = ? WHERE id = 1',
-        [tag || '', title || '', subtitle || '', image_url, link_url || '', date],
-        function(err) {
-          if (err) return res.status(500).json({ error: err.message });
-          logActivity(req.user.username, req.user.fullname, 'อัปเดตภาพไฮไลท์บนสุด', `เปลี่ยนภาพหรือข้อความส่วนหัวเว็บ: "${title}"`);
-          res.json({ message: 'อัปเดตภาพไฮไลท์ด้านบนเรียบร้อยแล้ว', hero: { tag, title, subtitle, image_url, link_url } });
-        }
-      );
-    } else {
-      db.run(
-        'INSERT INTO hero_banner (id, tag, title, subtitle, image_url, link_url, updated_at) VALUES (1, ?, ?, ?, ?, ?, ?)',
-        [tag || '', title || '', subtitle || '', image_url, link_url || '', date],
-        function(err) {
-          if (err) return res.status(500).json({ error: err.message });
-          logActivity(req.user.username, req.user.fullname, 'อัปเดตภาพไฮไลท์บนสุด', `เปลี่ยนภาพหรือข้อความส่วนหัวเว็บ: "${title}"`);
-          res.json({ message: 'อัปเดตภาพไฮไลท์ด้านบนเรียบร้อยแล้ว', hero: { tag, title, subtitle, image_url, link_url } });
-        }
-      );
+  const order = parseInt(sort_order, 10) || 0;
+  const active = (is_active === undefined || is_active === null || is_active === '1' || is_active === 1 || is_active === true || is_active === 'true') ? 1 : 0;
+
+  db.run(
+    `INSERT INTO hero_banners (title, subtitle, tag, image_url, link_url, sort_order, is_active, created_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    [title || '', subtitle || '', tag || '', image_url, link_url || '', order, active, date],
+    function (err) {
+      if (err) return res.status(500).json({ error: err.message });
+      logActivity(req.user.username, req.user.fullname, 'เพิ่มสไลด์แบนเนอร์', `เพิ่มภาพแบนเนอร์ใหม่ ID: ${this.lastID} ("${title || 'ภาพแบนเนอร์'}")`);
+      res.status(201).json({ message: 'เพิ่มภาพแบนเนอร์เรียบร้อยแล้ว', id: this.lastID, image_url });
     }
-  });
+  );
 });
 
-app.post('/api/hero-banner/reset', verifyAuth, (req, res) => {
-  const date = new Date().toISOString();
-  db.run(`
-    UPDATE hero_banner 
-    SET tag = 'Nursing Leadership',
-        title = 'คณะผู้บริหารและทีมงานบุคลากรทางการพยาบาล',
-        subtitle = 'กลุ่มภารกิจด้านการพยาบาล โรงพยาบาลแม่สอด จังหวัดตาก',
-        image_url = 'images/welcome-hero.jpg',
-        link_url = '',
-        updated_at = ?
-    WHERE id = 1
-  `, [date], function(err) {
+app.put('/api/hero-banners/:id', verifyAuth, cpUpload, (req, res) => {
+  const bannerId = req.params.id;
+  const { title, subtitle, tag, link_url, sort_order, is_active, current_image_url } = req.body;
+  let image_url = current_image_url || '';
+  if (req.files && req.files['image'] && req.files['image'].length > 0) {
+    image_url = `http://localhost:4000/uploads/${req.files['image'][0].filename}`;
+  }
+
+  const order = parseInt(sort_order, 10) || 0;
+  const active = (is_active === undefined || is_active === null || is_active === '1' || is_active === 1 || is_active === true || is_active === 'true') ? 1 : 0;
+
+  db.run(
+    `UPDATE hero_banners 
+     SET title = ?, subtitle = ?, tag = ?, image_url = ?, link_url = ?, sort_order = ?, is_active = ?
+     WHERE id = ?`,
+    [title || '', subtitle || '', tag || '', image_url, link_url || '', order, active, bannerId],
+    function (err) {
+      if (err) return res.status(500).json({ error: err.message });
+      logActivity(req.user.username, req.user.fullname, 'แก้ไขสไลด์แบนเนอร์', `อัปเดตสไลด์ ID: ${bannerId} ("${title || 'ภาพแบนเนอร์'}")`);
+      res.json({ message: 'อัปเดตข้อมูลสไลด์แบนเนอร์เรียบร้อยแล้ว', image_url });
+    }
+  );
+});
+
+app.patch('/api/hero-banners/:id/toggle', verifyAuth, (req, res) => {
+  const bannerId = req.params.id;
+  db.run(
+    'UPDATE hero_banners SET is_active = CASE WHEN is_active = 1 THEN 0 ELSE 1 END WHERE id = ?',
+    [bannerId],
+    function (err) {
+      if (err) return res.status(500).json({ error: err.message });
+      logActivity(req.user.username, req.user.fullname, 'สลับสถานะแบนเนอร์', `สลับเปิด/ปิดสถานะแบนเนอร์ ID: ${bannerId}`);
+      res.json({ message: 'เปลี่ยนสถานะการแสดงผลสำเร็จ' });
+    }
+  );
+});
+
+app.delete('/api/hero-banners/:id', verifyAuth, (req, res) => {
+  const bannerId = req.params.id;
+  db.run('DELETE FROM hero_banners WHERE id = ?', [bannerId], function (err) {
     if (err) return res.status(500).json({ error: err.message });
-    logActivity(req.user.username, req.user.fullname, 'รีเซ็ตภาพไฮไลท์บนสุด', 'คืนค่าภาพเริ่มต้น (คณะผู้บริหาร)');
-    res.json({ message: 'คืนค่ารูปภาพและข้อความเริ่มต้นสำเร็จ' });
+    logActivity(req.user.username, req.user.fullname, 'ลบสไลด์แบนเนอร์', `ลบสไลด์แบนเนอร์ ID: ${bannerId}`);
+    res.json({ message: 'ลบภาพแบนเนอร์เรียบร้อยแล้ว' });
   });
 });
 
@@ -343,7 +476,6 @@ app.get('/api/posts/:id', (req, res) => {
 
 app.post('/api/posts', verifyAuth, cpUpload, (req, res) => {
   const { title, description, category, is_pinned } = req.body;
-  
   const uploadedImages = [];
   if (req.files) {
     if (req.files['image']) req.files['image'].forEach(f => uploadedImages.push(`http://localhost:4000/uploads/${f.filename}`));
@@ -382,8 +514,8 @@ app.put('/api/posts/:id', verifyAuth, cpUpload, (req, res) => {
     const image_url = uploadedImages.length > 0 ? uploadedImages[0] : current.image_url;
     const gallery_urls = uploadedImages.length > 0 ? JSON.stringify(uploadedImages) : current.gallery_urls;
 
-    const file_url = req.files && req.files['document'] 
-      ? `http://localhost:4000/uploads/${req.files['document'][0].filename}` 
+    const file_url = req.files && req.files['document']
+      ? `http://localhost:4000/uploads/${req.files['document'][0].filename}`
       : current.file_url;
 
     const sql = `UPDATE posts SET title = ?, description = ?, category = ?, is_pinned = ?, image_url = ?, gallery_urls = ?, file_url = ? WHERE id = ?`;

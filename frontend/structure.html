@@ -1,26 +1,483 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>โครงสร้างการบริหาร | กลุ่มการพยาบาล โรงพยาบาลแม่สอด</title>
+  <title>โครงสร้างการบริหาร - กลุ่มการพยาบาล โรงพยาบาลแม่สอด</title>
   <link rel="icon" type="image/png" href="images/logo.png">
   <link rel="apple-touch-icon" href="images/logo.png">
-  <meta name="description" content="โครงสร้างการบริหารและสายบังคับบัญชา กลุ่มภารกิจด้านการพยาบาล โรงพยาบาลแม่สอด">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ==========================================================================
+       สไตล์โครงสร้างการบริหารระดับ High-Tech Enterprise Healthcare
+       ========================================================================== */
+    .org-chart-wrapper {
+      margin-top: 36px;
+      position: relative;
+    }
+
+    /* 1. สายการบังคับบัญชาระดับบริหาร (2-Tier Executive Hierarchy Tree) */
+    .hierarchy-executive-tree {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 50px;
+      position: relative;
+    }
+
+    /* เส้นเชื่อมจาก ผอ. ลงมาหา รอง ผอ.ฝ่ายการพยาบาล */
+    .hierarchy-connector-vertical {
+      width: 3px;
+      height: 40px;
+      background: linear-gradient(180deg, #0d9488 0%, #14b8a6 100%);
+      box-shadow: 0 0 10px rgba(13, 148, 136, 0.4);
+      border-radius: 4px;
+      margin: 0 auto;
+    }
+
+    /* เส้นเชื่อมจาก รอง ผอ.ฝ่ายการพยาบาล ลงไปหากลุ่มงานด้านล่าง */
+    .hierarchy-executive-tree::after {
+      content: '';
+      position: absolute;
+      bottom: -45px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 45px;
+      background: linear-gradient(180deg, #0d9488 0%, #99f6e4 100%);
+      box-shadow: 0 0 10px rgba(13, 148, 136, 0.4);
+      border-radius: 4px;
+    }
+
+    /* การ์ดผู้อำนวยการโรงพยาบาล (Level 1: Director VIP Card) */
+    .director-card {
+      background: radial-gradient(120% 120% at 50% 10%, #ffffff 0%, #f0fdfa 70%, #e6fffa 100%);
+      border: 2px solid #99f6e4;
+      border-radius: 28px;
+      padding: 30px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 580px;
+      width: 100%;
+      box-shadow: 0 20px 40px -10px rgba(13, 148, 136, 0.18), 0 4px 14px rgba(0, 0, 0, 0.04);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .director-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #0d9488 0%, #14b8a6 50%, #ea580c 100%);
+    }
+
+    .director-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px -10px rgba(13, 148, 136, 0.28);
+      border-color: #2dd4bf;
+    }
+
+    .director-photo-wrap {
+      width: 145px;
+      height: 145px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 3.5px solid #0d9488;
+      padding: 4px;
+      box-shadow: 0 8px 24px rgba(13, 148, 136, 0.3);
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .director-card:hover .director-photo-wrap {
+      transform: scale(1.05);
+    }
+
+    .director-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 15%;
+      transform: scale(1.18);
+    }
+
+    /* การ์ดรองผู้อำนวยการฝ่ายการพยาบาล (Level 2: Nursing Director Card) */
+    .nursing-director-card {
+      background: linear-gradient(135deg, #ffffff 0%, #fdf4ff 40%, #f0fdfa 100%);
+      border: 2px solid #cbd5e1;
+      border-top: 4px solid #0d9488;
+      border-radius: 24px;
+      padding: 24px 34px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 16px 36px -10px rgba(15, 23, 42, 0.12);
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nursing-director-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 42px -10px rgba(13, 148, 136, 0.25);
+      border-color: #0d9488;
+    }
+
+    .nursing-director-photo-wrap {
+      width: 135px;
+      height: 135px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 3px solid #0f766e;
+      padding: 3px;
+      box-shadow: 0 6px 20px rgba(13, 148, 136, 0.25);
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .nursing-director-card:hover .nursing-director-photo-wrap {
+      transform: scale(1.05);
+    }
+
+    .nursing-director-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 10%;
+      transform: scale(1.22);
+    }
+
+    .exec-role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+      color: #ffffff;
+      padding: 5px 16px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+      box-shadow: 0 3px 10px rgba(13, 148, 136, 0.25);
+    }
+
+    .exec-role-badge.nurse-badge {
+      background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
+      box-shadow: 0 3px 10px rgba(15, 118, 110, 0.25);
+    }
+
+    .exec-details h3 {
+      font-size: 22px;
+      color: #0f172a;
+      margin: 4px 0 6px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    .exec-details p {
+      font-size: 14px;
+      color: #475569;
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    /* 2. แถบควบคุม: ค้นหากลุ่มงาน & ปุ่มฟิลเตอร์คลัสเตอร์ */
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .org-search-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-full);
+      padding: 9px 24px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      transition: all 0.25s ease;
+    }
+
+    .org-search-box:focus-within {
+      border-color: #0d9488;
+      box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.15);
+    }
+
+    .org-search-box input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-family: inherit;
+      font-size: 14px;
+      color: #0f172a;
+    }
+
+    .cluster-filter-nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .cluster-filter-btn {
+      padding: 9px 18px;
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--slate-200);
+      background: var(--white);
+      color: var(--slate-700);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+
+    .cluster-filter-btn:hover {
+      border-color: var(--primary-500);
+      color: var(--primary-700);
+      background: var(--primary-50);
+      transform: translateY(-2px);
+    }
+
+    .cluster-filter-btn.active {
+      background: linear-gradient(135deg, var(--primary-700) 0%, var(--primary-600) 100%);
+      color: var(--white);
+      border-color: transparent;
+      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.3);
+    }
+
+    /* 3. ตารางการ์ด 17 กลุ่มงาน */
+    .groups-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-bottom: 40px;
+    }
+
+    .group-card {
+      background: var(--white);
+      border: 1.5px solid var(--slate-200);
+      border-radius: 20px;
+      padding: 22px 20px;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .group-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: #0d9488;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .group-card:hover {
+      transform: translateY(-6px);
+      border-color: #0d9488;
+      box-shadow: 0 16px 32px -6px rgba(13, 148, 136, 0.2);
+    }
+
+    .group-card:hover::before {
+      opacity: 1;
+    }
+
+    .group-card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--slate-100);
+    }
+
+    .group-number-pill {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: #f0fdfa;
+      color: #0f766e;
+      border: 1.5px solid #99f6e4;
+      font-family: 'Prompt', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .group-leader-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #cbd5e1;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #f8fafc;
+    }
+
+    .group-leader-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .group-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--slate-900);
+      line-height: 1.35;
+      margin-bottom: 3px;
+    }
+
+    .group-card-lead-name {
+      font-size: 12.5px;
+      color: #0d9488;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .group-card-body {
+      flex-grow: 1;
+    }
+
+    .staff-badge-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .staff-badge {
+      font-size: 11.5px;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .staff-badge.rn {
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    .staff-badge.tn {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .group-card-footer {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--slate-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+      color: var(--slate-500);
+    }
+
+    .btn-view-unit {
+      color: #0d9488;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* 4. Modal กล่องรายละเอียดกลุ่มงาน */
+    .unit-modal-box {
+      background: #ffffff;
+      width: 90%;
+      max-width: 540px;
+      border-radius: 24px;
+      padding: 32px;
+      position: relative;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    @media (max-width: 1024px) {
+      .groups-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 680px) {
+
+      .director-card,
+      .nursing-director-card {
+        padding: 24px 18px;
+      }
+
+      .exec-details h3 {
+        font-size: 19px;
+      }
+
+      .groups-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-  <!-- แถบเมนูด้านบน (Sticky Navbar) -->
-  <header class="navbar-wrapper">
+  <!-- แถบความคืบหน้าการเลื่อนหน้าจอ -->
+  <div class="scroll-progress-track" aria-hidden="true">
+    <div class="scroll-progress-bar" id="scroll-progress-bar"></div>
+  </div>
+
+  <!-- ================= 1. แถบเมนูด้านบน (Sticky Navbar ฉบับสมบูรณ์) ================= -->
+  <header class="navbar-wrapper" id="main-header">
     <div class="navbar-container">
-      <a href="index.html" class="brand-section">
+      <a href="index.html" class="brand-section" aria-label="หน้าแรกกลุ่มการพยาบาล โรงพยาบาลแม่สอด">
         <div class="brand-logo-wrap">
-          <img src="images/logo.png" alt="ตราสัญลักษณ์กลุ่มการพยาบาล โรงพยาบาลแม่สอด" class="brand-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/f7/Emblem_of_the_Ministry_of_Public_Health_of_Thailand.svg'">
+          <img src="images/logo.png" alt="ตราสัญลักษณ์กลุ่มการพยาบาล โรงพยาบาลแม่สอด" class="brand-logo"
+            onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/f7/Emblem_of_the_Ministry_of_Public_Health_of_Thailand.svg'">
         </div>
         <div class="brand-text">
           <h2>กลุ่มการพยาบาล โรงพยาบาลแม่สอด</h2>
@@ -28,10 +485,12 @@
         </div>
       </a>
 
+      <!-- ปุ่ม Toggle สำหรับหน้าจอมือถือ -->
       <button class="mobile-toggle-btn" onclick="toggleMobileMenu()" aria-label="เปิดเมนูนำทาง">
         <i class="fa-solid fa-bars"></i>
       </button>
 
+      <!-- ลิงก์เมนูนำทาง -->
       <nav class="nav-links" id="primary-navigation" aria-label="เมนูหลัก">
         <a href="index.html" class="nav-btn">
           <i class="fa-solid fa-house"></i> หน้าแรก
@@ -79,37 +538,37 @@
         <div class="nav-dropdown">
           <button type="button" class="nav-btn" onclick="toggleDropdown('roles-menu')" aria-expanded="false"
             aria-controls="roles-menu">
-            <i class="fa-solid fa-user-tie"></i> บทบาทหน้าที่ <i class="fa-solid fa-angle-down"></i>
+            <i class="fa-solid fa-user-nurse"></i> บทบาทหน้าที่ <i class="fa-solid fa-angle-down"></i>
           </button>
           <div id="roles-menu" class="dropdown-menu hidden" role="menu" aria-label="เมนูบทบาทหน้าที่">
-            <div class="dropdown-item" role="menuitem">
+            <a href="roles.html#admin-role" class="dropdown-item" role="menuitem">
               <div class="dropdown-item-icon"><i class="fa-solid fa-gear"></i></div>
               <div class="dropdown-item-text">
                 <strong>ด้านบริหาร</strong>
                 <span>กำกับคุณภาพ กำลังคน และระบบบริการ</span>
               </div>
-            </div>
-            <div class="dropdown-item" role="menuitem">
+            </a>
+            <a href="roles.html#academic-role" class="dropdown-item" role="menuitem">
               <div class="dropdown-item-icon"><i class="fa-solid fa-graduation-cap"></i></div>
               <div class="dropdown-item-text">
                 <strong>ด้านวิชาการ</strong>
                 <span>องค์ความรู้ วิจัย R2R นวัตกรรม</span>
               </div>
-            </div>
-            <div class="dropdown-item" role="menuitem">
+            </a>
+            <a href="roles.html#service-role" class="dropdown-item" role="menuitem">
               <div class="dropdown-item-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
               <div class="dropdown-item-text">
                 <strong>ด้านบริการ</strong>
                 <span>การพยาบาลแบบองค์รวม ปลอดภัย</span>
               </div>
-            </div>
-            <div class="dropdown-item" role="menuitem">
+            </a>
+            <a href="roles.html#special-role" class="dropdown-item" role="menuitem">
               <div class="dropdown-item-icon"><i class="fa-solid fa-star"></i></div>
               <div class="dropdown-item-text">
                 <strong>กิจกรรมพิเศษ</strong>
                 <span>สร้างเสริมสุขภาพและเครือข่ายชุมชน</span>
               </div>
-            </div>
+            </a>
           </div>
         </div>
 
@@ -120,32 +579,18 @@
             <i class="fa-solid fa-newspaper"></i> ข่าวสารและกิจกรรม <i class="fa-solid fa-angle-down"></i>
           </button>
           <div id="news-menu" class="dropdown-menu hidden" role="menu" aria-label="เมนูข่าวสารและกิจกรรม">
-            <a href="index.html#news-section" class="dropdown-item" role="menuitem">
+            <a href="index.html#news-section" class="dropdown-item" role="menuitem" onclick="closeAllDropdowns()">
               <div class="dropdown-item-icon"><i class="fa-solid fa-bullhorn"></i></div>
               <div class="dropdown-item-text">
                 <strong>ข่าวประชาสัมพันธ์</strong>
                 <span>ข่าวสาร ประกาศ และเอกสารสำคัญ</span>
               </div>
             </a>
-            <a href="index.html#activities-section" class="dropdown-item" role="menuitem">
+            <a href="index.html#activities-section" class="dropdown-item" role="menuitem" onclick="closeAllDropdowns()">
               <div class="dropdown-item-icon"><i class="fa-solid fa-calendar-days"></i></div>
               <div class="dropdown-item-text">
                 <strong>กิจกรรมและโครงการ</strong>
                 <span>ภาพกิจกรรม โครงการ และงานอบรม</span>
-              </div>
-            </a>
-            <a href="index.html#news-section" class="dropdown-item" role="menuitem">
-              <div class="dropdown-item-icon"><i class="fa-solid fa-layer-group"></i></div>
-              <div class="dropdown-item-text">
-                <strong>คลังข่าวสารทั้งหมด</strong>
-                <span>เปิดดูข่าวประชาสัมพันธ์ทั้งหมด</span>
-              </div>
-            </a>
-            <a href="index.html#activities-section" class="dropdown-item" role="menuitem">
-              <div class="dropdown-item-icon"><i class="fa-solid fa-images"></i></div>
-              <div class="dropdown-item-text">
-                <strong>คลังภาพกิจกรรมทั้งหมด</strong>
-                <span>เปิดดูประมวลภาพกิจกรรมทั้งหมด</span>
               </div>
             </a>
           </div>
@@ -164,106 +609,167 @@
     </div>
   </header>
 
+  <!-- ================= 2. เนื้อหาหลัก ================= -->
   <main class="page-body">
     <div class="subpage-card">
-      <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าแรก</a>
-
-      <!-- ส่วนหัวของหน้าเพจ (Subpage Header) -->
       <div class="subpage-header-box">
-        <div class="hero-badge-wrap">
-          <i class="fa-solid fa-sitemap"></i>
-          <span>โครงสร้างการจัดองค์กรทางการพยาบาล</span>
+        <div
+          style="display: inline-flex; align-items: center; gap: 8px; background: #ccfbf1; color: #0f766e; padding: 5px 14px; border-radius: 50px; font-size: 13px; font-weight: 700; margin-bottom: 12px;">
+          <i class="fa-solid fa-sitemap"></i> โครงสร้างการจัดองค์กรทางการพยาบาล
         </div>
-        <h1 style="font-size: clamp(24px, 2.2vw, 32px); color: var(--slate-900); font-weight: 700; margin-bottom: 8px;">
-          โครงสร้างการบริหารงานพยาบาล
+        <h1 style="font-size: 28px; font-weight: 800; color: #0f172a; margin: 0 0 8px;">
+          โครงสร้างการบริหารกลุ่มการพยาบาล
         </h1>
-        <p style="color: var(--slate-600); font-size: clamp(14px, 1.1vw, 16px); max-width: 800px; line-height: 1.6;">
-          สายการบังคับบัญชาและการจัดแบ่งหน่วยงาน กลุ่มภารกิจด้านการพยาบาล โรงพยาบาลแม่สอด
+        <p style="font-size: 15px; color: #64748b; margin: 0;">
+          ภารกิจด้านการพยาบาล กลุ่มการพยาบาล โรงพยาบาลแม่สอด จังหวัดตาก
         </p>
 
-        <!-- แถบสลับหน้าข้อมูลกลุ่มการพยาบาล (Quick Subpage Tabs) -->
-        <nav class="subpage-nav-tabs" aria-label="เมนูสลับหน้าข้อมูล">
-          <a href="vision.html" class="subpage-tab-link">
-            <i class="fa-solid fa-compass"></i> วิสัยทัศน์ / พันธกิจ
-          </a>
-          <a href="structure.html" class="subpage-tab-link active">
-            <i class="fa-solid fa-sitemap"></i> โครงสร้างการบริหาร
-          </a>
-          <a href="strategy.html" class="subpage-tab-link">
-            <i class="fa-solid fa-chart-line"></i> แผนยุทธศาสตร์
-          </a>
-          <a href="kpi.html" class="subpage-tab-link">
-            <i class="fa-solid fa-arrow-trend-up"></i> ตัวชี้วัด (KPI)
-          </a>
-        </nav>
+        <!-- แถบสลับหน้าย่อย -->
+        <div class="subpage-nav-tabs">
+          <a href="vision.html" class="subpage-tab-link"><i class="fa-solid fa-compass"></i> วิสัยทัศน์ / พันธกิจ</a>
+          <a href="structure.html" class="subpage-tab-link active"><i class="fa-solid fa-sitemap"></i>
+            โครงสร้างการบริหาร</a>
+          <a href="strategy.html" class="subpage-tab-link"><i class="fa-solid fa-chart-line"></i> แผนยุทธศาสตร์</a>
+          <a href="kpi.html" class="subpage-tab-link"><i class="fa-solid fa-arrow-trend-up"></i> ตัวชี้วัด (KPI)</a>
+        </div>
       </div>
 
-      <!-- หัวหน้าพยาบาล -->
-      <div style="background: linear-gradient(135deg, var(--primary-800) 0%, var(--primary-600) 100%); color: white; padding: 24px; border-radius: var(--radius-lg); text-align: center; margin-bottom: 24px; box-shadow: var(--shadow-md);">
-        <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(255, 255, 255, 0.2); margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 22px;">
-          <i class="fa-solid fa-user-nurse"></i>
-        </div>
-        <h3 style="color: white; font-size: 20px; font-weight: 700;">หัวหน้าพยาบาล (Nursing Director)</h3>
-        <p style="font-size: 14px; opacity: 0.9; margin-top: 4px;">กลุ่มภารกิจด้านการพยาบาล โรงพยาบาลแม่สอด</p>
-      </div>
+      <div class="org-chart-wrapper">
+        <!-- 1. ลำดับสายการบังคับบัญชาระดับบริหาร (2-Tier Executive Hierarchy Tree) -->
+        <div class="hierarchy-executive-tree">
 
-      <!-- สายงานหลัก 4 ด้าน -->
-      <div class="subpage-grid-2">
-        <div style="background: var(--slate-50); border: 1.5px solid var(--slate-200); border-radius: var(--radius-md); padding: 20px;">
-          <h4 style="color: var(--primary-700); font-size: 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
-            <i class="fa-solid fa-bed-pulse"></i> งานการพยาบาลผู้ป่วยใน (IPD)
-          </h4>
-          <ul style="font-size: 14px; color: var(--slate-600); line-height: 1.8; margin-left: 20px;">
-            <li>หอผู้ป่วยอายุรกรรม / ศัลยกรรม / กุมารเวชกรรม</li>
-            <li>หอผู้ป่วยวิกฤต (ICU / Sub-ICU)</li>
-            <li>หอผู้ป่วยสูติ-นรีเวชกรรม และทารกแรกเกิด</li>
-          </ul>
+          <!-- ระดับที่ 1: ผู้อำนวยการโรงพยาบาลแม่สอด -->
+          <div class="director-card">
+            <div class="director-photo-wrap">
+              <img src="images/ผอ.png" alt="ผู้อำนวยการโรงพยาบาลแม่สอด"
+                onerror="this.src='https://cdn-icons-png.flaticon.com/512/387/387561.png'">
+            </div>
+            <div class="exec-details">
+              <span class="exec-role-badge"><i class="fa-solid fa-award"></i> ผู้อำนวยการโรงพยาบาลแม่สอด</span>
+              <h3>นพ.ศักรินทร์ ธนเกียรติสกุล</h3>
+              <p>ผู้อำนวยการโรงพยาบาลแม่สอด จังหวัดตาก</p>
+              <div
+                style="font-size: 12.5px; color: #0f766e; margin-top: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; background: rgba(13, 148, 136, 0.1); padding: 4px 14px; border-radius: 50px;">
+                <i class="fa-solid fa-quote-left"></i> มุ่งมั่นพัฒนาคุณภาพบริการ สู่มาตรฐานสากลด้วยหัวใจ <i
+                  class="fa-solid fa-quote-right"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- เส้นเชื่อมแนวดิ่งจาก ผอ. สู่ รอง ผอ.ฝ่ายการพยาบาล -->
+          <div class="hierarchy-connector-vertical"></div>
+
+          <!-- ระดับที่ 2: รองผู้อำนวยการฝ่ายการพยาบาล (หัวหน้าพยาบาล) -->
+          <div class="nursing-director-card">
+            <div class="nursing-director-photo-wrap">
+              <img src="images/รอง.jpg" alt="รองผู้อำนวยการฝ่ายการพยาบาล"
+                onerror="this.src='https://cdn-icons-png.flaticon.com/512/387/387561.png'">
+            </div>
+            <div class="exec-details">
+              <span class="exec-role-badge nurse-badge"><i class="fa-solid fa-user-nurse"></i>
+                รองผู้อำนวยการฝ่ายการพยาบาล (หัวหน้าพยาบาล)</span>
+              <h3>นางสุภาวรรณ ยะดอนใจ</h3>
+              <div style="font-size: 12.5px; color: #0d9488; margin-top: 6px; font-weight: 700;">
+                <i class="fa-solid fa-phone"></i> กลุ่มภารกิจด้านการพยาบาล: ต่อเบอร์ภายใน 1387
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <div style="background: var(--slate-50); border: 1.5px solid var(--slate-200); border-radius: var(--radius-md); padding: 20px;">
-          <h4 style="color: var(--primary-700); font-size: 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
-            <i class="fa-solid fa-truck-medical"></i> งานอุบัติเหตุ-ฉุกเฉินและผู้ป่วยนอก (ER/OPD)
-          </h4>
-          <ul style="font-size: 14px; color: var(--slate-600); line-height: 1.8; margin-left: 20px;">
-            <li>กลุ่มงานการพยาบาลอุบัติเหตุ-ฉุกเฉิน (ER & EMS 1669)</li>
-            <li>แผนกผู้ป่วยนอก (OPD) และคลินิกเฉพาะทาง</li>
-            <li>หน่วยไตเทียมและเคมีบำบัด</li>
-          </ul>
+        <!-- 2. แถบควบคุม: ค้นหากลุ่มงาน & ปุ่มฟิลเตอร์คลัสเตอร์ -->
+        <div class="controls-panel">
+          <div class="org-search-box">
+            <i class="fa-solid fa-magnifying-glass" style="color: #94a3b8;"></i>
+            <input type="text" id="org-search-input" placeholder="พิมพ์ค้นหากลุ่มงาน หรือชื่อผู้รับผิดชอบ..."
+              oninput="handleOrgSearch(this.value)">
+          </div>
+
+          <div class="cluster-filter-nav">
+            <button type="button" class="cluster-filter-btn active" onclick="filterOrgCluster('all', this)">
+              <i class="fa-solid fa-layer-group"></i> ทั้งหมด (17 กลุ่มงาน)
+            </button>
+            <button type="button" class="cluster-filter-btn" onclick="filterOrgCluster('critical', this)">
+              <i class="fa-solid fa-truck-medical" style="color: #ea580c;"></i> วิกฤต ฉุกเฉิน & ผู้ป่วยนอก
+            </button>
+            <button type="button" class="cluster-filter-btn" onclick="filterOrgCluster('inpatient', this)">
+              <i class="fa-solid fa-bed-pulse" style="color: #0284c7;"></i> ผู้ป่วยในตามสาขา (IPD)
+            </button>
+            <button type="button" class="cluster-filter-btn" onclick="filterOrgCluster('specialty', this)">
+              <i class="fa-solid fa-stethoscope" style="color: #10b981;"></i> บริการและตรวจรักษาพิเศษ
+            </button>
+            <button type="button" class="cluster-filter-btn" onclick="filterOrgCluster('quality', this)">
+              <i class="fa-solid fa-shield-virus" style="color: #7c3aed;"></i> พัฒนาคุณภาพ วิชาการ & IC
+            </button>
+          </div>
         </div>
 
-        <div style="background: var(--slate-50); border: 1.5px solid var(--slate-200); border-radius: var(--radius-md); padding: 20px;">
-          <h4 style="color: var(--primary-700); font-size: 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
-            <i class="fa-solid fa-scissors"></i> งานการพยาบาลผ่าตัดและวิสัญญี (OR)
-          </h4>
-          <ul style="font-size: 14px; color: var(--slate-600); line-height: 1.8; margin-left: 20px;">
-            <li>ห้องผ่าตัด (Operating Room)</li>
-            <li>กลุ่มงานการพยาบาลวิสัญญี (Anesthesia)</li>
-            <li>หน่วยจ่ายกลางและนึ่งฆ่าเชื้อ (CSSD)</li>
-          </ul>
-        </div>
-
-        <div style="background: var(--slate-50); border: 1.5px solid var(--slate-200); border-radius: var(--radius-md); padding: 20px;">
-          <h4 style="color: var(--primary-700); font-size: 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
-            <i class="fa-solid fa-shield-virus"></i> งานพัฒนาคุณภาพ วิชาการ และ IPC
-          </h4>
-          <ul style="font-size: 14px; color: var(--slate-600); line-height: 1.8; margin-left: 20px;">
-            <li>งานควบคุมและป้องกันการติดเชื้อในโรงพยาบาล (IPC)</li>
-            <li>งานวิจัย การศึกษาต่อเนื่อง และนวัตกรรม (R2R)</li>
-            <li>งานบริหารความเสี่ยงและมาตรฐานวิชาชีพ</li>
-          </ul>
+        <!-- 3. ตารางแสดงการ์ดทั้ง 17 กลุ่มงานตามผังราชการจริง -->
+        <div class="groups-grid" id="groups-container">
+          <!-- Rendered dynamically by JavaScript -->
         </div>
       </div>
     </div>
   </main>
 
-  <!-- Footer ท้ายเว็บไซต์ -->
+  <!-- ================= 3. Modal ป๊อปอัปดูรายละเอียดกลุ่มงาน ================= -->
+  <div id="unit-detail-modal" class="custom-modal-overlay hidden" style="display: none;"
+    onclick="closeUnitModal(event)">
+    <div class="unit-modal-box" onclick="event.stopPropagation()">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div id="modal-unit-num" class="group-number-pill" style="width: 44px; height: 44px; font-size: 20px;">1</div>
+          <div>
+            <h3 id="modal-unit-title" style="margin: 0; font-size: 19px; color: #0f172a; font-weight: 700;">ชื่อกลุ่มงาน
+            </h3>
+            <span id="modal-unit-cluster" style="font-size: 12.5px; color: #0d9488; font-weight: 700;">สายงาน</span>
+          </div>
+        </div>
+        <button type="button" class="btn-close-modal" onclick="closeUnitModal()">&times;</button>
+      </div>
+
+      <div
+        style="background: #f8fafc; border-radius: 16px; padding: 18px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+        <strong style="font-size: 13.5px; color: #334155; display: block; margin-bottom: 10px;">
+          <i class="fa-solid fa-user-tie" style="color: #0d9488;"></i> หัวหน้ากลุ่มงาน / ผู้รับผิดชอบ:
+        </strong>
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <img id="modal-lead-img" src="" alt="หัวหน้ากลุ่มงาน"
+            style="width: 58px; height: 58px; border-radius: 50%; object-fit: cover; border: 2.5px solid #0d9488; box-shadow: 0 4px 10px rgba(13,148,136,0.2);">
+          <div>
+            <div id="modal-lead-name" style="font-weight: 800; font-size: 15.5px; color: #0f172a;">ชื่อ-นามสกุล</div>
+            <div id="modal-lead-pos" style="font-size: 13px; color: #64748b; margin-top: 2px;">ตำแหน่งบริหาร</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 24px;">
+        <strong style="font-size: 13.5px; color: #334155; display: block; margin-bottom: 10px;">
+          <i class="fa-solid fa-users" style="color: #0284c7;"></i> โครงสร้างกำลังคนประจำหน่วยงาน:
+        </strong>
+        <ul style="padding-left: 20px; font-size: 13.5px; color: #475569; line-height: 1.85;">
+          <li><strong>พยาบาลวิชาชีพ (Registered Nurse: RN):</strong> ดูแลแผนการพยาบาลและการบริบาลขั้นสูง</li>
+          <li><strong>พยาบาลเทคนิค (Technical Nurse: TN):</strong> ปฏิบัติการพยาบาลตามมาตรฐานวิชาชีพ</li>
+          <li><strong>ผู้ช่วยเหลือคนไข้และบุคลากรสนับสนุน:</strong> ดูแลสุขอนามัยและการอำนวยความสะดวก</li>
+        </ul>
+      </div>
+
+      <button type="button" class="custom-modal-btn" onclick="closeUnitModal()">ปิดหน้าต่าง</button>
+    </div>
+  </div>
+
+  <!-- ================= 4. Footer ท้ายเว็บไซต์ฉบับสมบูรณ์ ================= -->
   <footer class="site-footer">
     <div class="footer-container">
+      <!-- คอลัมน์ 1: แนะนำกลุ่มการพยาบาล และสายด่วน -->
       <div class="footer-col footer-about">
         <h4>กลุ่มการพยาบาล โรงพยาบาลแม่สอด</h4>
         <p>
-          มุ่งมั่นพัฒนาการบริการพยาบาลที่ได้มาตรฐานสากล บริการด้วยหัวใจความเป็นมนุษย์ ดำรงไว้ซึ่งจริยธรรมวิชาชีพ เพื่อสุขภาวะที่ดีของผู้รับบริการในพื้นที่ชายแดน
+          มุ่งมั่นพัฒนาการบริการพยาบาลที่ได้มาตรฐานสากล บริการด้วยหัวใจความเป็นมนุษย์ ดำรงไว้ซึ่งจริยธรรมวิชาชีพ
+          เพื่อสุขภาวะที่ดีของผู้รับบริการในพื้นที่ชายแดน
         </p>
+
+        <!-- กล่องสายด่วนอุบัติเหตุ-ฉุกเฉิน -->
         <div class="footer-emergency-card">
           <div class="footer-emergency-icon">
             <i class="fa-solid fa-truck-medical"></i>
@@ -275,6 +781,7 @@
         </div>
       </div>
 
+      <!-- คอลัมน์ 2: ข้อมูลติดต่อทางการ -->
       <div class="footer-col">
         <h4>ข้อมูลการติดต่อ</h4>
         <ul class="footer-contact-list">
@@ -290,19 +797,48 @@
             <i class="fa-solid fa-user-nurse"></i>
             <span>กลุ่มภารกิจด้านการพยาบาล: ต่อเบอร์ภายใน 1120, 1121</span>
           </li>
+          <li>
+            <i class="fa-solid fa-clock"></i>
+            <span>เปิดทำการ: แผนก OPD (จันทร์ - ศุกร์ 08:00 - 16:30 น.) / แผนกอุบัติเหตุ-ฉุกเฉิน (บริการ 24
+              ชั่วโมง)</span>
+          </li>
         </ul>
       </div>
 
+      <!-- คอลัมน์ 3: ลิงก์หน่วยงานและข้อมูลภายนอก -->
       <div class="footer-col">
         <h4>หน่วยงานที่เกี่ยวข้อง</h4>
         <ul class="footer-links-list">
-          <li><a href="https://maesothospital.go.th/" target="_blank"><i class="fa-solid fa-angle-right"></i> โรงพยาบาลแม่สอด</a></li>
-          <li><a href="vision.html"><i class="fa-solid fa-angle-right"></i> วิสัยทัศน์และพันธกิจ</a></li>
-          <li><a href="strategy.html"><i class="fa-solid fa-angle-right"></i> แผนยุทธศาสตร์</a></li>
-          <li><a href="kpi.html"><i class="fa-solid fa-angle-right"></i> ตัวชี้วัด (KPI)</a></li>
+          <li>
+            <a href="https://maesothospital.go.th/" target="_blank" rel="noopener noreferrer">
+              <i class="fa-solid fa-angle-right"></i> โรงพยาบาลแม่สอด
+            </a>
+          </li>
+          <li>
+            <a href="https://www.nhso.go.th" target="_blank" rel="noopener noreferrer">
+              <i class="fa-solid fa-angle-right"></i> สำนักงานหลักประกันสุขภาพแห่งชาติ (สปสช.)
+            </a>
+          </li>
+          <li>
+            <a href="https://www.tnmc.or.th" target="_blank" rel="noopener noreferrer">
+              <i class="fa-solid fa-angle-right"></i> สภาการพยาบาลแห่งประเทศไทย
+            </a>
+          </li>
+          <li>
+            <a href="vision.html">
+              <i class="fa-solid fa-angle-right"></i> วิสัยทัศน์และพันธกิจกลุ่มการพยาบาล
+            </a>
+          </li>
+          <li>
+            <a href="structure.html">
+              <i class="fa-solid fa-angle-right"></i> โครงสร้างการบริหารงานพยาบาล
+            </a>
+          </li>
         </ul>
       </div>
     </div>
+
+    <!-- แถบเครดิตลิขสิทธิ์ด้านล่างสุด -->
     <div class="footer-bottom">
       <p>© 2026 กลุ่มการพยาบาล โรงพยาบาลแม่สอด (Mae Sot Hospital). สงวนลิขสิทธิ์</p>
       <p>ระบบสารสนเทศและการสื่อสารงานพยาบาล</p>
@@ -310,5 +846,296 @@
   </footer>
 
   <script src="js/app.js"></script>
+  <script>
+    // ข้อมูลทั้ง 17 กลุ่มงานตามผังราชการจริงของโรงพยาบาลศูนย์/โรงพยาบาลทั่วไป
+    const orgUnits = [
+      {
+        id: 1,
+        cluster: 'critical',
+        clusterLabel: 'งานวิกฤต ฉุกเฉิน & ผู้ป่วยนอก',
+        name: 'กลุ่มงานการพยาบาลผู้ป่วยอุบัติเหตุและฉุกเฉิน',
+        leader: 'พว. วันเพ็ญ สุริยะ (ตัวอย่าง)',
+        leaderPos: 'หัวหน้ากลุ่มงานการพยาบาลอุบัติเหตุและฉุกเฉิน',
+        avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&auto=format&fit=crop&q=80',
+        rns: true, tns: true,
+        phone: '1387'
+      },
+      {
+        id: 2,
+        cluster: 'critical',
+        clusterLabel: 'งานวิกฤต ฉุกเฉิน & ผู้ป่วยนอก',
+        name: 'กลุ่มงานการพยาบาลผู้ป่วยนอก',
+        leader: 'พว. กัลยา นวลจันทร์ (ตัวอย่าง)',
+        leaderPos: 'หัวหน้ากลุ่มงานการพยาบาลผู้ป่วยนอก',
+        avatar: 'https://images.unsplash.com/photo-1594824813633-5c7423010b99?w=150&auto=format&fit=crop&q=80',
+        rns: true, tns: true,
+        phone: '1387'
+      },
+      {
+        id: 3,
+        cluster: 'critical',
+        clusterLabel: 'งานวิกฤต ฉุกเฉิน & ผู้ป่วยนอก',
+        name: 'กลุ่มงานการพยาบาลผู้ป่วยหนัก',
+        leader: 'พว. นิภาวรรณ สมศักดิ์ (ตัวอย่าง)',
+        leaderPos: 'หัวหน้ากลุ่มงานการพยาบาลผู้ป่วยหนัก (ICU)',
+        avatar: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&auto=format&fit=crop&q=80',
+        rns: true, tns: true,
+        phone: '1387'
+      },
+      {
+        id: 4,
+        cluster: 'specialty',
+        clusterLabel: 'บริการและตรวจรักษาพิเศษ',
+        name: 'กลุ่มงานการพยาบาลผู้คลอด',
+        leader: 'พว. มาลี วรรณโชติ (ตัวอย่าง)',
+        leaderPos: 'หัวหน้ากลุ่มงานการพยาบาลผู้คลอด (LR)',
+        avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&auto=format&fit=crop&q=80',
+        rns: true, tns: true,
+        phone: '1387'
+      },
+      {
+        id: 5,
+        cluster: 'critical',
+        clusterLabel: 'งานวิกฤต ฉุกเฉิน & ผู้ป่วยนอก',
+        name: 'กลุ่มงานการพยาบาลผู้ป่วยห้องผ่าตัด',
+        leader: 'พว. ธนภรณ์ รักษ์สกุล (ตัวอย่าง)',
+        leaderPos: 'หัวหน้ากลุ่มงานการพยาบาลห้องผ่าตัด (OR)',
+        avatar: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&auto=format&fit=crop&q=80',
+        rns: true, tns: true,
+        phone: '1387'
+      },
+      {
+        id: 6,
+        cluster: 'critical',
+        clusterLabel: 'งานวิกฤต ฉุกเฉิน & ผู้ป่วยนอก',
+        name: 'กลุ่มงานการพยาบาลวิสัญญี',
+        leader: 'พว. จุฬารัตน์ บรรณสาร (ตัวอย่าง)',
+        leaderPos: 'หัวหน้ากลุ่มงานการพยาบาลวิสัญญี',
+        avatar: 'https://images.unsplash.com/photo-1594824813633-5c7423010b99?w=150&auto=format&fit=crop&q=80',
+        rns: true, tns: true,
+        phone: '1387'
+      },
+      {
+        id: 7,
+        cluster: 'inpatient',
+        clusterLabel: 'ผู้ป่วยในตามสาขา (IPD)',
+        name: 'กลุ่มงานการพยาบาลผู้ป่วยอายุรกรรม',
+        leader: 'พว. สุชาดา ชัยมงคล (ตัวอย่าง)',
+        leaderPos: 'หัวหน้ากลุ่มงานผู้ป่วยอายุรกรรม',
+        avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&auto=format&fit=crop&q=80',
+        rns: true, tns: true,
+        phone: '1387'
+      },
+      {
+        id: 8,
+        cluster: 'inpatient',
+        clusterLabel: 'ผู้ป่วยในตามสาขา (IPD)',
+        name: 'กลุ่มงานการพยาบาลผู้ป่วยศัลยกรรม',
+        leader: 'พว. ปวีณา ธนกิจ (ตัวอย่าง)',
+        leaderPos: 'หัวหน้ากลุ่มงานผู้ป่วยศัลยกรรม',
+        avatar: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&auto=format&fit=crop&q=80',
+        rns: true, tns: true,
+        phone: '1387'
+      },
+      {
+        id: 9,
+        cluster: 'inpatient',
+        clusterLabel: 'ผู้ป่วยในตามสาขา (IPD)',
+        name: 'กลุ่มงานการพยาบาลผู้ป่วยสูติ-นรีเวช',
+        leader: 'พว. วราภรณ์ มงคลพงษ์ (ตัวอย่าง)',
+        leaderPos: 'หัวหน้ากลุ่มงานสูติ-นรีเวช',
+        avatar: 'https://images.unsplash.com/photo-1594824813633-5c7423010b99?w=150&auto=format&fit=crop&q=80',
+        rns: true, tns: true,
+        phone: '1387'
+      },
+      {
+        id: 10,
+        cluster: 'inpatient',
+        clusterLabel: 'ผู้ป่วยในตามสาขา (IPD)',
+        name: 'กลุ่มงานการพยาบาลจิตเวช',
+        leader: 'พว. ขนิษฐา กิจเจริญ (ตัวอย่าง)',
+        leaderPos: 'หัวหน้ากลุ่มงานจิตเวช',
+        avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&auto=format&fit=crop&q=80',
+        rns: true, tns: true,
+        phone: '1387'
+      },
+      {
+        id: 11,
+        cluster: 'specialty',
+        clusterLabel: 'บริการและตรวจรักษาพิเศษ',
+        name: 'กลุ่มงานการพยาบาลผู้ป่วยอุบัติเหตุและแผลไหม้',
+        leader: 'พว. ธีรนันท์ สุรเดช (ตัวอย่าง)',
+        leaderPos: 'หัวหน้ากลุ่มงานอุบัติเหตุและแผลไหม้ (Burn Unit)',
+        avatar: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&auto=format&fit=crop&q=80',
+        rns: true, tns: true,
+        phone: '1387'
+      },
+      {
+        id: 12,
+        cluster: 'specialty',
+        clusterLabel: 'บริการและตรวจรักษาพิเศษ',
+        name: 'กลุ่มงานการพยาบาลผู้ป่วยออร์โธปิดิกส์',
+        leader: 'พว. อมรรัตน์ แก้วใส (ตัวอย่าง)',
+        leaderPos: 'หัวหน้ากลุ่มงานออร์โธปิดิกส์',
+        avatar: 'https://images.unsplash.com/photo-1594824813633-5c7423010b99?w=150&auto=format&fit=crop&q=80',
+        rns: true, tns: true,
+        phone: '1387'
+      },
+      {
+        id: 13,
+        cluster: 'inpatient',
+        clusterLabel: 'ผู้ป่วยในตามสาขา (IPD)',
+        name: 'กลุ่มงานการพยาบาลผู้ป่วยโสต ศอ นาสิก จักษุ',
+        leader: 'พว. ดวงแข ปัญญาวงศ์ (ตัวอย่าง)',
+        leaderPos: 'หัวหน้ากลุ่มงาน ENT & Eye',
+        avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&auto=format&fit=crop&q=80',
+        rns: true, tns: true,
+        phone: '1387'
+      },
+      {
+        id: 14,
+        cluster: 'quality',
+        clusterLabel: 'พัฒนาคุณภาพ วิชาการ & IC',
+        name: 'กลุ่มงานการพยาบาลด้านการควบคุมและป้องกันการติดเชื้อ',
+        leader: 'พว. นงลักษณ์ ชัยพฤกษ์ (ตัวอย่าง)',
+        leaderPos: 'หัวหน้างานพยาบาล IC (Infection Control)',
+        avatar: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&auto=format&fit=crop&q=80',
+        rns: true, tns: true,
+        phone: '1387'
+      },
+      {
+        id: 15,
+        cluster: 'specialty',
+        clusterLabel: 'บริการและตรวจรักษาพิเศษ',
+        name: 'กลุ่มงานการพยาบาลตรวจรักษาพิเศษ',
+        leader: 'พว. ทิพวรรณ สว่างเนตร (ตัวอย่าง)',
+        leaderPos: 'หัวหน้ากลุ่มงานตรวจรักษาพิเศษ (ไตเทียม/เคมีบำบัด)',
+        avatar: 'https://images.unsplash.com/photo-1594824813633-5c7423010b99?w=150&auto=format&fit=crop&q=80',
+        rns: true, tns: true,
+        phone: '1387'
+      },
+      {
+        id: 16,
+        cluster: 'quality',
+        clusterLabel: 'พัฒนาคุณภาพ วิชาการ & IC',
+        name: 'กลุ่มงานวิจัยและพัฒนาทางการพยาบาล',
+        leader: 'ดร.พว. ชนิกา วัฒนกุล (ตัวอย่าง)',
+        leaderPos: 'หัวหน้ากลุ่มงานวิจัยและนวัตกรรม (R2R)',
+        avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&auto=format&fit=crop&q=80',
+        rns: true, tns: true,
+        phone: '1387'
+      },
+      {
+        id: 17,
+        cluster: 'specialty',
+        clusterLabel: 'บริการและตรวจรักษาพิเศษ',
+        name: 'กลุ่มงานการพยาบาลการรับบริจาค ปลูกถ่ายอวัยวะและเนื้อเยื่อ',
+        leader: 'พว. รุ่งทิพย์ เจริญผล (ตัวอย่าง)',
+        leaderPos: 'ผู้ประสานงานการปลูกถ่ายอวัยวะ (Organ Donation)',
+        avatar: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&auto=format&fit=crop&q=80',
+        rns: true, tns: false,
+        phone: '1387'
+      }
+    ];
+
+    let currentFilter = 'all';
+    let currentSearchKeyword = '';
+
+    function renderOrgUnits() {
+      const container = document.getElementById('groups-container');
+      if (!container) return;
+
+      let list = currentFilter === 'all'
+        ? orgUnits
+        : orgUnits.filter(u => u.cluster === currentFilter);
+
+      if (currentSearchKeyword.trim() !== '') {
+        const q = currentSearchKeyword.toLowerCase().trim();
+        list = list.filter(u =>
+          u.name.toLowerCase().includes(q) ||
+          u.leader.toLowerCase().includes(q) ||
+          u.clusterLabel.toLowerCase().includes(q)
+        );
+      }
+
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 40px; background: #f8fafc; border-radius: 18px; border: 2px dashed #cbd5e1;">
+            <i class="fa-solid fa-magnifying-glass" style="font-size: 32px; color: #94a3b8; margin-bottom: 10px; display: block;"></i>
+            <h4 style="color: #0f172a; margin-bottom: 4px;">ไม่พบกลุ่มงานที่ตรงกับคำค้นหา</h4>
+            <p style="color: #64748b; font-size: 13.5px; margin: 0;">ลองพิมพ์ค้นหาด้วยคำอื่น หรือกดเลือกดูทั้งหมด</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map(u => `
+        <article class="group-card" onclick="openUnitModal(${u.id})">
+          <div class="group-card-header">
+            <div class="group-number-pill">${u.id}</div>
+            <div class="group-leader-avatar">
+              <img src="${u.avatar}" alt="${u.leader}">
+            </div>
+            <div>
+              <div class="group-card-title">${u.name}</div>
+              <div class="group-card-lead-name"><i class="fa-solid fa-user-tie"></i> ${u.leader}</div>
+            </div>
+          </div>
+          <div class="group-card-body">
+            <div style="font-size: 12px; color: #64748b;">สายงาน: <strong style="color: #0f766e;">${u.clusterLabel}</strong></div>
+            <div class="staff-badge-list">
+              ${u.rns ? '<span class="staff-badge rn"><i class="fa-solid fa-check"></i> พยาบาลวิชาชีพ</span>' : ''}
+              ${u.tns ? '<span class="staff-badge tn"><i class="fa-solid fa-check"></i> พยาบาลเทคนิค</span>' : ''}
+            </div>
+          </div>
+          <div class="group-card-footer">
+            <span><i class="fa-solid fa-phone"></i> ภายใน: ${u.phone}</span>
+            <span class="btn-view-unit">ดูข้อมูล <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function filterOrgCluster(cluster, btn) {
+      currentFilter = cluster;
+      document.querySelectorAll('.cluster-filter-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderOrgUnits();
+    }
+
+    function handleOrgSearch(val) {
+      currentSearchKeyword = val || '';
+      renderOrgUnits();
+    }
+
+    function openUnitModal(id) {
+      const unit = orgUnits.find(u => u.id === id);
+      if (!unit) return;
+
+      document.getElementById('modal-unit-num').innerText = unit.id;
+      document.getElementById('modal-unit-title').innerText = unit.name;
+      document.getElementById('modal-unit-cluster').innerText = unit.clusterLabel;
+      document.getElementById('modal-lead-img').src = unit.avatar;
+      document.getElementById('modal-lead-name').innerText = unit.leader;
+      document.getElementById('modal-lead-pos').innerText = `${unit.leaderPos} (โทรภายใน: ${unit.phone})`;
+
+      const modal = document.getElementById('unit-detail-modal');
+      modal.classList.remove('hidden');
+      modal.style.display = 'flex';
+    }
+
+    function closeUnitModal(e) {
+      if (!e || e.target.id === 'unit-detail-modal' || e.target.closest('.btn-close-modal') || e.target.closest('.custom-modal-btn')) {
+        const modal = document.getElementById('unit-detail-modal');
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderOrgUnits();
+    });
+  </script>
 </body>
+
 </html>
