@@ -12,10 +12,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css?v=2.2">
+  <link rel="stylesheet" href="css/style.css?v=3.2">
   <style>
     .auth-wrapper {
       min-height: 75vh;
@@ -48,7 +48,7 @@
       justify-content: center;
       font-size: 28px;
       margin: 0 auto 16px;
-      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.15);
+      box-shadow: 0 4px 14px rgba(132, 51, 156, 0.15);
     }
 
     .auth-card h2 {
@@ -148,9 +148,9 @@
       font-weight: 800 !important;
       text-align: center;
       padding: 12px !important;
-      color: #0f766e !important;
-      background: #f0fdfa !important;
-      border: 2px solid #0d9488 !important;
+      color: #6c2682 !important;
+      background: #faf0fc !important;
+      border: 2px solid #84339c !important;
       border-radius: 12px !important;
     }
 
@@ -251,7 +251,7 @@
       padding: 12px 20px;
       border-radius: 10px;
       border: none;
-      background: #0d9488;
+      background: #84339c;
       color: #ffffff;
       font-size: 15px;
       font-weight: 600;
@@ -260,7 +260,7 @@
     }
 
     .custom-modal-btn:hover {
-      background: #0f766e;
+      background: #6c2682;
     }
   </style>
 </head>
@@ -334,9 +334,9 @@
       <!-- ขั้นตอนที่ 2: กรอกรหัส OTP 6 หลักทางอีเมล (บังคับทุกบัญชี) -->
       <div id="mfa-verify-step" class="hidden" style="display: none; text-align: left; margin-top: 10px;">
         <div
-          style="background: #f0fdfa; border: 1.5px solid #99f6e4; padding: 14px; border-radius: 12px; margin-bottom: 20px; font-size: 13.5px; color: #0f766e; line-height: 1.6;">
-          <i class="fa-solid fa-envelope-circle-check" style="color: #0d9488; font-size: 18px; margin-right: 6px;"></i>
-          ส่งรหัสผ่าน OTP 6 หลักไปยังอีเมล: <strong id="mfa-masked-email-display" style="color: #0d9488;"></strong> แล้ว
+          style="background: #faf0fc; border: 1.5px solid #ffc4e1; padding: 14px; border-radius: 12px; margin-bottom: 20px; font-size: 13.5px; color: #6c2682; line-height: 1.6;">
+          <i class="fa-solid fa-envelope-circle-check" style="color: #84339c; font-size: 18px; margin-right: 6px;"></i>
+          ส่งรหัสผ่าน OTP 6 หลักไปยังอีเมล: <strong id="mfa-masked-email-display" style="color: #84339c;"></strong> แล้ว
           (รหัสมีอายุ 5 นาที)
         </div>
 
@@ -350,7 +350,7 @@
           </div>
 
           <button type="submit" id="btn-verify-otp" class="btn-submit"
-            style="width: 100%; margin-top: 14px; padding: 12px 20px; font-size: 15.5px; background: #0d9488;">
+            style="width: 100%; margin-top: 14px; padding: 12px 20px; font-size: 15.5px; background: #84339c;">
             <i class="fa-solid fa-key"></i> ยืนยันรหัส OTP เข้าสู่ระบบ
           </button>
 

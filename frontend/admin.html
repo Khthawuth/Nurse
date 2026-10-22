@@ -9,16 +9,16 @@
   <link rel="apple-touch-icon" href="images/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css?v=2.2">
+  <link rel="stylesheet" href="css/style.css?v=3.2">
   <style>
     :root {
       --admin-sidebar-w: 260px;
-      --admin-primary: #0d9488;
-      --admin-primary-dark: #0f766e;
-      --admin-primary-light: #f0fdfa;
+      --admin-primary: #84339c;
+      --admin-primary-dark: #6c2682;
+      --admin-primary-light: #faf0fc;
       --admin-slate-dark: #0f172a;
       --admin-slate-muted: #64748b;
       --admin-bg-body: #f8fafc;
@@ -30,7 +30,7 @@
     body {
       background-color: var(--admin-bg-body);
       color: #1e293b;
-      font-family: 'Sarabun', -apple-system, sans-serif;
+      font-family: 'Prompt', -apple-system, sans-serif;
       margin: 0;
       display: flex;
       min-height: 100vh;
@@ -70,7 +70,7 @@
       background: rgba(255, 255, 255, 0.08);
       border-radius: 50%;
       padding: 3px;
-      border: 1.5px solid rgba(13, 148, 136, 0.45);
+      border: 1.5px solid rgba(132, 51, 156, 0.45);
       flex-shrink: 0;
       transition: transform 0.2s ease;
     }
@@ -89,7 +89,7 @@
 
     .sidebar-brand p {
       font-size: 12px;
-      color: #14b8a6;
+      color: #ff51a3;
       margin: 3px 0 0;
       font-weight: 600;
     }
@@ -138,9 +138,9 @@
     }
 
     .sidebar-nav-item.active {
-      background: #0d9488;
+      background: #84339c;
       color: #ffffff;
-      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35);
+      box-shadow: 0 4px 14px rgba(132, 51, 156, 0.35);
     }
 
     .sidebar-badge {
@@ -192,8 +192,8 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: #ccfbf1;
-      color: #0f766e;
+      background: #ffe3f0;
+      color: #6c2682;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -235,19 +235,19 @@
 
     .stat-kpi-card:hover {
       transform: translateY(-3px);
-      box-shadow: 0 10px 22px rgba(13, 148, 136, 0.12);
-      border-color: #99f6e4;
+      box-shadow: 0 10px 22px rgba(132, 51, 156, 0.12);
+      border-color: #ffc4e1;
     }
 
     .stat-kpi-card::after {
       content: 'คลิกดูข้อมูล \f061';
-      font-family: 'Sarabun', 'Font Awesome 6 Free';
+      font-family: 'Prompt', 'Font Awesome 6 Free';
       font-weight: 900;
       position: absolute;
       right: 14px;
       bottom: 10px;
       font-size: 11px;
-      color: #0d9488;
+      color: #84339c;
       opacity: 0;
       transform: translateX(6px);
       transition: all 0.2s ease;
@@ -270,8 +270,8 @@
     }
 
     .kpi-icon-wrap.teal {
-      background: #ccfbf1;
-      color: #0f766e;
+      background: #ffe3f0;
+      color: #6c2682;
     }
 
     .kpi-icon-wrap.blue {
@@ -337,8 +337,8 @@
     }
 
     .search-filter-box:focus-within {
-      border-color: #0d9488;
-      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+      border-color: #84339c;
+      box-shadow: 0 0 0 3px rgba(132, 51, 156, 0.15);
       background: #ffffff;
     }
 
@@ -354,7 +354,7 @@
 
     /* ปุ่มทางลัดและปุ่ม Action */
     .btn-create-highlight {
-      background: #0d9488;
+      background: #84339c;
       color: #ffffff;
       padding: 9px 20px;
       border-radius: 50px;
@@ -365,12 +365,12 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 3px 10px rgba(13, 148, 136, 0.28);
+      box-shadow: 0 3px 10px rgba(132, 51, 156, 0.28);
       transition: all 0.2s ease;
     }
 
     .btn-create-highlight:hover {
-      background: #0f766e;
+      background: #6c2682;
       transform: translateY(-1px);
     }
 
@@ -380,8 +380,8 @@
       gap: 6px;
       padding: 8px 16px;
       background: #ffffff;
-      border: 1.5px solid #0d9488;
-      color: #0d9488;
+      border: 1.5px solid #84339c;
+      color: #84339c;
       border-radius: 50px;
       font-size: 13px;
       font-weight: 700;
@@ -391,7 +391,7 @@
     }
 
     .btn-refresh-modern:hover {
-      background: #0d9488;
+      background: #84339c;
       color: #ffffff;
     }
 
@@ -400,9 +400,9 @@
       align-items: center;
       gap: 7px;
       padding: 8px 16px;
-      background: #f0fdfa;
-      border: 1.5px solid #99f6e4;
-      color: #0f766e;
+      background: #faf0fc;
+      border: 1.5px solid #ffc4e1;
+      color: #6c2682;
       border-radius: 50px;
       font-size: 13.5px;
       font-weight: 700;
@@ -411,9 +411,9 @@
     }
 
     .btn-nav-home:hover {
-      background: #0d9488;
+      background: #84339c;
       color: #ffffff;
-      border-color: #0d9488;
+      border-color: #84339c;
       transform: translateY(-1px);
     }
 
@@ -544,9 +544,9 @@
     }
 
     .btn-info-star {
-      background: #f0fdfa;
-      color: #0d9488;
-      border: 1.5px solid #99f6e4;
+      background: #faf0fc;
+      color: #84339c;
+      border: 1.5px solid #ffc4e1;
       padding: 6px 12px;
       border-radius: 8px;
       font-size: 12px;
@@ -560,7 +560,7 @@
     }
 
     .btn-info-star:hover {
-      background: #0d9488;
+      background: #84339c;
       color: #ffffff;
     }
 
@@ -579,13 +579,13 @@
     }
 
     .btn-user-email {
-      background: #f0fdfa;
-      color: #0d9488;
-      border-color: #99f6e4;
+      background: #faf0fc;
+      color: #84339c;
+      border-color: #ffc4e1;
     }
 
     .btn-user-email:hover {
-      background: #0d9488;
+      background: #84339c;
       color: #ffffff;
     }
 
@@ -635,8 +635,8 @@
 
     /* Custom Form & Pin Button Toggle */
     .collapsible-form {
-      border: 1.5px solid #99f6e4;
-      background: #f0fdfa;
+      border: 1.5px solid #ffc4e1;
+      background: #faf0fc;
       border-radius: var(--admin-radius);
       padding: 24px;
       margin-bottom: 26px;
@@ -688,8 +688,8 @@
     }
 
     .custom-file-dropzone:hover {
-      border-color: #0d9488;
-      background: #f0fdfa;
+      border-color: #84339c;
+      background: #faf0fc;
       transform: translateY(-1px);
     }
 
@@ -697,8 +697,8 @@
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      background: #ccfbf1;
-      color: #0d9488;
+      background: #ffe3f0;
+      color: #84339c;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -752,14 +752,14 @@
     }
 
     .pagination-btn-modern:hover:not(:disabled) {
-      background: #f0fdfa;
-      border-color: #0d9488;
-      color: #0d9488;
+      background: #faf0fc;
+      border-color: #84339c;
+      color: #84339c;
     }
 
     .pagination-btn-modern.active {
-      background: #0d9488;
-      border-color: #0d9488;
+      background: #84339c;
+      border-color: #84339c;
       color: #ffffff;
     }
 
@@ -859,8 +859,8 @@
     }
 
     .sidebar-toggle-btn:hover {
-      background: #0d9488;
-      border-color: #0d9488;
+      background: #84339c;
+      border-color: #84339c;
       color: #ffffff;
     }
 
@@ -1180,7 +1180,7 @@
           <div style="min-width: 0;">
             <strong id="current-user-display" style="font-size: 14.5px; color: #0f172a; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">ผู้ใช้งาน:
               กำลังตรวจสอบ...</strong>
-            <span style="font-size: 12px; color: #0d9488; font-weight: 600;"><i class="fa-solid fa-shield-check"></i>
+            <span style="font-size: 12px; color: #84339c; font-weight: 600;"><i class="fa-solid fa-shield-check"></i>
               <span class="header-mfa-badge-text">บังคับใช้ MFA ยืนยันตัวตนแล้ว</span></span>
           </div>
         </div>
@@ -1238,7 +1238,7 @@
         <!-- ฟอร์มเพิ่ม/แก้ไขข่าว (เปิดออกเมื่อกดปุ่ม เขียนข่าวใหม่) -->
         <div id="posts-form-box" class="collapsible-form">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <h3 id="form-mode-title" style="margin: 0; color: #0f766e; display: flex; align-items: center; gap: 8px;">
+            <h3 id="form-mode-title" style="margin: 0; color: #6c2682; display: flex; align-items: center; gap: 8px;">
               <i class="fa-solid fa-pen-nib"></i> เขียนข่าวประชาสัมพันธ์ / กิจกรรมใหม่
             </h3>
             <button type="button" class="btn-action-modern" onclick="togglePostForm(false)"><i
@@ -1275,7 +1275,7 @@
             <div class="form-group">
               <label
                 style="font-weight: 700; font-size: 13.5px; color: #0f172a; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
-                <i class="fa-solid fa-images" style="color: #0d9488;"></i> รูปภาพประกอบข่าว (เลือกได้หลายรูป)
+                <i class="fa-solid fa-images" style="color: #84339c;"></i> รูปภาพประกอบข่าว (เลือกได้หลายรูป)
               </label>
               <div class="custom-file-dropzone" id="dropzone-image" onclick="document.getElementById('image').click()">
                 <input type="file" id="image" accept="image/*" multiple onchange="previewSelectedImages(event)"
@@ -1327,7 +1327,7 @@
           <div class="card-top-bar">
             <div>
               <h3 style="margin: 0; font-size: 18px; color: #0f172a; display: flex; align-items: center; gap: 8px;">
-                <i class="fa-solid fa-newspaper" style="color: #0d9488;"></i> รายการข่าวสารและกิจกรรมที่เผยแพร่อยู่
+                <i class="fa-solid fa-newspaper" style="color: #84339c;"></i> รายการข่าวสารและกิจกรรมที่เผยแพร่อยู่
               </h3>
               <p id="posts-count-info" style="font-size: 13px; color: var(--admin-slate-muted); margin: 3px 0 0;">
                 กำลังโหลดข้อมูล...</p>
@@ -1461,7 +1461,7 @@
               <div class="form-group" style="margin-bottom: 18px;">
                 <label class="checkbox-container">
                   <input type="checkbox" id="hero-input-active" checked>
-                  <span style="font-weight: 700; color: #0f766e;"><i class="fa-solid fa-circle-check"></i>
+                  <span style="font-weight: 700; color: #6c2682;"><i class="fa-solid fa-circle-check"></i>
                     เปิดใช้งานและแสดงบนหน้าแรกทันที</span>
                 </label>
               </div>
@@ -2323,7 +2323,7 @@
               <i class="fa-solid fa-circle-user" style="color: #6366f1; margin-right: 6px;"></i> ${escapeHtml(u.fullname)}
             </td>
             <td><span style="font-family: monospace; font-size: 13.5px; font-weight: 600;">@${escapeHtml(u.username)}</span></td>
-            <td style="font-size: 13px; color: ${u.email ? '#0f766e' : '#ef4444'}; font-weight: 600;">
+            <td style="font-size: 13px; color: ${u.email ? '#6c2682' : '#ef4444'}; font-weight: 600;">
               ${u.email ? `<i class="fa-regular fa-envelope"></i> ${escapeHtml(u.email)}` : '<em>⚠️ ยังไม่มีอีเมลรับ OTP</em>'}
             </td>
             <td style="text-align: center;">${statusBadge}</td>

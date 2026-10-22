@@ -10,10 +10,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css?v=2.2">
+  <link rel="stylesheet" href="css/style.css?v=3.2">
   <style>
     .calendar-page-container {
       max-width: 1400px;
@@ -96,9 +96,9 @@
       width: 40px;
       height: 40px;
       border-radius: 12px;
-      border: 1.5px solid #e2e8f0;
+      border: 1.5px solid #e7e0eb;
       background: #ffffff;
-      color: #334155;
+      color: #53296c;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -107,14 +107,14 @@
       transition: all 0.2s ease;
     }
     .cal-btn-icon:hover {
-      border-color: #0d9488;
-      color: #0d9488;
-      background: #f0fdfa;
+      border-color: #84339c;
+      color: #84339c;
+      background: #faf0fc;
     }
     .cal-current-label {
       font-size: 22px;
       font-weight: 800;
-      color: #0f172a;
+      color: #230534;
       min-width: 200px;
     }
     .calendar-month-grid {
@@ -126,15 +126,15 @@
       text-align: center;
       font-weight: 700;
       font-size: 13.5px;
-      color: #64748b;
+      color: #6b3e87;
       padding: 8px 0 12px;
     }
-    .cal-weekday-header.weekend { color: #ea580c; }
+    .cal-weekday-header.weekend { color: #ff51a3; }
     .cal-day-cell {
-      min-height: 105px;
-      border: 1.5px solid #f1f5f9;
-      border-radius: 14px;
-      padding: 8px;
+      min-height: 92px;
+      border: 1.5px solid #e7e0eb;
+      border-radius: 12px;
+      padding: 6px 8px;
       display: flex;
       flex-direction: column;
       background: #ffffff;
@@ -142,36 +142,40 @@
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .cal-day-cell:hover {
-      border-color: #99f6e4;
-      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.12);
+      border-color: #ff51a3;
+      box-shadow: 0 4px 14px rgba(132, 51, 156, 0.12);
       transform: translateY(-2px);
     }
     .cal-day-cell.today {
-      border-color: #0d9488;
-      background: #f0fdfa;
+      border-color: #84339c;
+      background: #faf0fc;
+    }
+    .cal-day-cell.selected {
+      border-color: #ff51a3;
+      box-shadow: 0 0 0 3px rgba(255, 81, 163, 0.25);
     }
     .cal-day-number {
       font-weight: 700;
-      font-size: 14px;
-      color: #1e293b;
-      margin-bottom: 6px;
+      font-size: 13.5px;
+      color: #230534;
+      margin-bottom: 5px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 26px;
-      height: 26px;
+      width: 25px;
+      height: 25px;
       border-radius: 50%;
     }
     .cal-day-cell.today .cal-day-number {
-      background: #0d9488;
+      background: #84339c;
       color: #ffffff;
     }
     .cal-event-pill {
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 600;
-      padding: 2.5px 6px;
+      padding: 2px 6px;
       border-radius: 6px;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -179,36 +183,50 @@
       align-items: center;
       gap: 4px;
     }
-    .cal-event-academic { background: #eff6ff; color: #1d4ed8; border-left: 3px solid #3b82f6; }
-    .cal-event-meeting { background: #f0fdf4; color: #15803d; border-left: 3px solid #22c55e; }
-    .cal-event-community { background: #fff7ed; color: #c2410c; border-left: 3px solid #f97316; }
-    .cal-event-quality { background: #faf5ff; color: #7e22ce; border-left: 3px solid #a855f7; }
+    .cal-event-academic { background: #faf0fc; color: #84339c; border-left: 3.5px solid #84339c; }
+    .cal-event-meeting { background: #fff0f7; color: #c91771; border-left: 3.5px solid #ff51a3; }
+    .cal-event-community { background: #fff8e1; color: #b45309; border-left: 3.5px solid #f59e0b; }
+    .cal-event-quality { background: #f0fdf4; color: #15803d; border-left: 3.5px solid #22c55e; }
     .calendar-sidebar-card {
       background: #ffffff;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 24px;
-      padding: 24px;
-      box-shadow: 0 8px 28px -4px rgba(15, 23, 42, 0.05);
+      border: 1.5px solid #e7e0eb;
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 6px 24px -4px rgba(35, 5, 52, 0.04);
     }
     .sidebar-agenda-list {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
       overflow-y: auto;
       max-height: 580px;
     }
     .agenda-item-card {
-      border: 1.5px solid #f1f5f9;
-      border-radius: 16px;
-      padding: 16px;
+      border: 1.5px solid #e7e0eb;
+      border-radius: 14px;
+      padding: 14px;
       background: #ffffff;
       cursor: pointer;
       transition: all 0.25s ease;
     }
     .agenda-item-card:hover {
-      border-color: #99f6e4;
-      box-shadow: 0 6px 18px rgba(13, 148, 136, 0.12);
+      border-color: #ff51a3;
+      box-shadow: 0 6px 18px rgba(132, 51, 156, 0.12);
       transform: translateX(3px);
+    }
+    .cal-tag-btn.active {
+      background: linear-gradient(135deg, #84339c 0%, #ff51a3 100%) !important;
+      color: #ffffff !important;
+      border-color: transparent !important;
+      box-shadow: 0 4px 12px rgba(132, 51, 156, 0.28) !important;
+    }
+    .cal-tag-btn.active .cal-tag-dot {
+      background: #ffffff !important;
+    }
+    .cal-view-btn.active {
+      background: #84339c !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 8px rgba(132, 51, 156, 0.25) !important;
     }
   </style>
 </head>
@@ -320,9 +338,53 @@
           </div>
         </div>
 
+        <!-- ดรอปดาวน์: ข่าวสารและกิจกรรม -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-btn" onclick="toggleDropdown('news-menu')" aria-expanded="false"
+            aria-controls="news-menu">
+            <i class="fa-solid fa-newspaper"></i> ข่าวสารและกิจกรรม <i class="fa-solid fa-angle-down"></i>
+          </button>
+          <div id="news-menu" class="dropdown-menu hidden" role="menu" aria-label="เมนูข่าวสารและกิจกรรม">
+            <a href="index.html#news-section" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-bullhorn"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ข่าวประชาสัมพันธ์</strong>
+                <span>ข่าวสาร ประกาศ และเอกสารสำคัญ</span>
+              </div>
+            </a>
+            <a href="index.html#activities-section" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-calendar-days"></i></div>
+              <div class="dropdown-item-text">
+                <strong>กิจกรรมและโครงการ</strong>
+                <span>ภาพกิจกรรม โครงการ และงานอบรม</span>
+              </div>
+            </a>
+            <a href="index.html#news-section" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-layer-group"></i></div>
+              <div class="dropdown-item-text">
+                <strong>คลังข่าวสารทั้งหมด</strong>
+                <span>เปิดดูข่าวประชาสัมพันธ์ทั้งหมด</span>
+              </div>
+            </a>
+            <a href="index.html#activities-section" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-images"></i></div>
+              <div class="dropdown-item-text">
+                <strong>คลังภาพกิจกรรมทั้งหมด</strong>
+                <span>เปิดดูประมวลภาพกิจกรรมทั้งหมด</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
         <!-- เมนูปฏิทินกิจกรรม (Active) -->
         <a href="calendar.html" class="nav-btn active">
           <i class="fa-solid fa-calendar-alt"></i> ปฏิทินกิจกรรม
+        </a>
+
+        <!-- งานวิจัยและวิชาการ -->
+        <a href="javascript:void(0)" class="nav-btn"
+          onclick="alert('งานวิจัยและวิชาการ กำลังอยู่ในระหว่างอัปเดตข้อมูล')">
+          <i class="fa-solid fa-book-open"></i> งานวิจัยและวิชาการ
         </a>
 
         <!-- ปุ่มเข้าสู่ระบบสำหรับเจ้าหน้าที่ -->
@@ -340,15 +402,24 @@
       <!-- ส่วนหัวหน้าเว็บ -->
       <div class="subpage-header-box" style="margin-bottom: 24px;">
         <div
-          style="display: inline-flex; align-items: center; gap: 8px; background: #ccfbf1; color: #0f766e; padding: 5px 14px; border-radius: 50px; font-size: 13px; font-weight: 700; margin-bottom: 12px;">
+          style="display: inline-flex; align-items: center; gap: 8px; background: #ffe3f0; color: #84339c; padding: 5px 14px; border-radius: 50px; font-size: 13px; font-weight: 700; margin-bottom: 12px;">
           <i class="fa-solid fa-calendar-days"></i> กำหนดการและตารางกิจกรรมทางการพยาบาล
         </div>
-        <h1 style="font-size: 28px; font-weight: 800; color: #0f172a; margin: 0 0 8px;">
+        <h1 style="font-size: 28px; font-weight: 800; color: #230534; margin: 0 0 8px;">
           ปฏิทินกิจกรรมและการประชุม
         </h1>
-        <p style="font-size: 15px; color: #64748b; margin: 0;">
+        <p style="font-size: 15px; color: #6b3e87; margin: 0 0 16px;">
           ติดตามตารางการอบรมฟื้นฟูวิชาการ การประชุมกลุ่มงาน และกิจกรรมสำคัญของกลุ่มการพยาบาล โรงพยาบาลแม่สอด
         </p>
+
+        <!-- แถบสลับหน้าย่อย -->
+        <div class="subpage-nav-tabs">
+          <a href="vision.html" class="subpage-tab-link"><i class="fa-solid fa-compass"></i> วิสัยทัศน์ / พันธกิจ</a>
+          <a href="structure.html" class="subpage-tab-link"><i class="fa-solid fa-hospital-user"></i> หน่วยงานภายใน</a>
+          <a href="strategy.html" class="subpage-tab-link"><i class="fa-solid fa-chart-line"></i> แผนยุทธศาสตร์</a>
+          <a href="kpi.html" class="subpage-tab-link"><i class="fa-solid fa-arrow-trend-up"></i> ตัวชี้วัด (KPI)</a>
+          <a href="calendar.html" class="subpage-tab-link active"><i class="fa-solid fa-calendar-alt"></i> ปฏิทินกิจกรรม</a>
+        </div>
       </div>
 
       <!-- แถบสถิติสรุปกิจกรรมด้านบน (Top Summary Stats) -->
@@ -410,7 +481,7 @@
                 <i class="fa-solid fa-chevron-right"></i>
               </button>
               <button type="button" class="btn-subtle" onclick="goToToday()"
-                style="padding: 7px 16px; border-radius: 10px; font-weight: 600; font-size: 13px; background: #f0fdfa; color: #0d9488; border: 1.5px solid #ccfbf1; cursor: pointer;">
+                style="padding: 7px 16px; border-radius: 10px; font-weight: 600; font-size: 13px; background: #faf0fc; color: #84339c; border: 1.5px solid #ffe3f0; cursor: pointer;">
                 <i class="fa-solid fa-clock-rotate-left"></i> วันนี้
               </button>
             </div>
@@ -450,7 +521,7 @@
             <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 16px; top: 13px; color: #94a3b8;"></i>
             <input type="text" id="cal-search-input" placeholder="ค้นหาชื่อกิจกรรม, วิทยากร หรือห้องประชุม..."
               oninput="handleCalendarSearch(this.value)"
-              style="width: 100%; padding: 10px 16px 10px 42px; border-radius: 12px; border: 1.5px solid #e2e8f0; font-family: 'Sarabun', sans-serif; font-size: 14px; outline: none; transition: all 0.2s ease;">
+              style="width: 100%; padding: 10px 16px 10px 42px; border-radius: 12px; border: 1.5px solid #e2e8f0; font-family: 'Prompt', sans-serif; font-size: 14px; outline: none; transition: all 0.2s ease;">
           </div>
 
           <!-- ตารางปฏิทินรายเดือน (Month Grid View) -->
@@ -484,13 +555,13 @@
         <div class="calendar-sidebar-card">
           <div class="sidebar-agenda-header">
             <div>
-              <span style="font-size: 12px; font-weight: 700; color: #0d9488; text-transform: uppercase;">กำหนดการประจำวัน</span>
+              <span style="font-size: 12px; font-weight: 700; color: #84339c; text-transform: uppercase;">กำหนดการประจำวัน</span>
               <h3 id="sidebar-selected-date-title" style="margin: 2px 0 0; font-size: 17px; font-weight: 800; color: var(--slate-900);">
                 22 ตุลาคม 2569
               </h3>
             </div>
             <button type="button" class="btn-subtle" onclick="openSuggestModal()"
-              style="font-size: 12.5px; font-weight: 700; color: #0f766e; background: #ccfbf1; border: 1px solid #99f6e4; padding: 6px 12px; border-radius: 8px; cursor: pointer;">
+              style="font-size: 12.5px; font-weight: 700; color: #6c2682; background: #ffe3f0; border: 1px solid #ffc4e1; padding: 6px 12px; border-radius: 8px; cursor: pointer;">
               <i class="fa-solid fa-plus"></i> เสนอกิจกรรม
             </button>
           </div>
@@ -535,7 +606,7 @@
       <!-- ข้อมูลวัน เวลา สถานที่ -->
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #f8fafc; border-radius: 16px; padding: 16px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
         <div style="display: flex; align-items: center; gap: 10px;">
-          <div style="width: 38px; height: 38px; border-radius: 10px; background: #ccfbf1; color: #0f766e; display: flex; align-items: center; justify-content: center; font-size: 16px;">
+          <div style="width: 38px; height: 38px; border-radius: 10px; background: #ffe3f0; color: #6c2682; display: flex; align-items: center; justify-content: center; font-size: 16px;">
             <i class="fa-solid fa-clock"></i>
           </div>
           <div>
@@ -558,7 +629,7 @@
       <!-- รายละเอียดกิจกรรม -->
       <div style="margin-bottom: 20px;">
         <h4 style="font-size: 14px; font-weight: 700; color: #334155; margin: 0 0 8px;">
-          <i class="fa-solid fa-circle-info" style="color: #0d9488;"></i> รายละเอียดและวัตถุประสงค์
+          <i class="fa-solid fa-circle-info" style="color: #84339c;"></i> รายละเอียดและวัตถุประสงค์
         </h4>
         <p id="modal-event-desc" style="font-size: 14px; color: #475569; line-height: 1.7; margin: 0;">
           คำอธิบายกิจกรรม
@@ -568,7 +639,7 @@
       <!-- ผู้รับผิดชอบ/วิทยากร และกลุ่มเป้าหมาย -->
       <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; font-size: 13.5px; color: #475569;">
         <div>
-          <strong><i class="fa-solid fa-user-tie" style="color: #0d9488;"></i> วิทยากร / ผู้รับผิดชอบ:</strong>
+          <strong><i class="fa-solid fa-user-tie" style="color: #84339c;"></i> วิทยากร / ผู้รับผิดชอบ:</strong>
           <span id="modal-event-speaker">พว. นงลักษณ์ ชัยพฤกษ์</span>
         </div>
         <div>
@@ -594,7 +665,7 @@
     <div class="unit-modal-box" onclick="event.stopPropagation()" style="max-width: 540px;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
         <h3 style="margin: 0; font-size: 18px; font-weight: 800; color: #0f172a;">
-          <i class="fa-solid fa-calendar-plus" style="color: #0d9488;"></i> แจ้งจัดกิจกรรม / การประชุม
+          <i class="fa-solid fa-calendar-plus" style="color: #84339c;"></i> แจ้งจัดกิจกรรม / การประชุม
         </h3>
         <button type="button" class="btn-close-modal" onclick="closeSuggestModal()">&times;</button>
       </div>
@@ -602,13 +673,13 @@
       <form onsubmit="handleSuggestSubmit(event)" style="display: flex; flex-direction: column; gap: 14px;">
         <div>
           <label style="display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px;">ชื่อกิจกรรม / หัวข้อการประชุม *</label>
-          <input type="text" required placeholder="เช่น อบรมฟื้นฟูทักษะการช่วยชีวิต..." style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-family: 'Sarabun'; outline: none;">
+          <input type="text" required placeholder="เช่น อบรมฟื้นฟูทักษะการช่วยชีวิต..." style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-family: 'Prompt'; outline: none;">
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
           <div>
             <label style="display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px;">หมวดหมู่ *</label>
-            <select required style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-family: 'Sarabun';">
+            <select required style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-family: 'Prompt';">
               <option value="academic">อบรมวิชาการ</option>
               <option value="meeting">ประชุมกลุ่มงาน</option>
               <option value="community">กิจกรรมโรงพยาบาล</option>
@@ -617,24 +688,24 @@
           </div>
           <div>
             <label style="display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px;">วันที่จัดกิจกรรม *</label>
-            <input type="date" required style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-family: 'Sarabun';">
+            <input type="date" required style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-family: 'Prompt';">
           </div>
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
           <div>
             <label style="display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px;">เวลาเริ่ม - สิ้นสุด *</label>
-            <input type="text" placeholder="09:00 - 12:00 น." required style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-family: 'Sarabun';">
+            <input type="text" placeholder="09:00 - 12:00 น." required style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-family: 'Prompt';">
           </div>
           <div>
             <label style="display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px;">สถานที่ / ห้องประชุม *</label>
-            <input type="text" placeholder="ห้องประชุมเพชรชมพู" required style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-family: 'Sarabun';">
+            <input type="text" placeholder="ห้องประชุมเพชรชมพู" required style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-family: 'Prompt';">
           </div>
         </div>
 
         <div>
           <label style="display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px;">หน่วยงานที่จัด / ผู้ประสานงาน</label>
-          <input type="text" placeholder="กลุ่มงานการพยาบาลผู้ป่วยหนัก เบอร์ต่อ 1387" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-family: 'Sarabun';">
+          <input type="text" placeholder="กลุ่มงานการพยาบาลผู้ป่วยหนัก เบอร์ต่อ 1387" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-family: 'Prompt';">
         </div>
 
         <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px;">
@@ -892,7 +963,7 @@
         });
 
         if (dayEvents.length > 2) {
-          html += `<div style="font-size: 10.5px; color: #0f766e; font-weight: 700; margin-top: 2px;">+ อีก ${dayEvents.length - 2} กิจกรรม</div>`;
+          html += `<div style="font-size: 10.5px; color: #6c2682; font-weight: 700; margin-top: 2px;">+ อีก ${dayEvents.length - 2} กิจกรรม</div>`;
         }
 
         cell.innerHTML = html;
@@ -956,7 +1027,7 @@
           <div class="agenda-item-meta">
             <i class="fa-solid fa-location-dot" style="color: #ea580c;"></i> ${ev.location}
           </div>
-          <div style="font-size: 12px; color: #0d9488; font-weight: 700; margin-top: 8px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="font-size: 12px; color: #84339c; font-weight: 700; margin-top: 8px; display: flex; align-items: center; justify-content: space-between;">
             <span><i class="fa-solid fa-tag"></i> ${ev.categoryLabel}</span>
             <span style="color: #0284c7;">ดูรายละเอียด <i class="fa-solid fa-arrow-right"></i></span>
           </div>
@@ -987,8 +1058,8 @@
 
       container.innerHTML = list.map(ev => `
         <div class="agenda-item-card" onclick="openEventDetailModal(${ev.id})" style="display: flex; gap: 16px; align-items: center;">
-          <div style="text-align: center; padding: 10px 14px; background: #f0fdfa; border: 1.5px solid #ccfbf1; border-radius: 12px; min-width: 90px;">
-            <div style="font-size: 12px; color: #0f766e; font-weight: 700;">${formatThaiDate(ev.date).split(' ')[1]}</div>
+          <div style="text-align: center; padding: 10px 14px; background: #faf0fc; border: 1.5px solid #ffe3f0; border-radius: 12px; min-width: 90px;">
+            <div style="font-size: 12px; color: #6c2682; font-weight: 700;">${formatThaiDate(ev.date).split(' ')[1]}</div>
             <div style="font-size: 22px; font-weight: 800; color: #0f172a;">${ev.date.split('-')[2]}</div>
           </div>
           <div style="flex: 1;">
@@ -999,7 +1070,7 @@
             <h4 style="margin: 0 0 4px; font-size: 15.5px; color: #0f172a; font-weight: 700;">${ev.title}</h4>
             <div style="font-size: 13px; color: #64748b;"><i class="fa-solid fa-location-dot" style="color: #ea580c;"></i> ${ev.location}</div>
           </div>
-          <button type="button" class="btn-subtle" style="padding: 8px 14px; border-radius: 8px; font-size: 13px; color: #0d9488; background: #f0fdfa; border: 1px solid #99f6e4;">
+          <button type="button" class="btn-subtle" style="padding: 8px 14px; border-radius: 8px; font-size: 13px; color: #84339c; background: #faf0fc; border: 1px solid #ffc4e1;">
             รายละเอียด <i class="fa-solid fa-arrow-right"></i>
           </button>
         </div>

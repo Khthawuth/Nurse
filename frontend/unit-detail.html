@@ -10,14 +10,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css?v=2.2">
+  <link rel="stylesheet" href="css/style.css?v=3.2">
   <style>
     .unit-detail-header-card {
-      background: linear-gradient(135deg, #f0fdfa 0%, #ffffff 50%, #f8fafc 100%);
-      border: 1.5px solid #ccfbf1;
+      background: linear-gradient(135deg, #faf0fc 0%, #ffffff 50%, #f8fafc 100%);
+      border: 1.5px solid #ffe3f0;
       border-radius: 24px;
       padding: 36px 32px;
       margin-bottom: 28px;
@@ -25,7 +25,7 @@
       align-items: center;
       gap: 32px;
       position: relative;
-      box-shadow: 0 10px 30px -6px rgba(13, 148, 136, 0.08);
+      box-shadow: 0 10px 30px -6px rgba(132, 51, 156, 0.08);
     }
 
     @media (max-width: 860px) {
@@ -66,8 +66,8 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: #ccfbf1;
-      color: #0f766e;
+      background: #ffe3f0;
+      color: #6c2682;
       padding: 5px 14px;
       border-radius: 50px;
       font-size: 13px;
@@ -106,21 +106,21 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+      background: linear-gradient(135deg, #84339c 0%, #6c2682 100%);
       color: #ffffff;
       padding: 10px 22px;
       border-radius: 12px;
       font-weight: 700;
       font-size: 14.5px;
       text-decoration: none;
-      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35);
+      box-shadow: 0 4px 14px rgba(132, 51, 156, 0.35);
       transition: all 0.25s ease;
     }
 
     .btn-unit-action-ext:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(13, 148, 136, 0.45);
-      background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+      box-shadow: 0 8px 20px rgba(132, 51, 156, 0.45);
+      background: linear-gradient(135deg, #ff51a3 0%, #84339c 100%);
     }
 
     .btn-unit-action-back {
@@ -193,8 +193,8 @@
       height: 70px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #0d9488;
-      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.2);
+      border: 3px solid #84339c;
+      box-shadow: 0 4px 12px rgba(132, 51, 156, 0.2);
     }
 
     .duty-list {
@@ -219,7 +219,7 @@
       position: absolute;
       left: 0;
       top: 2px;
-      color: #0d9488;
+      color: #84339c;
       font-size: 15px;
     }
 
@@ -231,8 +231,8 @@
     }
 
     .staff-count-pill {
-      background: #f0fdfa;
-      border: 1px solid #ccfbf1;
+      background: #faf0fc;
+      border: 1px solid #ffe3f0;
       border-radius: 14px;
       padding: 14px 10px;
       text-align: center;
@@ -241,7 +241,7 @@
     .staff-count-num {
       font-size: 22px;
       font-weight: 800;
-      color: #0f766e;
+      color: #6c2682;
     }
 
     .staff-count-label {
@@ -353,11 +353,53 @@
               </div>
             </a>
           </div>
+        <!-- ดรอปดาวน์: ข่าวสารและกิจกรรม -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-btn" onclick="toggleDropdown('news-menu')" aria-expanded="false"
+            aria-controls="news-menu">
+            <i class="fa-solid fa-newspaper"></i> ข่าวสารและกิจกรรม <i class="fa-solid fa-angle-down"></i>
+          </button>
+          <div id="news-menu" class="dropdown-menu hidden" role="menu" aria-label="เมนูข่าวสารและกิจกรรม">
+            <a href="index.html#news-section" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-bullhorn"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ข่าวประชาสัมพันธ์</strong>
+                <span>ข่าวสาร ประกาศ และเอกสารสำคัญ</span>
+              </div>
+            </a>
+            <a href="index.html#activities-section" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-calendar-days"></i></div>
+              <div class="dropdown-item-text">
+                <strong>กิจกรรมและโครงการ</strong>
+                <span>ภาพกิจกรรม โครงการ และงานอบรม</span>
+              </div>
+            </a>
+            <a href="index.html#news-section" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-layer-group"></i></div>
+              <div class="dropdown-item-text">
+                <strong>คลังข่าวสารทั้งหมด</strong>
+                <span>เปิดดูข่าวประชาสัมพันธ์ทั้งหมด</span>
+              </div>
+            </a>
+            <a href="index.html#activities-section" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-images"></i></div>
+              <div class="dropdown-item-text">
+                <strong>คลังภาพกิจกรรมทั้งหมด</strong>
+                <span>เปิดดูประมวลภาพกิจกรรมทั้งหมด</span>
+              </div>
+            </a>
+          </div>
         </div>
 
         <!-- เมนูปฏิทินกิจกรรม -->
         <a href="calendar.html" class="nav-btn">
           <i class="fa-solid fa-calendar-alt"></i> ปฏิทินกิจกรรม
+        </a>
+
+        <!-- งานวิจัยและวิชาการ -->
+        <a href="javascript:void(0)" class="nav-btn"
+          onclick="alert('งานวิจัยและวิชาการ กำลังอยู่ในระหว่างอัปเดตข้อมูล')">
+          <i class="fa-solid fa-book-open"></i> งานวิจัยและวิชาการ
         </a>
 
         <!-- ปุ่มเข้าสู่ระบบสำหรับเจ้าหน้าที่ -->
@@ -374,9 +416,9 @@
       <!-- Breadcrumb -->
       <nav aria-label="breadcrumb" style="margin-bottom: 20px;">
         <ol style="display: flex; gap: 8px; list-style: none; padding: 0; margin: 0; font-size: 13.5px; color: #64748b;">
-          <li><a href="index.html" style="color: #0d9488; text-decoration: none;">หน้าแรก</a></li>
+          <li><a href="index.html" style="color: #84339c; text-decoration: none;">หน้าแรก</a></li>
           <li>/</li>
-          <li><a href="structure.html" style="color: #0d9488; text-decoration: none;">หน่วยงานภายใน</a></li>
+          <li><a href="structure.html" style="color: #84339c; text-decoration: none;">หน่วยงานภายใน</a></li>
           <li>/</li>
           <li id="breadcrumb-current" style="color: #0f172a; font-weight: 600;">รายละเอียดกลุ่มงาน</li>
         </ol>
@@ -411,7 +453,7 @@
         <!-- คอลัมน์ซ้าย: ภารกิจและขอบเขตบริการ -->
         <div>
           <div class="info-card-box">
-            <h3><i class="fa-solid fa-bullseye" style="color: #0d9488;"></i> พันธกิจและหน้าที่ความรับผิดชอบ</h3>
+            <h3><i class="fa-solid fa-bullseye" style="color: #84339c;"></i> พันธกิจและหน้าที่ความรับผิดชอบ</h3>
             <ul class="duty-list" id="detail-duties">
               <!-- Rendered by JS -->
             </ul>
@@ -428,7 +470,7 @@
         <!-- คอลัมน์ขวา: ผู้บริหารหน่วยงาน และข้อมูลติดต่อ -->
         <div>
           <div class="info-card-box">
-            <h3><i class="fa-solid fa-user-tie" style="color: #0d9488;"></i> หัวหน้ากลุ่มงาน / ผู้รับผิดชอบ</h3>
+            <h3><i class="fa-solid fa-user-tie" style="color: #84339c;"></i> หัวหน้ากลุ่มงาน / ผู้รับผิดชอบ</h3>
             <div class="leader-profile-box">
               <img id="detail-leader-img" src="" alt="หัวหน้ากลุ่มงาน" class="leader-profile-img">
               <div>
@@ -439,7 +481,7 @@
 
             <div style="margin-top: 20px;">
               <strong style="font-size: 13.5px; color: #334155; display: block; margin-bottom: 10px;">
-                <i class="fa-solid fa-users" style="color: #0d9488;"></i> ข้อมูลกำลังคนในหน่วยงาน:
+                <i class="fa-solid fa-users" style="color: #84339c;"></i> ข้อมูลกำลังคนในหน่วยงาน:
               </strong>
               <div class="staff-count-row">
                 <div class="staff-count-pill">
@@ -462,19 +504,19 @@
             <h3><i class="fa-solid fa-location-dot" style="color: #ea580c;"></i> สถานที่ตั้งและช่องทางติดต่อ</h3>
             <div style="font-size: 14px; color: #475569; display: flex; flex-direction: column; gap: 12px;">
               <div style="display: flex; gap: 10px; align-items: flex-start;">
-                <i class="fa-solid fa-building" style="color: #0d9488; margin-top: 3px;"></i>
+                <i class="fa-solid fa-building" style="color: #84339c; margin-top: 3px;"></i>
                 <div>
                   <strong>ที่ตั้ง:</strong> <span id="detail-location">อาคารเฉลิมพระเกียรติ ชั้น 1</span>
                 </div>
               </div>
               <div style="display: flex; gap: 10px; align-items: center;">
-                <i class="fa-solid fa-phone" style="color: #0d9488;"></i>
+                <i class="fa-solid fa-phone" style="color: #84339c;"></i>
                 <div>
                   <strong>เบอร์ต่อภายใน:</strong> <span id="detail-phone">1387, 1166</span>
                 </div>
               </div>
               <div style="display: flex; gap: 10px; align-items: center;">
-                <i class="fa-solid fa-clock" style="color: #0d9488;"></i>
+                <i class="fa-solid fa-clock" style="color: #84339c;"></i>
                 <div>
                   <strong>เวลาทำการ:</strong> <span id="detail-hours">เปิดบริการตลอด 24 ชั่วโมง</span>
                 </div>
@@ -518,8 +560,8 @@
     </div>
   </footer>
 
-  <script src="js/app.js?v=2.2"></script>
-  <script src="js/units-data.js?v=2.2"></script>
+  <script src="js/app.js?v=3.2"></script>
+  <script src="js/units-data.js?v=3.2"></script>
   <script>
     // ดึงค่า ID จาก URL เช่น unit-detail.html?id=1
     const urlParams = new URLSearchParams(window.location.search);

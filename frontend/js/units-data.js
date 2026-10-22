@@ -38,7 +38,7 @@ const unitsData = [
     iconSvg: `
       <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
         <!-- รถพยาบาล -->
-        <rect x="22" y="38" width="94" height="48" rx="8" fill="#F8FAFC" stroke="#0D9488" stroke-width="2.5"/>
+        <rect x="22" y="38" width="94" height="48" rx="8" fill="#F8FAFC" stroke="#84339c" stroke-width="2.5"/>
         <rect x="30" y="44" width="22" height="18" rx="4" fill="#E0F2FE" stroke="#0284C7" stroke-width="1.5"/>
         <rect x="60" y="44" width="22" height="18" rx="4" fill="#E0F2FE" stroke="#0284C7" stroke-width="1.5"/>
         <path d="M22 66H116" stroke="#EF4444" stroke-width="4"/>
@@ -54,7 +54,7 @@ const unitsData = [
         <!-- บุคลากรพยาบาล/กู้ชีพ -->
         <circle cx="124" cy="50" r="11" fill="#FDBA74"/>
         <path d="M115 48C115 41 120 37 127 37C133 37 135 41 135 48" fill="#1E293B"/>
-        <rect x="114" y="61" width="20" height="34" rx="6" fill="#0D9488"/>
+        <rect x="114" y="61" width="20" height="34" rx="6" fill="#84339c"/>
         <rect x="118" y="72" width="12" height="4" fill="#F59E0B"/>
         <rect x="127" y="76" width="14" height="10" rx="3" fill="#EA580C"/>
         <path d="M134 81H134.01" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
@@ -92,10 +92,10 @@ const unitsData = [
         <!-- ใบหน้าผู้ป่วย -->
         <circle cx="82" cy="68" r="32" fill="#FED7AA"/>
         <!-- หมวกผ่าตัดสีเขียวมิ้นต์ -->
-        <path d="M54 62C54 44 67 36 84 36C100 36 112 44 112 62C112 65 108 67 84 67C60 67 54 65 54 62Z" fill="#0D9488"/>
+        <path d="M54 62C54 44 67 36 84 36C100 36 112 44 112 62C112 65 108 67 84 67C60 67 54 65 54 62Z" fill="#84339c"/>
         <!-- รอยย่นหมวก -->
-        <path d="M62 48Q82 42 104 48" stroke="#14B8A6" stroke-width="2" stroke-linecap="round"/>
-        <path d="M66 56Q84 52 100 56" stroke="#14B8A6" stroke-width="2" stroke-linecap="round"/>
+        <path d="M62 48Q82 42 104 48" stroke="#ff51a3" stroke-width="2" stroke-linecap="round"/>
+        <path d="M66 56Q84 52 100 56" stroke="#ff51a3" stroke-width="2" stroke-linecap="round"/>
         <!-- หน้ากากดมยาสลบ/ออกซิเจน -->
         <path d="M96 68C108 73 108 84 94 92C84 97 76 96 74 90C72 84 82 72 96 68Z" fill="#E2E8F0" stroke="#0284C7" stroke-width="2" opacity="0.9"/>
         <!-- ท่อต่อสายก๊าซดมยา -->
@@ -150,11 +150,11 @@ const unitsData = [
         </g>
         <!-- แคปซูลและเม็ดยาด้านล่าง -->
         <g transform="rotate(40 115 85)">
-          <rect x="106" y="78" width="10" height="22" rx="5" fill="#0D9488"/>
+          <rect x="106" y="78" width="10" height="22" rx="5" fill="#84339c"/>
           <rect x="106" y="78" width="10" height="11" rx="5" fill="#F97316"/>
         </g>
         <circle cx="60" cy="104" r="5" fill="#F59E0B"/>
-        <circle cx="102" cy="106" r="6" fill="#14B8A6"/>
+        <circle cx="102" cy="106" r="6" fill="#ff51a3"/>
       </svg>
     `
   },
@@ -229,28 +229,28 @@ const unitsData = [
     // SVG Illustration: ทีมแพทย์และพยาบาลในชุดเขียวผ่าตัดรอบโคมไฟ (สไตล์รูปที่สอง)
     iconSvg: `
       <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
-        <ellipse cx="80" cy="108" rx="56" ry="16" fill="#0D9488" fill-opacity="0.3"/>
+        <ellipse cx="80" cy="108" rx="56" ry="16" fill="#84339c" fill-opacity="0.3"/>
         <!-- โคมไฟผ่าตัดเหนือเตียง -->
         <ellipse cx="80" cy="30" rx="30" ry="8" fill="#E2E8F0" stroke="#64748B" stroke-width="2"/>
         <path d="M60 30L45 80M100 30L115 80" stroke="#FDE047" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.6"/>
         <!-- แพทย์/พยาบาล 3 คนในชุดผ่าตัด -->
         <!-- คนกลาง -->
         <circle cx="80" cy="52" r="12" fill="#FED7AA"/>
-        <path d="M68 48C68 40 73 38 80 38C87 38 92 40 92 48" fill="#0D9488"/>
+        <path d="M68 48C68 40 73 38 80 38C87 38 92 40 92 48" fill="#84339c"/>
         <rect x="72" y="52" width="16" height="9" rx="3" fill="#E2E8F0"/>
-        <path d="M64 68C64 64 70 62 80 62C90 62 96 64 96 68L98 94H62L64 68Z" fill="#0D9488"/>
+        <path d="M64 68C64 64 70 62 80 62C90 62 96 64 96 68L98 94H62L64 68Z" fill="#84339c"/>
         <!-- คนซ้าย -->
         <circle cx="50" cy="58" r="10" fill="#FED7AA"/>
-        <path d="M40 54C40 48 45 46 50 46C55 46 60 48 60 54" fill="#0D9488"/>
+        <path d="M40 54C40 48 45 46 50 46C55 46 60 48 60 54" fill="#84339c"/>
         <rect x="44" y="58" width="12" height="7" rx="2" fill="#E2E8F0"/>
-        <path d="M36 72C36 68 42 66 50 66C58 66 64 68 64 72L66 94H34L36 72Z" fill="#14B8A6"/>
+        <path d="M36 72C36 68 42 66 50 66C58 66 64 68 64 72L66 94H34L36 72Z" fill="#ff51a3"/>
         <!-- คนขวา -->
         <circle cx="110" cy="58" r="10" fill="#FED7AA"/>
-        <path d="M100 54C100 48 105 46 110 46C115 46 120 48 120 54" fill="#0D9488"/>
+        <path d="M100 54C100 48 105 46 110 46C115 46 120 48 120 54" fill="#84339c"/>
         <rect x="104" y="58" width="12" height="7" rx="2" fill="#E2E8F0"/>
-        <path d="M96 72C96 68 102 66 110 66C118 66 124 68 124 72L126 94H94L96 72Z" fill="#14B8A6"/>
+        <path d="M96 72C96 68 102 66 110 66C118 66 124 68 124 72L126 94H94L96 72Z" fill="#ff51a3"/>
         <!-- ผ้าคลุมผ่าตัดด้านล่าง -->
-        <path d="M26 94C26 88 50 86 80 86C110 86 134 88 134 94V102H26V94Z" fill="#0F766E"/>
+        <path d="M26 94C26 88 50 86 80 86C110 86 134 88 134 94V102H26V94Z" fill="#6c2682"/>
       </svg>
     `
   },
@@ -331,9 +331,9 @@ const unitsData = [
         <circle cx="56" cy="48" r="11" fill="#FED7AA"/>
         <path d="M48 46C48 38 52 35 58 35C64 35 66 38 66 46" fill="#1E293B"/>
         <!-- หมวกพยาบาลสีขาวแถบดำ -->
-        <path d="M50 40H64L62 34H52L50 40Z" fill="#FFFFFF" stroke="#0D9488" stroke-width="1.5"/>
-        <line x1="53" y1="36" x2="61" y2="36" stroke="#0F766E" stroke-width="1.5"/>
-        <rect x="48" y="59" width="18" height="38" rx="4" fill="#0D9488"/>
+        <path d="M50 40H64L62 34H52L50 40Z" fill="#FFFFFF" stroke="#84339c" stroke-width="1.5"/>
+        <line x1="53" y1="36" x2="61" y2="36" stroke="#6c2682" stroke-width="1.5"/>
+        <rect x="48" y="59" width="18" height="38" rx="4" fill="#84339c"/>
         <rect x="52" y="59" width="10" height="26" fill="#FFFFFF"/>
         <!-- โล่ป้องกันเชื้อโรคขนาดใหญ่ด้านขวา -->
         <path d="M82 40H118C118 72 100 96 100 96C100 96 82 72 82 40Z" fill="#F43F5E" stroke="#BE123C" stroke-width="2.5"/>
@@ -423,8 +423,8 @@ const unitsData = [
         <path d="M72 40H88L86 34H74L72 40Z" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.5"/>
         <rect x="70" y="64" width="20" height="18" fill="#0284C7"/>
         <!-- หูฟังแพทย์ Stethoscope -->
-        <path d="M46 54C46 64 54 72 64 72H68" stroke="#0D9488" stroke-width="3" stroke-linecap="round"/>
-        <circle cx="44" cy="52" r="3.5" fill="#0D9488"/>
+        <path d="M46 54C46 64 54 72 64 72H68" stroke="#84339c" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="44" cy="52" r="3.5" fill="#84339c"/>
         <!-- แฟ้มประวัติผู้ป่วย -->
         <rect x="100" y="60" width="18" height="24" rx="3" fill="#F8FAFC" stroke="#64748B" stroke-width="1.5"/>
         <line x1="104" y1="66" x2="114" y2="66" stroke="#94A3B8" stroke-width="2"/>
@@ -457,11 +457,11 @@ const unitsData = [
     // SVG Illustration: แฟ้มผู้ป่วยอายุรกรรม หูฟังแพทย์ ยาแคปซูล
     iconSvg: `
       <svg width="130" height="110" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 130px; max-height: 110px; width: 100%; height: auto; display: block; margin: 0 auto;">
-        <rect x="42" y="32" width="76" height="88" rx="8" fill="#FFFFFF" stroke="#0D9488" stroke-width="2.5"/>
-        <rect x="58" y="26" width="44" height="12" rx="4" fill="#14B8A6"/>
+        <rect x="42" y="32" width="76" height="88" rx="8" fill="#FFFFFF" stroke="#84339c" stroke-width="2.5"/>
+        <rect x="58" y="26" width="44" height="12" rx="4" fill="#ff51a3"/>
         <circle cx="80" cy="32" r="2.5" fill="#FFFFFF"/>
         <!-- เส้นบรรทัดประวัติ -->
-        <line x1="54" y1="50" x2="106" y2="50" stroke="#0F766E" stroke-width="3" stroke-linecap="round"/>
+        <line x1="54" y1="50" x2="106" y2="50" stroke="#6c2682" stroke-width="3" stroke-linecap="round"/>
         <line x1="54" y1="62" x2="98" y2="62" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
         <line x1="54" y1="72" x2="92" y2="72" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
         <line x1="54" y1="82" x2="84" y2="82" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
@@ -515,8 +515,8 @@ const unitsData = [
           <line x1="106" y1="70" x2="90" y2="40" stroke="#334155" stroke-width="2.5"/>
           <line x1="116" y1="70" x2="88" y2="40" stroke="#334155" stroke-width="2.5"/>
         </g>
-        <rect x="46" y="80" width="30" height="12" rx="3" fill="#FFFFFF" stroke="#0D9488" stroke-width="1.5"/>
-        <line x1="52" y1="86" x2="70" y2="86" stroke="#14B8A6" stroke-width="2"/>
+        <rect x="46" y="80" width="30" height="12" rx="3" fill="#FFFFFF" stroke="#84339c" stroke-width="1.5"/>
+        <line x1="52" y1="86" x2="70" y2="86" stroke="#ff51a3" stroke-width="2"/>
       </svg>
     `
   },
@@ -633,7 +633,7 @@ const unitsData = [
         <line x1="80" y1="52" x2="80" y2="90" stroke="#FED7AA" stroke-width="2" stroke-dasharray="2 2"/>
         <line x1="94" y1="58" x2="94" y2="92" stroke="#FED7AA" stroke-width="2" stroke-dasharray="2 2"/>
         <!-- โล่แห่งการปกป้องแผล -->
-        <circle cx="108" cy="46" r="14" fill="#0D9488"/>
+        <circle cx="108" cy="46" r="14" fill="#84339c"/>
         <path d="M104 46L107 49L114 42" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     `
