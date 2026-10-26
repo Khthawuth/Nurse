@@ -210,7 +210,7 @@
       padding: 28px 32px 50px;
     }
 
-    /* 3. การ์ดสรุปภาพรวมสถิติ (คลิกแล้วสลับไปเมนูนั้นๆ ได้) */
+    /* 3. การ์ดสรุปภาพรวมสถิติ */
     .stats-grid-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -322,7 +322,6 @@
       margin-bottom: 18px;
     }
 
-    /* ช่องค้นหาด่วน */
     .search-filter-box {
       display: flex;
       align-items: center;
@@ -352,7 +351,6 @@
       font-family: inherit;
     }
 
-    /* ปุ่มทางลัดและปุ่ม Action */
     .btn-create-highlight {
       background: #84339c;
       color: #ffffff;
@@ -417,7 +415,6 @@
       transform: translateY(-1px);
     }
 
-    /* Status Badges */
     .status-badge-active {
       background: #dcfce7;
       color: #15803d;
@@ -633,7 +630,6 @@
       color: #ffffff;
     }
 
-    /* Custom Form & Pin Button Toggle */
     .collapsible-form {
       border: 1.5px solid #ffc4e1;
       background: #faf0fc;
@@ -671,7 +667,6 @@
       box-shadow: 0 2px 8px rgba(234, 88, 12, 0.15);
     }
 
-    /* Custom File Dropzone & Modern Upload System */
     .custom-file-dropzone {
       border: 2px dashed #cbd5e1;
       background: #f8fafc;
@@ -754,7 +749,6 @@
       margin-top: 4px;
     }
 
-    /* Grid พรีวิวรูปภาพที่เลือก */
     .upload-preview-toolbar {
       display: flex;
       justify-content: space-between;
@@ -878,7 +872,6 @@
       color: #ffffff;
     }
 
-    /* กล่องพรีวิวเอกสารแนบแบบการ์ดทันสมัย */
     .doc-attachment-card {
       display: flex;
       align-items: center;
@@ -951,7 +944,6 @@
       transform: scale(1.02);
     }
 
-    /* Pagination controls */
     .pagination-bar {
       display: flex;
       justify-content: space-between;
@@ -995,7 +987,6 @@
       cursor: not-allowed;
     }
 
-    /* Log Badges */
     .log-badge {
       padding: 4px 10px;
       border-radius: 6px;
@@ -1025,7 +1016,6 @@
       color: #7e22ce;
     }
 
-    /* Table responsive wrapper */
     .table-responsive {
       width: 100%;
       overflow-x: auto;
@@ -1045,7 +1035,6 @@
       min-width: 680px;
     }
 
-    /* Form Responsive Grids & Layouts */
     .form-grid-2col {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1068,7 +1057,6 @@
       flex-wrap: wrap;
     }
 
-    /* Mobile Drawer Toggle & Overlay */
     .sidebar-toggle-btn {
       display: none;
       align-items: center;
@@ -1124,7 +1112,6 @@
       color: #ef4444;
     }
 
-    /* Responsive Media Queries */
     @media (max-width: 1200px) {
       .stats-grid-row {
         grid-template-columns: repeat(2, 1fr);
@@ -1195,11 +1182,11 @@
         gap: 14px;
       }
 
-      .card-top-bar > div:first-child {
+      .card-top-bar>div:first-child {
         width: 100%;
       }
 
-      .card-top-bar > div:last-child {
+      .card-top-bar>div:last-child {
         width: 100%;
         display: flex;
         flex-wrap: wrap;
@@ -1333,7 +1320,7 @@
       }
     }
 
-    /* ================= Feature 1: Modern Admin Hero Banner ================= */
+    /* Admin Hero Banner */
     .admin-hero-banner {
       background: linear-gradient(135deg, #230534 0%, #4a195e 55%, #84339c 100%);
       border-radius: var(--admin-radius);
@@ -1425,8 +1412,17 @@
     }
 
     @keyframes pulseGreen {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.85); }
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(0.85);
+      }
     }
 
     .admin-hero-actions {
@@ -1476,7 +1472,6 @@
       transform: translateY(-2px);
     }
 
-    /* ================= Feature 2: Filter Chips Row ================= */
     .filter-chips-row {
       display: flex;
       gap: 8px;
@@ -1516,7 +1511,6 @@
       box-shadow: 0 2px 8px rgba(132, 51, 156, 0.25);
     }
 
-    /* ================= Feature 3: Live Preview Button & Modal ================= */
     .btn-preview-modern {
       background: #eff6ff;
       color: #2563eb;
@@ -1589,7 +1583,6 @@
       background: #fafafc;
     }
 
-    /* ================= Feature 4: Export CSV Button ================= */
     .btn-export-csv {
       background: #ecfdf5;
       color: #059669;
@@ -1618,9 +1611,11 @@
         align-items: flex-start;
         padding: 20px;
       }
+
       .admin-hero-actions {
         width: 100%;
       }
+
       .admin-hero-actions .btn-hero-action {
         flex: 1 1 auto;
         justify-content: center;
@@ -1640,7 +1635,8 @@
         <h2>กลุ่มการพยาบาล</h2>
         <p>โรงพยาบาลแม่สอด</p>
       </div>
-      <button type="button" class="sidebar-close-btn" onclick="toggleAdminSidebar(false)" aria-label="ปิดเมนู" title="ปิดเมนู">
+      <button type="button" class="sidebar-close-btn" onclick="toggleAdminSidebar(false)" aria-label="ปิดเมนู"
+        title="ปิดเมนู">
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
@@ -1693,13 +1689,15 @@
   <div class="admin-main-wrap">
     <header class="admin-header">
       <div style="display: flex; align-items: center; gap: 14px; min-width: 0;">
-        <button type="button" id="sidebar-toggle-btn" class="sidebar-toggle-btn" onclick="toggleAdminSidebar()" aria-label="เปิดเมนูนำทาง" title="เปิดเมนู">
+        <button type="button" id="sidebar-toggle-btn" class="sidebar-toggle-btn" onclick="toggleAdminSidebar()"
+          aria-label="เปิดเมนูนำทาง" title="เปิดเมนู">
           <i class="fa-solid fa-bars"></i>
         </button>
         <div class="header-user-badge">
           <div class="header-user-avatar"><i class="fa-solid fa-user-nurse"></i></div>
           <div style="min-width: 0;">
-            <strong id="current-user-display" style="font-size: 14.5px; color: #0f172a; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">ผู้ใช้งาน:
+            <strong id="current-user-display"
+              style="font-size: 14.5px; color: #0f172a; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">ผู้ใช้งาน:
               กำลังตรวจสอบ...</strong>
             <span style="font-size: 12px; color: #84339c; font-weight: 600;"><i class="fa-solid fa-shield-check"></i>
               <span class="header-mfa-badge-text">บังคับใช้ MFA ยืนยันตัวตนแล้ว</span></span>
@@ -1719,7 +1717,7 @@
     </header>
 
     <main class="admin-body">
-      <!-- กล่องต้อนรับ & สถานะระบบแบบโมเดิร์น (Admin Welcome & Quick Bar) -->
+      <!-- กล่องต้อนรับ & สถานะระบบแบบโมเดิร์น -->
       <div class="admin-hero-banner">
         <div class="admin-hero-content">
           <div class="admin-hero-badge"><i class="fa-solid fa-hospital-user"></i> ฝ่ายการพยาบาล โรงพยาบาลแม่สอด</div>
@@ -1727,7 +1725,7 @@
           <p class="admin-hero-subtitle">
             <span id="live-thai-date"><i class="fa-regular fa-calendar-days"></i> วันนี้</span>
             <span class="live-dot-divider">•</span>
-            <span class="server-status-pill"><span class="status-indicator-dot"></span> ระบบออนไลน์ (API Port 4000)</span>
+            <span class="server-status-pill"><span class="status-indicator-dot"></span> ระบบออนไลน์พร้อมใช้งาน</span>
           </p>
         </div>
         <div class="admin-hero-actions">
@@ -1743,7 +1741,7 @@
         </div>
       </div>
 
-      <!-- การ์ดสรุปสถิติภาพรวม 4 กล่อง (คลิกที่การ์ดเพื่อสลับไปยังหน้านั้นๆ ได้ทันที) -->
+      <!-- การ์ดสรุปสถิติภาพรวม 4 กล่อง -->
       <section class="stats-grid-row">
         <div class="stat-kpi-card" onclick="switchAdminTab('posts')" title="คลิกเพื่อจัดการข่าวประชาสัมพันธ์">
           <div class="kpi-icon-wrap teal"><i class="fa-solid fa-bullhorn"></i></div>
@@ -1780,7 +1778,6 @@
 
       <!-- ================= แท็บ 1: จัดการข่าวสารและกิจกรรม ================= -->
       <section id="section-posts-manage">
-        <!-- ฟอร์มเพิ่ม/แก้ไขข่าว (เปิดออกเมื่อกดปุ่ม เขียนข่าวใหม่) -->
         <div id="posts-form-box" class="collapsible-form">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
             <h3 id="form-mode-title" style="margin: 0; color: #6c2682; display: flex; align-items: center; gap: 8px;">
@@ -1804,7 +1801,8 @@
               <label
                 style="font-weight: 700; font-size: 13.5px; display: block; margin-bottom: 6px;">การปักหมุดความสำคัญ</label>
               <input type="checkbox" id="is_pinned" style="display: none;" onchange="updatePinButtonState()">
-              <button type="button" id="pin-toggle-button" class="pin-toggle-btn" onclick="togglePinCheckbox()" style="width: 100%; justify-content: center;">
+              <button type="button" id="pin-toggle-button" class="pin-toggle-btn" onclick="togglePinCheckbox()"
+                style="width: 100%; justify-content: center;">
                 <i class="fa-solid fa-thumbtack"></i> <span>ปักหมุดข่าวนี้ไว้บนสุด (Pin to Top)</span>
               </button>
             </div>
@@ -1876,7 +1874,6 @@
           </div>
         </div>
 
-        <!-- การ์ดตารางข่าวสาร -->
         <div class="content-box-card">
           <div class="card-top-bar">
             <div>
@@ -1888,7 +1885,6 @@
             </div>
 
             <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-              <!-- ช่องค้นหาด่วน -->
               <div class="search-filter-box">
                 <i class="fa-solid fa-magnifying-glass" style="color: #94a3b8;"></i>
                 <input type="text" id="posts-search-input" placeholder="พิมพ์ค้นหาหัวข้อข่าว..."
@@ -1905,19 +1901,25 @@
               </button>
             </div>
 
-            <!-- ชิปตัวกรองหมวดหมู่ด่วน (Fast Filter Chips) -->
             <div class="filter-chips-row">
-              <button type="button" class="filter-chip active" id="chip-cat-all" onclick="setPostCategoryFilter('all', this)">
+              <button type="button" class="filter-chip active" id="chip-cat-all"
+                onclick="setPostCategoryFilter('all', this)">
                 <i class="fa-solid fa-layer-group"></i> ทั้งหมด (<span id="chip-count-all">0</span>)
               </button>
-              <button type="button" class="filter-chip" id="chip-cat-news" onclick="setPostCategoryFilter('news', this)">
-                <i class="fa-solid fa-bullhorn" style="color: #0284c7;"></i> ข่าวประชาสัมพันธ์ (<span id="chip-count-news">0</span>)
+              <button type="button" class="filter-chip" id="chip-cat-news"
+                onclick="setPostCategoryFilter('news', this)">
+                <i class="fa-solid fa-bullhorn" style="color: #0284c7;"></i> ข่าวประชาสัมพันธ์ (<span
+                  id="chip-count-news">0</span>)
               </button>
-              <button type="button" class="filter-chip" id="chip-cat-activity" onclick="setPostCategoryFilter('activity', this)">
-                <i class="fa-solid fa-calendar-check" style="color: #059669;"></i> กิจกรรมและโครงการ (<span id="chip-count-activity">0</span>)
+              <button type="button" class="filter-chip" id="chip-cat-activity"
+                onclick="setPostCategoryFilter('activity', this)">
+                <i class="fa-solid fa-calendar-check" style="color: #059669;"></i> กิจกรรมและโครงการ (<span
+                  id="chip-count-activity">0</span>)
               </button>
-              <button type="button" class="filter-chip" id="chip-cat-pinned" onclick="setPostCategoryFilter('pinned', this)">
-                <i class="fa-solid fa-thumbtack" style="color: #ea580c;"></i> เฉพาะที่ปักหมุด (<span id="chip-count-pinned">0</span>)
+              <button type="button" class="filter-chip" id="chip-cat-pinned"
+                onclick="setPostCategoryFilter('pinned', this)">
+                <i class="fa-solid fa-thumbtack" style="color: #ea580c;"></i> เฉพาะที่ปักหมุด (<span
+                  id="chip-count-pinned">0</span>)
               </button>
             </div>
           </div>
@@ -1967,16 +1969,17 @@
 
           <div class="hero-form-layout">
             <div>
-              <!-- อัปโหลดรูปภาพแบนเนอร์ -->
               <div class="form-group" style="margin-bottom: 14px;">
                 <label style="font-weight: 700; font-size: 13.5px; display: block; margin-bottom: 6px;">
-                  ไฟล์รูปภาพแบนเนอร์ (แนะนำขนาด 1920x1080 พิกเซล สัดส่วน 16:9 แนวนอนเต็มจอ) <span style="color: #ef4444;">*</span>
+                  ไฟล์รูปภาพแบนเนอร์ (แนะนำขนาด 1920x1080 พิกเซล สัดส่วน 16:9 แนวนอนเต็มจอ) <span
+                    style="color: #ef4444;">*</span>
                 </label>
                 <div class="custom-file-dropzone" id="dropzone-hero"
                   onclick="document.getElementById('hero-file-input').click()">
                   <input type="file" id="hero-file-input" accept="image/*" onchange="previewHeroFile(event)"
                     style="display: none;">
-                  <div class="dropzone-icon" style="background: #e0f2fe; color: #0284c7;"><i class="fa-solid fa-images"></i></div>
+                  <div class="dropzone-icon" style="background: #e0f2fe; color: #0284c7;"><i
+                      class="fa-solid fa-images"></i></div>
                   <div class="dropzone-text">
                     <strong>คลิกเพื่อเลือกภาพแบนเนอร์ หรือลากไฟล์มาวางที่นี่</strong>
                     <span>แนะนำขนาด 1920x1080 พิกเซล (16:9) เพื่อให้ภาพแสดงผลเต็มจอ สวยงาม คมชัด</span>
@@ -2030,15 +2033,12 @@
                   style="width: 100%; padding: 9px; border-radius: 8px; border: 1.5px solid #cbd5e1; box-sizing: border-box;">
               </div>
 
-
-
               <button type="button" id="btn-save-hero" class="btn-create-highlight" style="background: #0284c7;"
                 onclick="saveHeroBanner()">
                 <i class="fa-solid fa-cloud-arrow-up"></i> <span id="btn-save-hero-text">บันทึกภาพแบนเนอร์ใหม่</span>
               </button>
             </div>
 
-            <!-- กล่อง Live Preview -->
             <div>
               <strong style="font-size: 14px; color: #334155; display: block; margin-bottom: 10px;">พรีวิวตัวอย่างสไลด์
                 (Live Preview)</strong>
@@ -2108,7 +2108,6 @@
             </div>
 
             <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-              <!-- ช่องค้นหาสมาชิก -->
               <div class="search-filter-box">
                 <i class="fa-solid fa-magnifying-glass" style="color: #94a3b8;"></i>
                 <input type="text" id="users-search-input" placeholder="พิมพ์ค้นหาชื่อ หรือ username..."
@@ -2152,13 +2151,13 @@
             </div>
 
             <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-              <!-- ช่องค้นหา Log -->
               <div class="search-filter-box">
                 <i class="fa-solid fa-magnifying-glass" style="color: #94a3b8;"></i>
                 <input type="text" id="logs-search-input" placeholder="ค้นหาประวัติการทำงาน..."
                   oninput="filterLogsLive()">
               </div>
-              <button type="button" class="btn-export-csv" onclick="exportLogsToCSV()" title="ส่งออกข้อมูล Log เป็นไฟล์ CSV (เปิดดูใน Excel ได้)">
+              <button type="button" class="btn-export-csv" onclick="exportLogsToCSV()"
+                title="ส่งออกข้อมูล Log เป็นไฟล์ CSV (เปิดดูใน Excel ได้)">
                 <i class="fa-solid fa-file-csv"></i> ส่งออก Excel/CSV
               </button>
               <button type="button" id="btn-refresh-logs" class="btn-refresh-modern" onclick="handleRefreshLogs(this)">
@@ -2203,15 +2202,17 @@
     </div>
   </div>
 
-  <!-- Modal ดูตัวอย่างโพสต์สดก่อนบันทึก (Live Post Preview Modal) -->
-  <div id="admin-preview-modal" class="custom-modal-overlay hidden" style="display: none;" onclick="closePostPreviewModal(event)">
+  <!-- Modal ดูตัวอย่างโพสต์สดก่อนบันทึก -->
+  <div id="admin-preview-modal" class="custom-modal-overlay hidden" style="display: none;"
+    onclick="closePostPreviewModal(event)">
     <div class="preview-modal-dialog" onclick="event.stopPropagation()">
       <div class="preview-modal-header">
         <div style="display: flex; align-items: center; gap: 10px;">
           <span class="preview-tag-badge"><i class="fa-solid fa-eye"></i> โหมดดูตัวอย่างก่อนเผยแพร่</span>
           <span style="font-size: 13px; color: #64748b;">(มุมมองที่ประชาชน/บุคลากรจะเห็น)</span>
         </div>
-        <button type="button" class="btn-action-modern" onclick="closePostPreviewModal()"><i class="fa-solid fa-xmark"></i></button>
+        <button type="button" class="btn-action-modern" onclick="closePostPreviewModal()"><i
+            class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="preview-modal-body" id="preview-modal-content"></div>
       <div class="preview-modal-footer">
@@ -2224,17 +2225,25 @@
   </div>
 
   <script>
-    const backendHost = (window.location.hostname && window.location.hostname !== '') ? window.location.hostname : 'localhost';
-    const API_URL = `http://${backendHost}:4000/api/posts`;
-    const HERO_API_URL = `http://${backendHost}:4000/api/hero-banners`;
-    const USERS_API_URL = `http://${backendHost}:4000/api/developer/users`;
-    const LOGS_API_URL = `http://${backendHost}:4000/api/developer/logs`;
+    // ================= Dynamic API Base URL =================
+    function getApiBaseUrl() {
+      const host = window.location.hostname;
+      if (host === 'localhost' || host === '127.0.0.1') {
+        return 'http://localhost:4000/api';
+      }
+      return '/api';
+    }
+
+    const API_BASE = getApiBaseUrl();
+    const API_URL = `${API_BASE}/posts`;
+    const HERO_API_URL = `${API_BASE}/hero-banners`;
+    const USERS_API_URL = `${API_BASE}/developer/users`;
+    const LOGS_API_URL = `${API_BASE}/developer/logs`;
 
     let token = localStorage.getItem('nursing_token');
     let role = localStorage.getItem('nursing_user_role');
     let modalActionCallback = null;
 
-    // หากเปิดเข้ามายังไม่มี session ให้กำหนด session ผู้ดูแลระบบเพื่อความต่อเนื่องในการใช้งาน
     if (!token || token === 'undefined' || token === 'null') {
       token = 'admin_session_active';
       localStorage.setItem('nursing_token', token);
@@ -2306,7 +2315,6 @@
       }
     }
 
-    // ควบคุมการเปิด/ปิดเมนูด้านข้างบนมือถือและแท็บเล็ต (Mobile & Tablet Drawer)
     function toggleAdminSidebar(show) {
       const sidebar = document.querySelector('.admin-sidebar');
       const backdrop = document.getElementById('admin-sidebar-backdrop');
@@ -2336,7 +2344,6 @@
       }
     });
 
-    // สลับแท็บ Sidebar
     function switchAdminTab(tabName) {
       if (window.innerWidth <= 992) {
         toggleAdminSidebar(false);
@@ -2444,7 +2451,6 @@
       const q = document.getElementById('posts-search-input').value.toLowerCase().trim();
       let results = [...allPostsCache];
 
-      // กรองตามหมวดหมู่ชิป
       if (currentPostCategoryFilter === 'news') {
         results = results.filter(p => p.category === 'news');
       } else if (currentPostCategoryFilter === 'activity') {
@@ -2453,7 +2459,6 @@
         results = results.filter(p => p.is_pinned == 1 || p.is_pinned === true);
       }
 
-      // กรองตามคำค้นหา
       if (q) {
         results = results.filter(p => (p.title && p.title.toLowerCase().includes(q)) || (p.description && p.description.toLowerCase().includes(q)));
       }
@@ -2619,7 +2624,6 @@
         document.getElementById('document').value = '';
         selectedPostImages = [];
 
-        // แสดงรูปภาพเดิมที่บันทึกไว้ในระบบ
         const imgList = document.getElementById('image-preview-list');
         if (data.image_url) {
           imgList.innerHTML = `
@@ -2637,16 +2641,15 @@
           imgList.innerHTML = '';
         }
 
-        // แสดงเอกสารแนบเดิม
         const docContainer = document.getElementById('doc-preview-container');
-        if (data.pdf_url) {
+        if (data.file_url) {
           docContainer.innerHTML = `
             <div class="doc-attachment-card" style="background: #f8fafc; border-color: #cbd5e1;">
               <div class="doc-attachment-left">
                 <div class="doc-attachment-icon"><i class="fa-solid fa-file-lines"></i></div>
                 <div class="doc-attachment-info">
                   <h5>เอกสารแนบเดิมที่มีในระบบ</h5>
-                  <span><a href="${escapeHtml(data.pdf_url)}" target="_blank" style="color: #0284c7; text-decoration: underline;">คลิกเปิดดูไฟล์</a></span>
+                  <span><a href="${escapeHtml(data.file_url)}" target="_blank" style="color: #0284c7; text-decoration: underline;">คลิกเปิดดูไฟล์</a></span>
                 </div>
               </div>
             </div>
@@ -2676,7 +2679,6 @@
       document.getElementById('form-mode-title').innerHTML = '<i class="fa-solid fa-pen-nib"></i> เขียนข่าวประชาสัมพันธ์ / กิจกรรมใหม่';
     }
 
-    // ฟังก์ชันดูตัวอย่างโพสต์สดก่อนบันทึก (Live Post Preview)
     function openPostPreviewModal() {
       const title = document.getElementById('title').value.trim();
       const description = document.getElementById('description').value.trim();
@@ -2708,7 +2710,6 @@
       const contentBox = document.getElementById('preview-modal-content');
       contentBox.innerHTML = `
         <div style="display: grid; grid-template-columns: 300px 1fr; gap: 24px; align-items: start;">
-          <!-- 1. ตัวอย่างการ์ดหน้าแรก -->
           <div>
             <div style="font-size: 12.5px; font-weight: 700; color: #84339c; margin-bottom: 8px;">
               <i class="fa-solid fa-table-cells-large"></i> 1. มุมมองการ์ดบนหน้าแรก
@@ -2735,7 +2736,6 @@
             </article>
           </div>
 
-          <!-- 2. ตัวอย่างหน้าอ่านต่อฉบับเต็ม -->
           <div>
             <div style="font-size: 12.5px; font-weight: 700; color: #84339c; margin-bottom: 8px;">
               <i class="fa-solid fa-newspaper"></i> 2. มุมมองเมื่อกดอ่านรายละเอียดฉบับเต็ม
@@ -2827,7 +2827,6 @@
       if (!files || files.length === 0) return;
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        // ป้องกันไฟล์ซ้ำชื่อและขนาดเดียวกัน
         if (!selectedPostImages.some(f => f.name === file.name && f.size === file.size)) {
           selectedPostImages.push(file);
         }
@@ -2844,7 +2843,6 @@
       input.files = dt.files;
     }
 
-    // ฟังก์ชันยกเลิก / ลบรูปภาพที่เลือกทีละรูป (เมื่อเลือกรูปผิด)
     function removePostImage(index) {
       if (index >= 0 && index < selectedPostImages.length) {
         selectedPostImages.splice(index, 1);
@@ -2853,7 +2851,6 @@
       }
     }
 
-    // ฟังก์ชันยกเลิกรูปภาพทั้งหมด
     function clearAllPostImages() {
       selectedPostImages = [];
       const input = document.getElementById('image');
@@ -2939,7 +2936,6 @@
       `;
     }
 
-    // ฟังก์ชันยกเลิก / ลบเอกสารแนบที่เลือก
     function clearSelectedDocument() {
       const docInput = document.getElementById('document');
       if (docInput) docInput.value = '';
@@ -3059,7 +3055,6 @@
       setHeroPreviewImage(currentImg || 'images/welcome-hero.jpg');
     }
 
-    // ติดตั้ง Event Listener ระบบลากและวาง (Drag and Drop)
     function initModernDropzones() {
       const dropzoneConfigs = [
         {
@@ -3551,7 +3546,6 @@
       }
     }
 
-    // อัปเดตตัวเลขการ์ดสรุป KPI ด้านบน
     function updateKPIStats() {
       const newsCount = allPostsCache.filter(p => p.category === 'news').length;
       const activityCount = allPostsCache.filter(p => p.category === 'activity').length;
@@ -3574,7 +3568,6 @@
       }
     }
 
-    // ส่งออกประวัติการทำงาน (Audit Logs) เป็นไฟล์ CSV สำหรับเปิดดูใน Excel
     function exportLogsToCSV() {
       if (!allAuditLogsCache || allAuditLogsCache.length === 0) {
         openAlertModal('ไม่พบข้อมูล', 'ยังไม่มีรายการประวัติการทำงานในระบบสำหรับส่งออก', 'warning');
@@ -3604,7 +3597,6 @@
       URL.revokeObjectURL(url);
     }
 
-    // แสดงวันที่ภาษาไทยและเวลาแบบ Real-time บนหัวแบนเนอร์
     function updateLiveThaiDate() {
       const el = document.getElementById('live-thai-date');
       if (!el) return;

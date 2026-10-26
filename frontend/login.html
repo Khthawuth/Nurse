@@ -378,8 +378,16 @@
   </div>
 
   <script>
-    const backendHost = (window.location.hostname && window.location.hostname !== '') ? window.location.hostname : 'localhost';
-    const API_BASE = `http://${backendHost}:4000/api`;
+    // ตรวจจับ URL ของ API อัตโนมัติ (หากอยู่บนเครื่องใช้ localhost:4000 หากอยู่บน Plesk ใช้ /api)
+    function getApiBaseUrl() {
+      const host = window.location.hostname;
+      if (host === 'localhost' || host === '127.0.0.1') {
+        return 'http://localhost:4000/api';
+      }
+      return '/api';
+    }
+
+    const API_BASE = getApiBaseUrl();
 
     let isRegisterMode = false;
     let modalCallback = null;
@@ -520,7 +528,7 @@
           return;
         }
 
-        // บังคับสลับไปหน้ากรอก OTP ทันที
+        // สลับไปหน้ากรอก OTP
         if (data.mfa_required) {
           currentMfaTicket = data.mfa_ticket;
           document.getElementById('auth-form').style.display = 'none';
