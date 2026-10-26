@@ -6,6 +6,17 @@
 
 let allFetchedPosts = [];
 
+// ================= 0. Dynamic API Base URL Configuration =================
+function getApiBaseUrl() {
+  const host = window.location.hostname;
+  // ถ้าทำงานบนเครื่อง Localhost ให้ชี้ไปที่พอร์ต 4000
+  if (host === 'localhost' || host === '127.0.0.1') {
+    return 'http://localhost:4000/api';
+  }
+  // ถ้าอยู่บนเซิร์ฟเวอร์จริง (Plesk / Domain) ให้ใช้ Relative Path ตรงๆ
+  return '/api';
+}
+
 // ================= 1. Modern Compact Dropdown Menu & Mobile Menu =================
 function toggleDropdown(menuId) {
   const currentMenu = document.getElementById(menuId);
@@ -77,7 +88,7 @@ function highlightKeyword(text, keyword) {
   return text.replace(regex, '<mark class="search-highlight-text">$1</mark>');
 }
 
-// ================= 3. ดึงข้อมูลข่าวสาร & กิจกรรมหน้าแรก (Pagination & Live Search) =================
+// ================= 3. ดึงข้อมูลข่าวสาร & กิจกรรมหน้าแรก =================
 const POSTS_PER_PAGE = 8;
 let currentNewsPage = 1;
 let currentActivityPage = 1;
@@ -217,15 +228,15 @@ async function loadDynamicPosts() {
   const activityGrid = document.getElementById('dynamic-activity-grid');
 
   try {
-    const backendHost = (window.location.hostname && window.location.hostname !== '') ? window.location.hostname : 'localhost';
-    const res = await fetch(`http://${backendHost}:4000/api/posts`);
+    const apiUrl = `${getApiBaseUrl()}/posts`;
+    const res = await fetch(apiUrl);
     if (!res.ok) throw new Error('Network response was not ok');
     allFetchedPosts = await res.json();
 
     renderNewsSection(1);
     renderActivitySection(1);
   } catch (err) {
-    console.warn('โหลดข้อมูลจาก API ไม่สำเร็จ (หรือเซิร์ฟเวอร์ยังไม่เปิด):', err);
+    console.warn('โหลดข้อมูลจาก API ไม่สำเร็จ:', err);
     if (newsGrid) {
       newsGrid.innerHTML = `
         <div class="empty-state" style="grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
@@ -417,7 +428,7 @@ function createCardHtml(item, searchKeyword = '', index = 0) {
       <div class="card-media">
         <img src="${item.image_url || fallbackImg}" 
              alt="${safeTitle}" 
-             loading="lazy"
+             loading="lazy" 
              onerror="this.onerror=null; this.src='${fallbackImg}';">
         <span class="category-tag">${categoryLabel}</span>
       </div>
@@ -600,7 +611,7 @@ function closeNewsModal(event) {
   }
 }
 
-// ================= 5. ดูทั้งหมด (เปิดในแท็บเดิม) =================
+// ================= 5. ดูทั้งหมด =================
 function openAllModal(category) {
   closeAllDropdowns();
   const targetCategory = category === 'activity' ? 'activity' : 'news';
@@ -698,8 +709,8 @@ async function loadHeroBannerSlider() {
   if (!track) return;
 
   try {
-    const backendHost = (window.location.hostname && window.location.hostname !== '') ? window.location.hostname : 'localhost';
-    const res = await fetch(`http://${backendHost}:4000/api/hero-banners`);
+    const apiUrl = `${getApiBaseUrl()}/hero-banners`;
+    const res = await fetch(apiUrl);
     if (res.ok) {
       const banners = await res.json();
       if (Array.isArray(banners) && banners.length > 0) {
@@ -789,13 +800,12 @@ function renderHeroSlides(banners) {
 function updateHeroCarouselView() {
   const track = document.getElementById('hero-carousel-track');
   const dots = document.querySelectorAll('.hero-dot');
-  const slides = document.querySelectorAll('.hero-slide'); // เพิ่มบรรทัดนี้
+  const slides = document.querySelectorAll('.hero-slide');
 
   if (track) {
     track.style.transform = `translateX(-${heroCurrentSlide * 100}%)`;
   }
 
-  // กำหนดคลาส active ให้กับสไลด์ที่กำลังแสดงผลเพื่อให้เริ่มซูมภาพ
   slides.forEach((slide, idx) => {
     if (idx === heroCurrentSlide) {
       slide.classList.add('active');

@@ -9,12 +9,16 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 
 const app = express();
-const PORT = 4000;
-const JWT_SECRET = 'nursing_secret_key_2026_jwt_auth';
+// รองรับพอร์ตอัตโนมัติจาก Plesk หรือใช้ 4000 เมื่อรันในเครื่อง
+const PORT = process.env.PORT || 4000;
+const JWT_SECRET = process.env.JWT_SECRET || 'nursing_secret_key_2026_jwt_auth';
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// เสิร์ฟไฟล์ Static ของฝั่ง Frontend และโฟลเดอร์อัปโหลด
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 // 1. ตั้งค่าโฟลเดอร์สำหรับอัปโหลดไฟล์
 const uploadDir = path.join(__dirname, 'uploads');
@@ -170,7 +174,7 @@ db.serialize(() => {
     )
   `);
 
-  // บัญชี Developer เริ่มต้น (มีอีเมลทดสอบเริ่มต้น)
+  // บัญชี Developer เริ่มต้น
   db.get('SELECT * FROM users WHERE username = ?', ['dev'], (err, row) => {
     if (!row) {
       const hash = bcrypt.hashSync('dev1234', 10);
@@ -189,7 +193,6 @@ function verifyAuth(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
 
-  // ถ้าไม่มี Token หรือเป็น Token พิเศษ/จำลอง ให้สิทธิ์ผ่านเป็น admin/dev ประจำระบบ
   if (!token || token === 'null' || token === 'undefined' || token === 'admin_session_active') {
     req.user = { id: 1, username: 'dev', fullname: 'ผู้พัฒนาระบบหลัก', role: 'developer' };
     return next();
@@ -197,7 +200,6 @@ function verifyAuth(req, res, next) {
 
   jwt.verify(token, JWT_SECRET, (err, decoded) => {
     if (err) {
-      // แม้ Token หมดอายุ (เช่น เกิน 8 ชม.) หรือเกิดข้อผิดพลาด ให้ decode ดึงข้อมูลเดิม หรือ fallback เพื่อไม่ให้ข้อมูลในระบบหาย
       const unverified = jwt.decode(token);
       req.user = unverified || { id: 1, username: 'dev', fullname: 'ผู้พัฒนาระบบหลัก', role: 'developer' };
       return next();
@@ -231,7 +233,6 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-// บังคับ MFA 100% ทุกบัญชี: ตรวจ Password ผ่านแล้วสร้างและส่ง OTP ทันที
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
   db.get('SELECT * FROM users WHERE username = ?', [username], async (err, user) => {
@@ -322,7 +323,6 @@ app.get(['/api/developer/users', '/api/users'], verifyAuth, (req, res) => {
   });
 });
 
-// แก้ไขอีเมลรับ OTP
 app.put(['/api/developer/users/:id/email', '/api/users/:id/email'], verifyAuth, (req, res) => {
   const { email } = req.body;
   if (!email || !email.includes('@')) {
@@ -402,9 +402,8 @@ app.post('/api/hero-banners', verifyAuth, cpUpload, (req, res) => {
     const { title, subtitle, tag, link_url, sort_order, is_active } = req.body;
     let image_url = req.body.image_url || '';
     if (req.files && req.files['image'] && req.files['image'].length > 0) {
-      const host = req.get('host') || 'localhost:4000';
-      const protocol = req.headers['x-forwarded-proto'] || req.protocol || 'http';
-      image_url = `${protocol}://${host}/uploads/${req.files['image'][0].filename}`;
+      // บันทึกเป็น Relative Path แทนการฮาร์ดโค้ด host
+      image_url = `/uploads/${req.files['image'][0].filename}`;
     }
 
     if (!image_url) return res.status(400).json({ error: 'กรุณาอัปโหลดรูปภาพแบนเนอร์' });
@@ -436,9 +435,7 @@ app.put('/api/hero-banners/:id', verifyAuth, cpUpload, (req, res) => {
     const { title, subtitle, tag, link_url, sort_order, is_active, current_image_url } = req.body;
     let image_url = current_image_url || '';
     if (req.files && req.files['image'] && req.files['image'].length > 0) {
-      const host = req.get('host') || 'localhost:4000';
-      const protocol = req.headers['x-forwarded-proto'] || req.protocol || 'http';
-      image_url = `${protocol}://${host}/uploads/${req.files['image'][0].filename}`;
+      image_url = `/uploads/${req.files['image'][0].filename}`;
     }
 
     const order = parseInt(sort_order, 10) || 0;
@@ -504,13 +501,13 @@ app.post('/api/posts', verifyAuth, cpUpload, (req, res) => {
   const { title, description, category, is_pinned } = req.body;
   const uploadedImages = [];
   if (req.files) {
-    if (req.files['image']) req.files['image'].forEach(f => uploadedImages.push(`http://localhost:4000/uploads/${f.filename}`));
-    if (req.files['images']) req.files['images'].forEach(f => uploadedImages.push(`http://localhost:4000/uploads/${f.filename}`));
+    if (req.files['image']) req.files['image'].forEach(f => uploadedImages.push(`/uploads/${f.filename}`));
+    if (req.files['images']) req.files['images'].forEach(f => uploadedImages.push(`/uploads/${f.filename}`));
   }
 
   const image_url = uploadedImages.length > 0 ? uploadedImages[0] : '';
   const gallery_urls = uploadedImages.length > 0 ? JSON.stringify(uploadedImages) : '';
-  const file_url = req.files && req.files['document'] ? `http://localhost:4000/uploads/${req.files['document'][0].filename}` : '';
+  const file_url = req.files && req.files['document'] ? `/uploads/${req.files['document'][0].filename}` : '';
   const pinned = is_pinned === '1' || is_pinned === 'true' ? 1 : 0;
   const date = new Date().toISOString().split('T')[0];
 
@@ -533,15 +530,15 @@ app.put('/api/posts/:id', verifyAuth, cpUpload, (req, res) => {
 
     const uploadedImages = [];
     if (req.files) {
-      if (req.files['image']) req.files['image'].forEach(f => uploadedImages.push(`http://localhost:4000/uploads/${f.filename}`));
-      if (req.files['images']) req.files['images'].forEach(f => uploadedImages.push(`http://localhost:4000/uploads/${f.filename}`));
+      if (req.files['image']) req.files['image'].forEach(f => uploadedImages.push(`/uploads/${f.filename}`));
+      if (req.files['images']) req.files['images'].forEach(f => uploadedImages.push(`/uploads/${f.filename}`));
     }
 
     const image_url = uploadedImages.length > 0 ? uploadedImages[0] : current.image_url;
     const gallery_urls = uploadedImages.length > 0 ? JSON.stringify(uploadedImages) : current.gallery_urls;
 
     const file_url = req.files && req.files['document']
-      ? `http://localhost:4000/uploads/${req.files['document'][0].filename}`
+      ? `/uploads/${req.files['document'][0].filename}`
       : current.file_url;
 
     const sql = `UPDATE posts SET title = ?, description = ?, category = ?, is_pinned = ?, image_url = ?, gallery_urls = ?, file_url = ? WHERE id = ?`;
@@ -565,6 +562,13 @@ app.delete('/api/posts/:id', verifyAuth, (req, res) => {
   });
 });
 
+// Fallback สำหรับ Client-side Routing เมื่อเข้าหน้าเว็บตรงๆ
+app.get('*', (req, res) => {
+  if (!req.path.startsWith('/api') && !req.path.startsWith('/uploads')) {
+    res.sendFile(path.join(__dirname, '../frontend/index.html'));
+  }
+});
+
 app.listen(PORT, () => {
-  console.log(`Nursing Backend API พร้อมทำงานแล้วที่ http://localhost:${PORT}`);
+  console.log(`Nursing Backend API พร้อมทำงานแล้วที่ Port ${PORT}`);
 });
