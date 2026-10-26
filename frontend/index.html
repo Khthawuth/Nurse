@@ -15,7 +15,7 @@
     href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css?v=3.2">
+  <link rel="stylesheet" href="css/style.css?v=3.7">
 </head>
 
 <body>
@@ -147,22 +147,6 @@
                 <span>ภาพกิจกรรม โครงการ และงานอบรม</span>
               </div>
             </a>
-            <a href="javascript:void(0)" class="dropdown-item" role="menuitem"
-              onclick="openAllModal('news'); closeAllDropdowns();">
-              <div class="dropdown-item-icon"><i class="fa-solid fa-layer-group"></i></div>
-              <div class="dropdown-item-text">
-                <strong>คลังข่าวสารทั้งหมด</strong>
-                <span>เปิดดูข่าวประชาสัมพันธ์ทั้งหมด</span>
-              </div>
-            </a>
-            <a href="javascript:void(0)" class="dropdown-item" role="menuitem"
-              onclick="openAllModal('activity'); closeAllDropdowns();">
-              <div class="dropdown-item-icon"><i class="fa-solid fa-images"></i></div>
-              <div class="dropdown-item-text">
-                <strong>คลังภาพกิจกรรมทั้งหมด</strong>
-                <span>เปิดดูประมวลภาพกิจกรรมทั้งหมด</span>
-              </div>
-            </a>
           </div>
         </div>
 
@@ -234,58 +218,59 @@
       </button>
     </section>
 
-    <!-- 2.3 ทางลัดบริการและเมนูที่ใช้บ่อย (Quick Services) -->
-    <section class="quick-services-section" aria-label="ทางลัดบริการที่ใช้บ่อย">
-      <div class="quick-services-header">
-        <div class="section-title-wrap">
-          <div class="section-icon-badge">
-            <i class="fa-solid fa-bolt"></i>
+    <!-- 2.3 ข่าวประชาสัมพันธ์ (News Section) -->
+    <section id="news-section" class="section-container" aria-label="ส่วนข่าวประชาสัมพันธ์">
+      <div class="section-header">
+        <div>
+          <h2>ข่าวประชาสัมพันธ์</h2>
+          <p class="section-subtitle">ติดตามประกาศ ข้อมูลข่าวสาร และความเคลื่อนไหวล่าสุด</p>
+        </div>
+        <div class="section-actions-group">
+          <div class="search-input-box">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="news-search-input" placeholder="พิมพ์ค้นหาข่าวสาร..."
+              oninput="handleNewsSearch(this.value)" autocomplete="off">
+            <button type="button" id="btn-clear-news-search" class="btn-clear-search hidden" onclick="clearNewsSearch()"
+              aria-label="ล้างคำค้นหา">&times;</button>
           </div>
-          <h3 class="section-title">ทางลัดบริการและข้อมูลที่ใช้บ่อย</h3>
+          <a href="all-posts.html?type=news" class="btn-outline">
+            ดูทั้งหมด <i class="fa-solid fa-arrow-right"></i>
+          </a>
         </div>
       </div>
 
-      <div class="quick-grid reveal-stagger">
-        <a href="vision.html" class="quick-card">
-          <div class="quick-icon-wrap"><i class="fa-solid fa-compass"></i></div>
-          <h4>วิสัยทัศน์/พันธกิจ</h4>
-          <p>เป้าหมายองค์กรพยาบาล</p>
-        </a>
-
-        <a href="structure.html" class="quick-card">
-          <div class="quick-icon-wrap"><i class="fa-solid fa-hospital-user"></i></div>
-          <h4>หน่วยงานภายใน</h4>
-          <p>17 กลุ่มงานการพยาบาล</p>
-        </a>
-
-        <a href="#news-section" class="quick-card">
-          <div class="quick-icon-wrap"><i class="fa-solid fa-bullhorn"></i></div>
-          <h4>ข่าวประชาสัมพันธ์</h4>
-          <p>ประกาศและข่าวสารล่าสุด</p>
-        </a>
-
-        <a href="calendar.html" class="quick-card">
-          <div class="quick-icon-wrap" style="background: #eff6ff; color: #2563eb;"><i class="fa-solid fa-calendar-days"></i></div>
-          <h4>ปฏิทินกิจกรรม</h4>
-          <p>ตารางอบรม & ประชุม</p>
-        </a>
-
-        <a href="strategy.html" class="quick-card">
-          <div class="quick-icon-wrap"><i class="fa-solid fa-chart-pie"></i></div>
-          <h4>แผนยุทธศาสตร์</h4>
-          <p>ทิศทางพัฒนาคุณภาพ</p>
-        </a>
-
-        <a href="login.html" class="quick-card">
-          <div class="quick-icon-wrap" style="background: var(--peach-50); color: var(--peach-600);"><i
-              class="fa-solid fa-user-gear"></i></div>
-          <h4>ระบบจัดการข้อมูล</h4>
-          <p>สำหรับบุคลากรภายใน</p>
-        </a>
-      </div>
+      <div id="news-search-result-bar" class="search-result-bar hidden"></div>
+      <div id="dynamic-news-grid" class="cards-grid"></div>
+      <div id="news-pagination"></div>
     </section>
 
-    <!-- 2.4 เสาหลักการพัฒนาและสถิติคุณภาพบริการ -->
+    <!-- 2.4 กิจกรรมและโครงการ (Activities Section) -->
+    <section id="activities-section" class="section-container alt-bg" aria-label="ส่วนกิจกรรมและโครงการ">
+      <div class="section-header">
+        <div>
+          <h2>กิจกรรมและโครงการ</h2>
+          <p class="section-subtitle">ภาพบรรยากาศโครงการอบรม ประชุมวิชาการ และกิจกรรมบริการ</p>
+        </div>
+        <div class="section-actions-group">
+          <div class="search-input-box">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="activity-search-input" placeholder="พิมพ์ค้นหากิจกรรม..."
+              oninput="handleActivitySearch(this.value)" autocomplete="off">
+            <button type="button" id="btn-clear-activity-search" class="btn-clear-search hidden"
+              onclick="clearActivitySearch()" aria-label="ล้างคำค้นหา">&times;</button>
+          </div>
+          <a href="all-posts.html?type=activity" class="btn-outline">
+            ดูทั้งหมด <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <div id="activity-search-result-bar" class="search-result-bar hidden"></div>
+      <div id="dynamic-activity-grid" class="cards-grid"></div>
+      <div id="activity-pagination"></div>
+    </section>
+
+    <!-- 2.5 เสาหลักการพัฒนาและสถิติคุณภาพบริการ -->
     <section class="pillars-card" aria-label="เสาหลักการบริการ">
       <div class="core-pillars reveal-stagger">
         <div class="pillar-item">
@@ -321,58 +306,6 @@
           <div class="stat-label">ยึดคุณภาพ ความปลอดภัย และความไว้วางใจเป็นศูนย์กลาง</div>
         </div>
       </div>
-    </section>
-
-    <!-- 2.5 ข่าวประชาสัมพันธ์ (News Section) -->
-    <section id="news-section" class="section-container" aria-label="ส่วนข่าวประชาสัมพันธ์">
-      <div class="section-header">
-        <div>
-          <h2>ข่าวประชาสัมพันธ์</h2>
-          <p class="section-subtitle">ติดตามประกาศ ข้อมูลข่าวสาร และความเคลื่อนไหวล่าสุด</p>
-        </div>
-        <div class="section-actions-group">
-          <div class="search-input-box">
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" id="news-search-input" placeholder="พิมพ์ค้นหาข่าวสาร..."
-              oninput="handleNewsSearch(this.value)" autocomplete="off">
-            <button type="button" id="btn-clear-news-search" class="btn-clear-search hidden" onclick="clearNewsSearch()"
-              aria-label="ล้างคำค้นหา">&times;</button>
-          </div>
-          <button type="button" class="btn-outline" onclick="openAllModal('news')">
-            ดูทั้งหมด <i class="fa-solid fa-arrow-right"></i>
-          </button>
-        </div>
-      </div>
-
-      <div id="news-search-result-bar" class="search-result-bar hidden"></div>
-      <div id="dynamic-news-grid" class="cards-grid"></div>
-      <div id="news-pagination"></div>
-    </section>
-
-    <!-- 2.6 กิจกรรมและโครงการ (Activities Section) -->
-    <section id="activities-section" class="section-container alt-bg" aria-label="ส่วนกิจกรรมและโครงการ">
-      <div class="section-header">
-        <div>
-          <h2>กิจกรรมและโครงการ</h2>
-          <p class="section-subtitle">ภาพบรรยากาศโครงการอบรม ประชุมวิชาการ และกิจกรรมบริการ</p>
-        </div>
-        <div class="section-actions-group">
-          <div class="search-input-box">
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" id="activity-search-input" placeholder="พิมพ์ค้นหากิจกรรม..."
-              oninput="handleActivitySearch(this.value)" autocomplete="off">
-            <button type="button" id="btn-clear-activity-search" class="btn-clear-search hidden"
-              onclick="clearActivitySearch()" aria-label="ล้างคำค้นหา">&times;</button>
-          </div>
-          <button type="button" class="btn-outline" onclick="openAllModal('activity')">
-            ดูทั้งหมด <i class="fa-solid fa-arrow-right"></i>
-          </button>
-        </div>
-      </div>
-
-      <div id="activity-search-result-bar" class="search-result-bar hidden"></div>
-      <div id="dynamic-activity-grid" class="cards-grid"></div>
-      <div id="activity-pagination"></div>
     </section>
 
   </main>

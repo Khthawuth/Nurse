@@ -566,20 +566,22 @@ img {
   box-sizing: border-box;
 }
 
-/* ================= 4. Hero Banner Slider (Full-Bleed Edge-to-Edge Showcase) ================= */
+/* ================= 4. Hero Banner Slider (Contained Premium 16:9 Showcase) ================= */
 .hero-slider-section {
   position: relative;
   width: 100%;
+  max-width: 100%;
   margin: 0 0 36px 0;
   padding: 0;
+  box-sizing: border-box;
   background: #0b1329;
-  box-shadow: 0 12px 32px -4px rgba(15, 23, 42, 0.16);
-  overflow: hidden;
+  box-shadow: 0 10px 32px rgba(15, 23, 42, 0.12);
 }
 
 .hero-carousel-card {
   position: relative;
   width: 100%;
+  aspect-ratio: 16 / 9;
   border-radius: 0;
   border: none;
   background: #0b1329;
@@ -590,6 +592,7 @@ img {
 .hero-carousel-track {
   display: flex;
   width: 100%;
+  height: 100%;
   transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   will-change: transform;
 }
@@ -597,35 +600,35 @@ img {
 .hero-slide {
   flex: 0 0 100%;
   width: 100%;
+  height: 100%;
   position: relative;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: #0b1329;
 }
 
-/* Ambient gradient overlay along bottom and edges for high visual contrast and smooth transition */
-.hero-slide::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg,
-      rgba(11, 19, 41, 0.04) 0%,
-      rgba(11, 19, 41, 0) 40%,
-      rgba(11, 19, 41, 0.28) 70%,
-      rgba(11, 19, 41, 0.72) 100%);
-  pointer-events: none;
-  z-index: 2;
+/* Subtle Ken Burns Zoom Animation */
+@keyframes subtleHeroZoom {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.042);
+  }
 }
 
 .hero-slide-img {
   width: 100%;
-  height: clamp(500px, 52vw, 750px);
+  height: 100%;
   object-fit: cover;
   object-position: center center;
   display: block;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(1);
+  will-change: transform;
+}
+
+/* สไลด์ที่กำลังแสดงผล (active) ให้มีลูกเล่นเคลื่อนไหว ซูมน้อยๆ อย่างนุ่มนวล */
+.hero-slide.active .hero-slide-img {
+  animation: subtleHeroZoom 7s ease-out infinite alternate;
 }
 
 .hero-slide.has-link {
@@ -633,7 +636,7 @@ img {
 }
 
 .hero-slide.has-link:hover .hero-slide-img {
-  transform: scale(1.02);
+  filter: brightness(1.03);
 }
 
 /* Optional Overlay Caption (only shown if title/subtitle is set) */
@@ -781,14 +784,11 @@ img {
 
 /* Responsive Media Queries for Hero Banner */
 @media (max-width: 992px) {
-  .hero-slide-img {
-    height: clamp(300px, 48vw, 440px);
-  }
 
   .hero-slide-caption {
-    bottom: 28px;
+    bottom: 24px;
     left: 20px;
-    padding: 14px 20px;
+    padding: 12px 18px;
     max-width: calc(100% - 130px);
   }
 }
@@ -796,10 +796,6 @@ img {
 @media (max-width: 640px) {
   .hero-slider-section {
     margin-bottom: 22px;
-  }
-
-  .hero-slide-img {
-    height: clamp(230px, 60vw, 320px);
   }
 
   .hero-carousel-arrow {
@@ -3526,9 +3522,7 @@ table th {
     max-height: 46px;
   }
 
-  .hero-slide-img {
-    height: clamp(260px, 65vw, 360px);
-  }
+
 
   .hero-carousel-arrow {
     width: 36px;
@@ -3640,21 +3634,7 @@ table th {
   }
 }
 
-/* ==========================================================================
-   Ken Burns Zoom Effect สำหรับ Hero Banner Slider
-   ========================================================================== */
-@keyframes kenBurnsZoom {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.08);
-  }
-}
 
-.hero-slide.active .hero-slide-img {
-  animation: kenBurnsZoom 7s ease-out forwards;
-}
 
 .hero-carousel-arrow {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;

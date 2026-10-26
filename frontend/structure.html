@@ -628,10 +628,10 @@
       <!-- แถบสลับมุมมองระหว่าง 17 กลุ่มงาน (สไตล์รูปที่สอง) และ ผังสายการบังคับบัญชาบริหาร -->
       <div style="display: flex; gap: 10px; margin: 24px 0 16px; flex-wrap: wrap;">
         <button type="button" class="cluster-filter-btn active" id="btn-mode-cards" onclick="toggleStructureMode('cards')">
-          <i class="fa-solid fa-grid-2"></i> 17 กลุ่มงานการพยาบาล (การ์ดไอคอน สไตล์รูปที่ 2)
+          <i class="fa-solid fa-table-cells-large"></i> 17 กลุ่มงานการพยาบาล
         </button>
         <button type="button" class="cluster-filter-btn" id="btn-mode-tree" onclick="toggleStructureMode('tree')">
-          <i class="fa-solid fa-sitemap"></i> ผังสายการบังคับบัญชาระดับบริหาร
+          <i class="fa-solid fa-sitemap"></i> ผังสายการบังคับบัญชา
         </button>
       </div>
 
@@ -675,50 +675,33 @@
         </div>
       </div>
 
-      <!-- ================= มุมมองที่ 2: ผังสายการบังคับบัญชาระดับบริหาร ================= -->
+      <!-- ================= มุมมองที่ 2: ผังสายการบังคับบัญชา ================= -->
       <div id="view-tree-container" style="display: none;">
-        <div class="org-chart-wrapper">
-          <!-- ลำดับสายการบังคับบัญชาระดับบริหาร (2-Tier Executive Hierarchy Tree) -->
-          <div class="hierarchy-executive-tree">
-
-            <!-- ระดับที่ 1: ผู้อำนวยการโรงพยาบาลแม่สอด -->
-            <div class="director-card">
-              <div class="director-photo-wrap">
-                <img src="images/ผอ.png" alt="ผู้อำนวยการโรงพยาบาลแม่สอด"
-                  onerror="this.src='https://cdn-icons-png.flaticon.com/512/387/387561.png'">
-              </div>
-              <div class="exec-details">
-                <span class="exec-role-badge"><i class="fa-solid fa-award"></i> ผู้อำนวยการโรงพยาบาลแม่สอด</span>
-                <h3>นพ.ศักรินทร์ ธนเกียรติสกุล</h3>
-                <p>ผู้อำนวยการโรงพยาบาลแม่สอด จังหวัดตาก</p>
-                <div
-                  style="font-size: 12.5px; color: #6c2682; margin-top: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; background: rgba(132, 51, 156, 0.1); padding: 4px 14px; border-radius: 50px;">
-                  <i class="fa-solid fa-quote-left"></i> มุ่งมั่นพัฒนาคุณภาพบริการ สู่มาตรฐานสากลด้วยหัวใจ <i
-                    class="fa-solid fa-quote-right"></i>
-                </div>
-              </div>
+        <div class="structure-diagram-card" style="text-align: center; background: #ffffff; border-radius: 20px; border: 1.5px solid #e7e0eb; padding: 24px 20px; box-shadow: 0 6px 24px -4px rgba(35, 5, 52, 0.04); margin-top: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 0 4px; flex-wrap: wrap; gap: 12px;">
+            <div style="text-align: left;">
+              <h3 style="font-size: 20px; font-weight: 800; color: #230534; margin: 0 0 4px;">
+                <i class="fa-solid fa-sitemap" style="color: #84339c; margin-right: 6px;"></i> ผังสายการบังคับบัญชา กลุ่มการพยาบาล โรงพยาบาลแม่สอด
+              </h3>
+              <p style="font-size: 14px; color: #6b3e87; margin: 0;">
+                โครงสร้างการบริหารงานและการจัดสายการบังคับบัญชาหน่วยงานทางการพยาบาล
+              </p>
             </div>
-
-            <!-- เส้นเชื่อมแนวดิ่งจาก ผอ. สู่ รอง ผอ.ฝ่ายการพยาบาล -->
-            <div class="hierarchy-connector-vertical"></div>
-
-            <!-- ระดับที่ 2: รองผู้อำนวยการฝ่ายการพยาบาล (หัวหน้าพยาบาล) -->
-            <div class="nursing-director-card">
-              <div class="nursing-director-photo-wrap">
-                <img src="images/รอง.jpg" alt="รองผู้อำนวยการฝ่ายการพยาบาล"
-                  onerror="this.src='https://cdn-icons-png.flaticon.com/512/387/387561.png'">
-              </div>
-              <div class="exec-details">
-                <span class="exec-role-badge nurse-badge"><i class="fa-solid fa-user-nurse"></i>
-                  รองผู้อำนวยการฝ่ายการพยาบาล (หัวหน้าพยาบาล)</span>
-                <h3>นางสุภาวรรณ ยะดอนใจ</h3>
-                <div style="font-size: 12.5px; color: #84339c; margin-top: 6px; font-weight: 700;">
-                  <i class="fa-solid fa-phone"></i> กลุ่มภารกิจด้านการพยาบาล: ต่อเบอร์ภายใน 1387
-                </div>
-              </div>
+            <div>
+              <a href="images/16 โครงสร้าง.png" target="_blank" class="btn-outline" style="display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; padding: 9px 18px; border-radius: 12px; text-decoration: none;">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> เปิดดูภาพขนาดเต็ม
+              </a>
             </div>
-
           </div>
+          
+          <div class="structure-image-wrapper" style="position: relative; overflow: hidden; border-radius: 16px; border: 1.5px solid #e2e8f0; background: #ffffff; width: 100%; box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);">
+            <a href="images/16 โครงสร้าง.png" target="_blank" title="คลิกเพื่อดูภาพขนาดเต็ม" style="display: block; cursor: zoom-in;">
+              <img src="images/16 โครงสร้าง.png" alt="ผังสายการบังคับบัญชา กลุ่มการพยาบาล โรงพยาบาลแม่สอด" style="width: 100%; height: auto; max-width: 100%; display: block; border-radius: 14px; transition: transform 0.3s ease;">
+            </a>
+          </div>
+          <p style="font-size: 13px; color: #84339c; margin: 16px 0 4px; font-weight: 600;">
+            <i class="fa-solid fa-circle-info"></i> คลิกที่รูปภาพเพื่อเปิดดูภาพขยายขนาดเต็มในหน้าต่างใหม่
+          </p>
         </div>
       </div>
     </div>
@@ -861,6 +844,12 @@
       <p>ระบบสารสนเทศและการสื่อสารงานพยาบาล</p>
     </div>
   </footer>
+
+  <!-- ปุ่มเลื่อนกลับขึ้นบนสุด -->
+  <button type="button" id="back-to-top-btn" class="back-to-top-btn" onclick="scrollToTop()"
+    aria-label="เลื่อนขึ้นบนสุด" title="เลื่อนขึ้นบนสุด">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
 
   <script src="js/app.js?v=3.2"></script>
   <script src="js/units-data.js?v=3.2"></script>

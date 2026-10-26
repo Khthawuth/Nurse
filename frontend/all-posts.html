@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>คลังข่าวสารและกิจกรรม - กลุ่มการพยาบาล โรงพยาบาลแม่สอด</title>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="apple-touch-icon" href="images/logo.png">
+  <meta name="description"
+    content="คลังข่าวประชาสัมพันธ์ ภาพกิจกรรม และโครงการทั้งหมดของกลุ่มการพยาบาล โรงพยาบาลแม่สอด">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css?v=3.2">
+  <style>
+    .all-posts-container {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+    .all-posts-tabs {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+    .post-filter-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #53296c;
+      background: #faf0fc;
+      border: 1.5px solid #e7e0eb;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+    .post-filter-tab:hover {
+      background: #f2d2fa;
+      color: #84339c;
+      border-color: #84339c;
+      transform: translateY(-1px);
+    }
+    .post-filter-tab.active {
+      background: linear-gradient(135deg, #84339c 0%, #ff51a3 100%);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 14px rgba(132, 51, 156, 0.32);
+    }
+    .post-filter-tab.active i {
+      color: #ffffff;
+    }
+    .posts-control-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin: 28px 0 24px;
+      padding: 18px 22px;
+      background: #ffffff;
+      border: 1.5px solid #e7e0eb;
+      border-radius: 18px;
+      box-shadow: 0 4px 16px -2px rgba(35, 5, 52, 0.04);
+    }
+    .posts-search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 280px;
+      max-width: 480px;
+    }
+    .posts-search-wrap i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #84339c;
+      font-size: 15px;
+    }
+    .posts-search-input {
+      width: 100%;
+      padding: 11px 40px 11px 44px;
+      border-radius: 12px;
+      border: 1.5px solid #e2e8f0;
+      font-family: 'Prompt', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+    .posts-search-input:focus {
+      border-color: #84339c;
+      box-shadow: 0 0 0 3px rgba(132, 51, 156, 0.15);
+    }
+    .posts-search-clear {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      color: #94a3b8;
+      cursor: pointer;
+    }
+    .posts-sort-select {
+      padding: 11px 16px;
+      border-radius: 12px;
+      border: 1.5px solid #e2e8f0;
+      font-family: 'Prompt', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: #230534;
+      background: #ffffff;
+      outline: none;
+      cursor: pointer;
+    }
+    .posts-sort-select:focus {
+      border-color: #84339c;
+    }
+    .results-count-badge {
+      font-size: 14px;
+      color: #6b3e87;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- แถบความคืบหน้าการเลื่อนหน้าจอ -->
+  <div class="scroll-progress-track" aria-hidden="true">
+    <div class="scroll-progress-bar" id="scroll-progress-bar"></div>
+  </div>
+
+  <!-- ================= 1. แถบเมนูด้านบน (Sticky Navbar) ================= -->
+  <header class="navbar-wrapper" id="main-header">
+    <div class="navbar-container">
+      <a href="index.html" class="brand-section" aria-label="หน้าแรกกลุ่มการพยาบาล โรงพยาบาลแม่สอด">
+        <div class="brand-logo-wrap">
+          <img src="images/logo.png" alt="ตราสัญลักษณ์กลุ่มการพยาบาล โรงพยาบาลแม่สอด" class="brand-logo"
+            onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/f7/Emblem_of_the_Ministry_of_Public_Health_of_Thailand.svg'">
+        </div>
+        <div class="brand-text">
+          <h2>กลุ่มการพยาบาล โรงพยาบาลแม่สอด</h2>
+          <p>Nursing Division, Mae Sot Hospital</p>
+        </div>
+      </a>
+
+      <!-- ปุ่ม Toggle สำหรับหน้าจอมือถือ -->
+      <button class="mobile-toggle-btn" onclick="toggleMobileMenu()" aria-label="เปิดเมนูนำทาง">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <!-- ลิงก์เมนูนำทาง -->
+      <nav class="nav-links" id="primary-navigation" aria-label="เมนูหลัก">
+        <a href="index.html" class="nav-btn">
+          <i class="fa-solid fa-house"></i> หน้าแรก
+        </a>
+
+        <!-- ดรอปดาวน์: เกี่ยวกับกลุ่มการพยาบาล -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-btn" onclick="toggleDropdown('about-menu')" aria-expanded="false"
+            aria-controls="about-menu">
+            <i class="fa-solid fa-landmark"></i> เกี่ยวกับกลุ่มการพยาบาล <i class="fa-solid fa-angle-down"></i>
+          </button>
+          <div id="about-menu" class="dropdown-menu hidden" role="menu" aria-label="เมนูเกี่ยวกับกลุ่มการพยาบาล">
+            <a href="vision.html" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-compass"></i></div>
+              <div class="dropdown-item-text">
+                <strong>วิสัยทัศน์ / พันธกิจ</strong>
+                <span>ทิศทางและเป้าหมายองค์กร</span>
+              </div>
+            </a>
+            <a href="structure.html" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-hospital-user"></i></div>
+              <div class="dropdown-item-text">
+                <strong>หน่วยงานภายใน</strong>
+                <span>17 กลุ่มงานการพยาบาลและผังบริหาร</span>
+              </div>
+            </a>
+            <a href="strategy.html" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-chart-line"></i></div>
+              <div class="dropdown-item-text">
+                <strong>แผนยุทธศาสตร์</strong>
+                <span>แผนยุทธศาสตร์และทิศทางการพัฒนา</span>
+              </div>
+            </a>
+            <a href="kpi.html" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ตัวชี้วัด (KPI)</strong>
+                <span>เป้าหมายคุณภาพและความสำเร็จ</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- ดรอปดาวน์: บทบาทหน้าที่ -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-btn" onclick="toggleDropdown('roles-menu')" aria-expanded="false"
+            aria-controls="roles-menu">
+            <i class="fa-solid fa-user-nurse"></i> บทบาทหน้าที่ <i class="fa-solid fa-angle-down"></i>
+          </button>
+          <div id="roles-menu" class="dropdown-menu hidden" role="menu" aria-label="เมนูบทบาทหน้าที่">
+            <a href="roles.html#admin-role" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-gear"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ด้านบริหาร</strong>
+                <span>กำกับคุณภาพ กำลังคน และระบบบริการ</span>
+              </div>
+            </a>
+            <a href="roles.html#academic-role" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ด้านวิชาการ</strong>
+                <span>องค์ความรู้ วิจัย R2R นวัตกรรม</span>
+              </div>
+            </a>
+            <a href="roles.html#service-role" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ด้านบริการ</strong>
+                <span>การพยาบาลแบบองค์รวม ปลอดภัย</span>
+              </div>
+            </a>
+            <a href="roles.html#special-role" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-star"></i></div>
+              <div class="dropdown-item-text">
+                <strong>กิจกรรมพิเศษ</strong>
+                <span>สร้างเสริมสุขภาพและเครือข่ายชุมชน</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- ดรอปดาวน์: ข่าวสารและกิจกรรม (Active) -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-btn active" onclick="toggleDropdown('news-menu')" aria-expanded="false"
+            aria-controls="news-menu">
+            <i class="fa-solid fa-newspaper"></i> ข่าวสารและกิจกรรม <i class="fa-solid fa-angle-down"></i>
+          </button>
+          <div id="news-menu" class="dropdown-menu hidden" role="menu" aria-label="เมนูข่าวสารและกิจกรรม">
+            <a href="index.html#news-section" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-bullhorn"></i></div>
+              <div class="dropdown-item-text">
+                <strong>ข่าวประชาสัมพันธ์</strong>
+                <span>ข่าวสาร ประกาศ และเอกสารสำคัญ</span>
+              </div>
+            </a>
+            <a href="index.html#activities-section" class="dropdown-item" role="menuitem">
+              <div class="dropdown-item-icon"><i class="fa-solid fa-calendar-days"></i></div>
+              <div class="dropdown-item-text">
+                <strong>กิจกรรมและโครงการ</strong>
+                <span>ภาพกิจกรรม โครงการ และงานอบรม</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- เมนูปฏิทินกิจกรรม -->
+        <a href="calendar.html" class="nav-btn">
+          <i class="fa-solid fa-calendar-alt"></i> ปฏิทินกิจกรรม
+        </a>
+
+        <!-- งานวิจัยและวิชาการ -->
+        <a href="javascript:void(0)" class="nav-btn"
+          onclick="alert('งานวิจัยและวิชาการ กำลังอยู่ในระหว่างอัปเดตข้อมูล')">
+          <i class="fa-solid fa-book-open"></i> งานวิจัยและวิชาการ
+        </a>
+
+        <!-- ปุ่มเข้าสู่ระบบสำหรับเจ้าหน้าที่ -->
+        <a href="login.html" id="nav-login-link" class="nav-btn btn-nav-login">
+          <i class="fa-solid fa-right-to-bracket"></i> เข้าสู่ระบบ
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= 2. เนื้อหาหลัก ================= -->
+  <main class="page-body">
+    <div class="subpage-card all-posts-container">
+      
+      <!-- ส่วนหัวหน้าเว็บ -->
+      <div class="subpage-header-box">
+        <div id="page-badge-tag"
+          style="display: inline-flex; align-items: center; gap: 8px; background: #ffe3f0; color: #84339c; padding: 5px 16px; border-radius: 50px; font-size: 13px; font-weight: 700; margin-bottom: 12px;">
+          <i class="fa-solid fa-newspaper"></i> คลังข่าวสารและกิจกรรมทางการพยาบาล
+        </div>
+        <h1 id="page-main-title" style="font-size: 28px; font-weight: 800; color: #230534; margin: 0 0 8px;">
+          ข่าวประชาสัมพันธ์ทั้งหมด
+        </h1>
+        <p id="page-main-desc" style="font-size: 15px; color: #6b3e87; margin: 0 0 16px;">
+          ติดตามประกาศ ข้อมูลข่าวสาร และความเคลื่อนไหวล่าสุดของกลุ่มการพยาบาล โรงพยาบาลแม่สอด
+        </p>
+
+        <!-- แถบสลับหมวดหมู่ (Tabs) -->
+        <div class="all-posts-tabs">
+          <button type="button" class="post-filter-tab active" id="tab-btn-news" onclick="switchCategory('news')">
+            <i class="fa-solid fa-bullhorn"></i> ข่าวประชาสัมพันธ์ทั้งหมด (<span id="count-tab-news">0</span>)
+          </button>
+          <button type="button" class="post-filter-tab" id="tab-btn-activity" onclick="switchCategory('activity')">
+            <i class="fa-solid fa-calendar-days"></i> กิจกรรมและโครงการทั้งหมด (<span id="count-tab-activity">0</span>)
+          </button>
+        </div>
+      </div>
+
+      <!-- แถบควบคุมการค้นหาและจัดเรียง -->
+      <div class="posts-control-bar">
+        <div class="posts-search-wrap">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="all-posts-search" class="posts-search-input"
+            placeholder="พิมพ์ค้นหาหัวข้อ หรือเนื้อหา..." oninput="handleAllPostsSearch(this.value)">
+          <button type="button" id="btn-clear-all-search" class="posts-search-clear hidden"
+            onclick="clearAllPostsSearch()">&times;</button>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+          <span class="results-count-badge" id="results-count-text">พบทั้งหมด 0 รายการ</span>
+          <select id="posts-sort-select" class="posts-sort-select" onchange="handleSortChange(this.value)">
+            <option value="newest">วันที่: ล่าสุด - เก่าสุด</option>
+            <option value="oldest">วันที่: เก่าสุด - ล่าสุด</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ตารางแสดงการ์ดข่าวสาร / กิจกรรม -->
+      <div id="all-posts-grid-display" class="cards-grid">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- การแบ่งหน้า -->
+      <div id="all-posts-pagination-container" style="margin-top: 36px;"></div>
+
+    </div>
+  </main>
+
+  <!-- ================= 3. Footer ท้ายเว็บไซต์ ================= -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-col footer-about">
+        <h4>กลุ่มการพยาบาล โรงพยาบาลแม่สอด</h4>
+        <p>
+          มุ่งมั่นพัฒนาการบริการพยาบาลที่ได้มาตรฐานสากล บริการด้วยหัวใจความเป็นมนุษย์ ดำรงไว้ซึ่งจริยธรรมวิชาชีพ เพื่อสุขภาวะที่ดีของผู้รับบริการในพื้นที่ชายแดน
+        </p>
+
+        <div class="footer-emergency-card">
+          <div class="footer-emergency-icon">
+            <i class="fa-solid fa-truck-medical"></i>
+          </div>
+          <div class="footer-emergency-text">
+            <strong>อุบัติเหตุ - ฉุกเฉิน (EMS 24 ชม.)</strong>
+            <span>โทร. 1669 หรือ 055-541600</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>ข้อมูลการติดต่อ</h4>
+        <ul class="footer-contact-list">
+          <li>
+            <i class="fa-solid fa-location-dot"></i>
+            <span>เลขที่ 11 ถนนศรีพานิช ตำบลแม่สอด อำเภอแม่สอด จังหวัดตาก 63110</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-phone"></i>
+            <span>โทรศัพท์กลาง: 055-531229, 055-531224</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-user-nurse"></i>
+            <span>กลุ่มภารกิจด้านการพยาบาล: ต่อเบอร์ภายใน 1120, 1121</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-clock"></i>
+            <span>เปิดทำการ: แผนก OPD (จันทร์ - ศุกร์ 08:00 - 16:30 น.) / แผนกอุบัติเหตุ-ฉุกเฉิน (บริการ 24 ชั่วโมง)</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>หน่วยงานที่เกี่ยวข้อง</h4>
+        <ul class="footer-links-list">
+          <li>
+            <a href="https://maesothospital.go.th/" target="_blank" rel="noopener noreferrer">
+              <i class="fa-solid fa-angle-right"></i> โรงพยาบาลแม่สอด
+            </a>
+          </li>
+          <li>
+            <a href="https://www.nhso.go.th" target="_blank" rel="noopener noreferrer">
+              <i class="fa-solid fa-angle-right"></i> สำนักงานหลักประกันสุขภาพแห่งชาติ (สปสช.)
+            </a>
+          </li>
+          <li>
+            <a href="https://www.tnmc.or.th" target="_blank" rel="noopener noreferrer">
+              <i class="fa-solid fa-angle-right"></i> สภาการพยาบาลแห่งประเทศไทย
+            </a>
+          </li>
+          <li>
+            <a href="vision.html">
+              <i class="fa-solid fa-angle-right"></i> วิสัยทัศน์และพันธกิจกลุ่มการพยาบาล
+            </a>
+          </li>
+          <li>
+            <a href="structure.html">
+              <i class="fa-solid fa-angle-right"></i> หน่วยงานภายใน (17 กลุ่มงาน)
+            </a>
+          </li>
+          <li>
+            <a href="calendar.html">
+              <i class="fa-solid fa-angle-right"></i> ปฏิทินกิจกรรมและการประชุม
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 กลุ่มการพยาบาล โรงพยาบาลแม่สอด (Mae Sot Hospital). สงวนลิขสิทธิ์</p>
+      <p>ระบบสารสนเทศและการสื่อสารงานพยาบาล</p>
+    </div>
+  </footer>
+
+  <!-- ================= 4. Modal อ่านต่อ ================= -->
+  <div id="news-modal" class="modal-overlay hidden" onclick="closeNewsModal(event)" role="dialog" aria-modal="true"
+    aria-labelledby="modal-title">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 id="modal-title">หัวข้อ</h3>
+        <button type="button" class="btn-close-modal" onclick="closeNewsModal()"
+          aria-label="ปิดหน้าต่าง">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-media-wrap" id="modal-media-wrap">
+          <img id="modal-img" src="" alt="ภาพประกอบข่าว" class="modal-image" onclick="openLightboxCurrent()">
+          <span class="modal-zoom-badge"><i class="fa-solid fa-magnifying-glass-plus"></i> คลิกเพื่อดูภาพขยาย</span>
+        </div>
+        <div id="modal-gallery" class="modal-gallery-grid hidden"></div>
+        <div id="modal-text" class="modal-desc"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-back" onclick="closeNewsModal()">
+          <i class="fa-solid fa-arrow-left"></i> ย้อนกลับ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 5. Lightbox ดูภาพขยาย ================= -->
+  <div id="lightbox-modal" class="lightbox-overlay hidden" onclick="closeLightbox(event)" role="dialog"
+    aria-modal="true" aria-label="ดูภาพขนาดเต็ม">
+    <button type="button" class="lightbox-close-btn" onclick="closeLightbox()" aria-label="ปิดภาพขยาย">&times;</button>
+    <div class="lightbox-counter" id="lightbox-counter">1 / 1</div>
+    <button type="button" class="lightbox-nav-btn lightbox-prev" onclick="prevLightboxImage(event)"
+      aria-label="ภาพก่อนหน้า">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <img id="lightbox-img" src="" alt="ภาพขยายขนาดเต็ม">
+    </div>
+    <button type="button" class="lightbox-nav-btn lightbox-next" onclick="nextLightboxImage(event)"
+      aria-label="ภาพถัดไป">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <!-- ปุ่มเลื่อนกลับขึ้นบนสุด -->
+  <button type="button" id="back-to-top-btn" class="back-to-top-btn" onclick="scrollToTop()"
+    aria-label="เลื่อนขึ้นบนสุด" title="เลื่อนขึ้นบนสุด">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <script src="js/app.js"></script>
+  <script>
+    let currentCategory = 'news';
+    let currentSearchTerm = '';
+    let currentSortOrder = 'newest';
+    let currentPageNum = 1;
+    const ITEMS_PER_PAGE = 8;
+
+    function initPageFromUrl() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const typeParam = urlParams.get('type');
+      if (typeParam === 'activity') {
+        currentCategory = 'activity';
+      } else {
+        currentCategory = 'news';
+      }
+      updateCategoryUi();
+    }
+
+    function switchCategory(cat) {
+      currentCategory = cat;
+      currentPageNum = 1;
+      currentSearchTerm = '';
+      const input = document.getElementById('all-posts-search');
+      if (input) input.value = '';
+      const clearBtn = document.getElementById('btn-clear-all-search');
+      if (clearBtn) clearBtn.classList.add('hidden');
+
+      // อัปเดต URL query parameter
+      const newUrl = new URL(window.location);
+      newUrl.searchParams.set('type', cat);
+      window.history.replaceState({}, '', newUrl);
+
+      updateCategoryUi();
+      renderAllPosts();
+    }
+
+    function updateCategoryUi() {
+      const isNews = currentCategory === 'news';
+      const btnNews = document.getElementById('tab-btn-news');
+      const btnAct = document.getElementById('tab-btn-activity');
+      const mainTitle = document.getElementById('page-main-title');
+      const mainDesc = document.getElementById('page-main-desc');
+      const badgeTag = document.getElementById('page-badge-tag');
+
+      if (isNews) {
+        if (btnNews) btnNews.classList.add('active');
+        if (btnAct) btnAct.classList.remove('active');
+        if (mainTitle) mainTitle.innerText = 'ข่าวประชาสัมพันธ์ทั้งหมด';
+        if (mainDesc) mainDesc.innerText = 'ติดตามประกาศ ข้อมูลข่าวสาร และความเคลื่อนไหวล่าสุดของกลุ่มการพยาบาล โรงพยาบาลแม่สอด';
+        if (badgeTag) badgeTag.innerHTML = '<i class="fa-solid fa-bullhorn"></i> คลังข่าวประชาสัมพันธ์ทางการพยาบาล';
+        document.title = 'ข่าวประชาสัมพันธ์ทั้งหมด - กลุ่มการพยาบาล โรงพยาบาลแม่สอด';
+      } else {
+        if (btnNews) btnNews.classList.remove('active');
+        if (btnAct) btnAct.classList.add('active');
+        if (mainTitle) mainTitle.innerText = 'กิจกรรมและโครงการทั้งหมด';
+        if (mainDesc) mainDesc.innerText = 'ภาพบรรยากาศโครงการอบรม ประชุมวิชาการ และกิจกรรมบริการทางการพยาบาล โรงพยาบาลแม่สอด';
+        if (badgeTag) badgeTag.innerHTML = '<i class="fa-solid fa-calendar-days"></i> คลังกิจกรรมและโครงการทางการพยาบาล';
+        document.title = 'กิจกรรมและโครงการทั้งหมด - กลุ่มการพยาบาล โรงพยาบาลแม่สอด';
+      }
+    }
+
+    function handleAllPostsSearch(query) {
+      currentSearchTerm = (query || '').trim();
+      currentPageNum = 1;
+      const clearBtn = document.getElementById('btn-clear-all-search');
+      if (clearBtn) {
+        if (currentSearchTerm !== '') clearBtn.classList.remove('hidden');
+        else clearBtn.classList.add('hidden');
+      }
+      renderAllPosts();
+    }
+
+    function clearAllPostsSearch() {
+      currentSearchTerm = '';
+      const input = document.getElementById('all-posts-search');
+      if (input) input.value = '';
+      const clearBtn = document.getElementById('btn-clear-all-search');
+      if (clearBtn) clearBtn.classList.add('hidden');
+      currentPageNum = 1;
+      renderAllPosts();
+    }
+
+    function handleSortChange(order) {
+      currentSortOrder = order;
+      currentPageNum = 1;
+      renderAllPosts();
+    }
+
+    function getFilteredList() {
+      let list = allFetchedPosts.filter(p => p.category === currentCategory);
+
+      if (currentSearchTerm !== '') {
+        const lower = currentSearchTerm.toLowerCase();
+        list = list.filter(p => 
+          (p.title && p.title.toLowerCase().includes(lower)) ||
+          (p.description && p.description.toLowerCase().includes(lower))
+        );
+      }
+
+      list.sort((a, b) => {
+        const dateA = new Date(a.created_at || a.date || 0).getTime();
+        const dateB = new Date(b.created_at || b.date || 0).getTime();
+        if (currentSortOrder === 'oldest') {
+          return dateA - dateB;
+        }
+        return dateB - dateA;
+      });
+
+      return list;
+    }
+
+    function renderAllPosts() {
+      const grid = document.getElementById('all-posts-grid-display');
+      const countText = document.getElementById('results-count-text');
+      const pagContainer = document.getElementById('all-posts-pagination-container');
+      if (!grid) return;
+
+      // อัปเดตตัวเลขในแท็บ
+      const newsTotal = allFetchedPosts.filter(p => p.category === 'news').length;
+      const actTotal = allFetchedPosts.filter(p => p.category === 'activity').length;
+      const tabNewsCount = document.getElementById('count-tab-news');
+      const tabActCount = document.getElementById('count-tab-activity');
+      if (tabNewsCount) tabNewsCount.innerText = newsTotal;
+      if (tabActCount) tabActCount.innerText = actTotal;
+
+      const filteredList = getFilteredList();
+
+      if (countText) {
+        countText.innerText = `พบทั้งหมด ${filteredList.length} รายการ`;
+      }
+
+      if (filteredList.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: #fafafa; border-radius: 20px; border: 1.5px dashed #e2e8f0;">
+            <i class="fa-solid fa-folder-open" style="font-size: 42px; color: #cbd5e1; margin-bottom: 14px; display: block;"></i>
+            <h3 style="color: #0f172a; margin-bottom: 8px;">ไม่พบรายการที่ค้นหา</h3>
+            <p style="color: #64748b; margin-bottom: 18px;">กรุณาลองตรวจสอบคำค้นหา หรือสลับไปดูหมวดหมู่อื่น</p>
+            ${currentSearchTerm ? `
+              <button type="button" class="btn-outline" onclick="clearAllPostsSearch()">
+                <i class="fa-solid fa-rotate-left"></i> ล้างการค้นหา
+              </button>
+            ` : ''}
+          </div>
+        `;
+        if (pagContainer) pagContainer.innerHTML = '';
+        return;
+      }
+
+      const totalPages = Math.ceil(filteredList.length / ITEMS_PER_PAGE);
+      if (currentPageNum > totalPages) currentPageNum = totalPages;
+      if (currentPageNum < 1) currentPageNum = 1;
+
+      const startIndex = (currentPageNum - 1) * ITEMS_PER_PAGE;
+      const pageItems = filteredList.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+      grid.innerHTML = '';
+      pageItems.forEach((item, index) => {
+        grid.innerHTML += createCardHtml(item, currentSearchTerm, index);
+      });
+
+      // Pagination
+      if (pagContainer) {
+        if (totalPages <= 1) {
+          pagContainer.innerHTML = '';
+        } else {
+          let html = `<nav class="pagination-wrapper" aria-label="การแบ่งหน้า" style="display:flex; justify-content:center; gap:8px;">`;
+          html += `
+            <button type="button" class="pagination-btn prev-btn" ${currentPageNum === 1 ? 'disabled' : ''} 
+              onclick="goToAllPage(${currentPageNum - 1})" aria-label="หน้าก่อนหน้า">
+              <i class="fa-solid fa-chevron-left"></i> ก่อนหน้า
+            </button>
+          `;
+          for (let p = 1; p <= totalPages; p++) {
+            const isActive = p === currentPageNum;
+            html += `
+              <button type="button" class="pagination-btn num-btn ${isActive ? 'active' : ''}" 
+                onclick="goToAllPage(${p})" aria-label="หน้าที่ ${p}">
+                ${p}
+              </button>
+            `;
+          }
+          html += `
+            <button type="button" class="pagination-btn next-btn" ${currentPageNum === totalPages ? 'disabled' : ''} 
+              onclick="goToAllPage(${currentPageNum + 1})" aria-label="หน้าถัดไป">
+              ถัดไป <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          `;
+          html += `</nav>`;
+          pagContainer.innerHTML = html;
+        }
+      }
+
+      initScrollReveal();
+    }
+
+    function goToAllPage(pageNum) {
+      currentPageNum = pageNum;
+      renderAllPosts();
+      window.scrollTo({ top: 220, behavior: 'smooth' });
+    }
+
+    // เมื่อโหลดหน้าเสร็จ
+    document.addEventListener('DOMContentLoaded', async () => {
+      initPageFromUrl();
+      if (!allFetchedPosts || allFetchedPosts.length === 0) {
+        await loadDynamicPosts();
+      }
+      renderAllPosts();
+    });
+  </script>
+</body>
+
+</html>

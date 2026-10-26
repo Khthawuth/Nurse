@@ -600,35 +600,11 @@ function closeNewsModal(event) {
   }
 }
 
-// ================= 5. Modal ดูทั้งหมด =================
+// ================= 5. ดูทั้งหมด (เปิดในแท็บเดิม) =================
 function openAllModal(category) {
   closeAllDropdowns();
-  const modal = document.getElementById('view-all-modal');
-  const title = document.getElementById('all-modal-title');
-  const grid = document.getElementById('all-posts-grid');
-  if (!modal || !title || !grid) return;
-
-  grid.innerHTML = '';
-
-  if (category === 'news') {
-    title.innerHTML = '<i class="fa-solid fa-bullhorn" style="color: var(--primary-600);"></i> ข่าวประชาสัมพันธ์ทั้งหมด';
-    const list = allFetchedPosts.filter(p => p.category === 'news');
-    if (list.length === 0) {
-      grid.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1; text-align:center; padding:30px;"><p>ยังไม่มีข่าวประชาสัมพันธ์ในขณะนี้</p></div>';
-    } else {
-      list.forEach(item => grid.innerHTML += createCardHtml(item));
-    }
-  } else {
-    title.innerHTML = '<i class="fa-solid fa-calendar-days" style="color: var(--primary-600);"></i> กิจกรรมทั้งหมด';
-    const list = allFetchedPosts.filter(p => p.category === 'activity');
-    if (list.length === 0) {
-      grid.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1; text-align:center; padding:30px;"><p>ยังไม่มีกิจกรรมในขณะนี้</p></div>';
-    } else {
-      list.forEach(item => grid.innerHTML += createCardHtml(item));
-    }
-  }
-
-  modal.classList.remove('hidden');
+  const targetCategory = category === 'activity' ? 'activity' : 'news';
+  window.location.href = `all-posts.html?type=${targetCategory}`;
 }
 
 function closeAllModal(event) {
